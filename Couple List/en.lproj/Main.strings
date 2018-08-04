@@ -1,0 +1,15 @@
+
+/* Class = "UIViewController"; title = "Load List"; ObjectID = "2SL-le-hGA"; */
+"2SL-le-hGA.title" = "Load List";
+
+/* Class = "UIButton"; normalTitle = "Load"; ObjectID = "IEX-wS-0oe"; */
+"IEX-wS-0oe.normalTitle" = "Load";
+
+/* Class = "UITextField"; placeholder = "List Code"; ObjectID = "Pny-CA-Wtf"; */
+"Pny-CA-Wtf.placeholder" = "List Code";
+
+/* Class = "UINavigationItem"; title = "Couple List"; ObjectID = "ZqI-Y5-sI8"; */
+"ZqI-Y5-sI8.title" = "Couple List";
+
+/* Class = "UIBarButtonItem"; title = "Load List"; ObjectID = "shK-SI-UXS"; */
+"shK-SI-UXS.title" = "Load List";

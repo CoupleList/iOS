@@ -10,18 +10,8 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-protocol HistoryTableViewControllerDelegate: class {
-    
-    func updateHistoryQueryLimit(forLast count: UInt)
-}
-
 class HistoryTableViewController: UITableViewController {
     
-    var queryLimit: UInt = 25 {
-        didSet {
-            loadData()
-        }
-    }
     var activityHistory = [ActivityHistory]()
     let cellIdentifier = "ActivityHistoryCell"
     
@@ -32,9 +22,6 @@ class HistoryTableViewController: UITableViewController {
         title = "History"
         
         tableView.register(ActivityHistoryTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        
-        let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(handleEdit))
-        navigationController?.navigationBar.topItem?.rightBarButtonItem = editButton
         
         loadData()
     }
@@ -71,16 +58,8 @@ class HistoryTableViewController: UITableViewController {
         return cell
     }
     
-    @objc func handleEdit() {
-        let viewController = HistorySettingsViewController()
-        viewController.queryLimit = queryLimit
-        viewController.delegate = self
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
     fileprivate func loadData() {
-        let ref = queryLimit > 0 ? Database.database().reference().child("lists/\(AppDelegate.settings.listKey)/history").queryLimited(toLast: queryLimit) : Database.database().reference().child("lists/\(AppDelegate.settings.listKey)/history")
-        ref.observe(.value, with: {
+        Database.database().reference().child("lists/\(AppDelegate.settings.listKey)/history").queryLimited(toLast: 25).observe(.value, with: {
             (snapshot) in
             self.activityHistory = [ActivityHistory]()
             
@@ -111,12 +90,5 @@ class HistoryTableViewController: UITableViewController {
             self.activityHistory = self.activityHistory.sorted(by: { $0.time > $1.time })
             self.tableView.reloadData()
         })
-    }
-}
-
-extension HistoryTableViewController: HistoryTableViewControllerDelegate {
-    
-    func updateHistoryQueryLimit(forLast count: UInt) {
-        queryLimit = count
     }
 }

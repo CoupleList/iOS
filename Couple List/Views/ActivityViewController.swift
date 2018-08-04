@@ -120,7 +120,7 @@ class ActivityViewController: UIViewController {
             
             titleLabel.text = activity.title
             descriptionLabel.text = activity.desc
-            editButton.isEnabled = !activity.isDone
+            editButton.isHidden = activity.isDone
             editButton.setTitleColor(editButton.isEnabled ? UIColor.init(named: "MainColor") : .gray, for: .normal)
         }
     }
@@ -185,15 +185,15 @@ class ActivityViewController: UIViewController {
         descriptionLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
         descriptionLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
         
-        cardView.addSubview(editButton)
-        editButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 0.0).isActive = true
-        editButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
-        editButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
-        
         cardView.addSubview(deleteButton)
         deleteButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 0.0).isActive = true
         deleteButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
-        deleteButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
+        deleteButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
+        
+        cardView.addSubview(editButton)
+        editButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 0.0).isActive = true
+        editButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
+        editButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
     }
 }
 

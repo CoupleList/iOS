@@ -235,15 +235,15 @@ class EditActivityViewController: UIViewController {
         descriptionTextView.delegate = self
         textViewDidChange(descriptionTextView)
         
-        cardView.addSubview(saveButton)
-        saveButton.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 0.0).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
-        saveButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
-        
         cardView.addSubview(completeButton)
         completeButton.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 0.0).isActive = true
         completeButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
-        completeButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
+        completeButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
+        
+        cardView.addSubview(saveButton)
+        saveButton.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 0.0).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
+        saveButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         cardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))

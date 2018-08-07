@@ -16,6 +16,7 @@
 		784A625D2112AEA900127812 /* CLBasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625C2112AEA900127812 /* CLBasicViewController.swift */; };
 		784A625F2112C06700127812 /* CLStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625E2112C06700127812 /* CLStackView.swift */; };
 		784AEC6D20D56FA900BAD8DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */; };
+		784BED8721194FCC00F68B60 /* CLCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784BED8621194FCC00F68B60 /* CLCard.swift */; };
 		784E0E2320D6DFB8006D6AAE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2220D6DFB8006D6AAE /* MainViewController.swift */; };
 		784E0E2520D6E144006D6AAE /* ActivityNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2420D6E144006D6AAE /* ActivityNavigationViewController.swift */; };
 		784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */; };
@@ -57,6 +58,7 @@
 		784A625C2112AEA900127812 /* CLBasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBasicViewController.swift; sourceTree = "<group>"; };
 		784A625E2112C06700127812 /* CLStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLStackView.swift; sourceTree = "<group>"; };
 		784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		784BED8621194FCC00F68B60 /* CLCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLCard.swift; sourceTree = "<group>"; };
 		784E0E2220D6DFB8006D6AAE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		784E0E2420D6E144006D6AAE /* ActivityNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNavigationViewController.swift; sourceTree = "<group>"; };
 		784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				784A625A2112ACCE00127812 /* CLTextField.swift */,
 				784A625E2112C06700127812 /* CLStackView.swift */,
 				784A625C2112AEA900127812 /* CLBasicViewController.swift */,
+				784BED8621194FCC00F68B60 /* CLCard.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				78E8EF2C20ED9DBC00B06F34 /* CLDescriptionLabel.swift in Sources */,
 				784E0E2320D6DFB8006D6AAE /* MainViewController.swift in Sources */,
 				78E8EF3C20EDD3CB00B06F34 /* AccountSettingsViewController.swift in Sources */,
+				784BED8721194FCC00F68B60 /* CLCard.swift in Sources */,
 				7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */,
 				786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */,
 				784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */,

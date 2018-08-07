@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -115,7 +116,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
             if let localFile = info[UIImagePickerControllerImageURL] as? URL {
                 uploadProfileImage(image: selectedImage, url: localFile)
             } else {
-                // TODO: Save and get image url
+                
             }
         }
         
@@ -280,7 +281,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
             
             self.present(alert, animated: true, completion: nil)
             
-            ActivitiesViewController.profileImages.updateValue(image, forKey: uid)
+            ActivitiesTableViewController.profileImages.updateValue(image, forKey: uid)
         }
         
         uploadTask.observe(.failure) { snapshot in

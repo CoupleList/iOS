@@ -100,11 +100,11 @@ class EditActivityViewController: UIViewController {
     var activity: Activity! {
         didSet {
             if let uid = activity.person {
-                if let displayName = ActivitiesViewController.profileDisplayNames[uid] {
+                if let displayName = ActivitiesTableViewController.profileDisplayNames[uid] {
                     personLabel.text = "\(displayName) want\(displayName == "You" ? "" : "s") to"
                 }
                 
-                if let profileImage = ActivitiesViewController.profileImages[uid] {
+                if let profileImage = ActivitiesTableViewController.profileImages[uid] {
                     profileImageView.image = profileImage
                 } else {
                     let profileImageRef = self.storage.reference(withPath: "profileImages/\(uid).JPG")
@@ -112,11 +112,11 @@ class EditActivityViewController: UIViewController {
                         if error == nil {
                             let profileImage = UIImage(data: data!)!
                             self.profileImageView.image = profileImage
-                            ActivitiesViewController.profileImages.updateValue(profileImage, forKey: uid)
+                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
                         } else {
                             let profileImage = UIImage(named: "ProfileImagePlaceholder")!
                             self.profileImageView.image = profileImage
-                            ActivitiesViewController.profileImages.updateValue(profileImage, forKey: uid)
+                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
                         }
                     }
                 }
@@ -124,7 +124,7 @@ class EditActivityViewController: UIViewController {
                 activity.person = Auth.auth().currentUser!.uid
                 personLabel.text = "You want to"
                 
-                if let profileImage = ActivitiesViewController.profileImages[activity.person!] {
+                if let profileImage = ActivitiesTableViewController.profileImages[activity.person!] {
                     profileImageView.image = profileImage
                 } else {
                     let profileImageRef = self.storage.reference(withPath: "profileImages/\(activity.person!).JPG")
@@ -132,11 +132,11 @@ class EditActivityViewController: UIViewController {
                         if error == nil {
                             let profileImage = UIImage(data: data!)!
                             self.profileImageView.image = profileImage
-                            ActivitiesViewController.profileImages.updateValue(profileImage, forKey: self.activity.person!)
+                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: self.activity.person!)
                         } else {
                             let profileImage = UIImage(named: "ProfileImagePlaceholder")!
                             self.profileImageView.image = profileImage
-                            ActivitiesViewController.profileImages.updateValue(profileImage, forKey: self.activity.person!)
+                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: self.activity.person!)
                         }
                     }
                 }

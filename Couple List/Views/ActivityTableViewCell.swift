@@ -1,5 +1,5 @@
 //
-//  ActivityCollectionViewCell.swift
+//  ActivityTableViewCell.swift
 //  Couple List
 //
 //  Created by Kirin Patel on 7/6/18.
@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
 
-class ActivityCollectionViewCell: UICollectionViewCell {
+class ActivityTableViewCell: UITableViewCell {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -60,7 +60,7 @@ class ActivityCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let imageView: UIImageView = {
+    let activityImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -79,7 +79,7 @@ class ActivityCollectionViewCell: UICollectionViewCell {
     var activity: Activity! {
         didSet {
             if let person = activity.person {
-                if let displayName = ActivitiesViewController.profileDisplayNames[person] {
+                if let displayName = ActivitiesTableViewController.profileDisplayNames[person] {
                     if activity.isDone {
                         personLabel.text = "\(displayName) and \(displayName == "You" ? "your S.O." : "you")"
                     } else {
@@ -89,7 +89,7 @@ class ActivityCollectionViewCell: UICollectionViewCell {
                     personLabel.text = ""
                 }
                 
-                if let profileImage = ActivitiesViewController.profileImages[person] {
+                if let profileImage = ActivitiesTableViewController.profileImages[person] {
                     profileImageView.image = profileImage
                     widthConstraint.isActive = true
                     heightConstraint.isActive = true
@@ -108,23 +108,15 @@ class ActivityCollectionViewCell: UICollectionViewCell {
             doneIndicator.isHidden = !activity.isDone
             
             if let image = activity.image {
-                imageView.image = image
+                activityImageView.image = image
             }
         }
     }
     
-    var ref: DatabaseReference!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        let screenWidth = UIScreen.main.bounds.size.width
-        let cellWidth: CGFloat = screenWidth
-        
-        contentView.widthAnchor.constraint(equalToConstant: cellWidth).isActive = true
-        
-        ref = Database.database().reference()
+        backgroundColor = UIColor.init(named: "MainColor")
         
         setupView()
     }
@@ -136,7 +128,7 @@ class ActivityCollectionViewCell: UICollectionViewCell {
     fileprivate func setupView() {
         contentView.addSubview(cardView)
         cardView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 0.0).isActive = true
-        cardView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: 0.0).isActive = true
+        cardView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -8.0).isActive = true
         cardView.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor, constant: 0.0).isActive = true
         cardView.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor, constant: 0.0).isActive = true
         

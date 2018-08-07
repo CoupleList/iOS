@@ -89,7 +89,7 @@ class ActivityViewController: UIViewController {
     var activity: Activity! {
         didSet {
             if let uid = activity.person {
-                if let displayName = ActivitiesViewController.profileDisplayNames[uid] {
+                if let displayName = ActivitiesTableViewController.profileDisplayNames[uid] {
                     if activity.isDone {
                         personLabel.text = "\(displayName) and \(displayName == "You" ? "your S.O." : "you")"
                     } else {
@@ -97,7 +97,7 @@ class ActivityViewController: UIViewController {
                     }
                 }
                 
-                if let profileImage = ActivitiesViewController.profileImages[uid] {
+                if let profileImage = ActivitiesTableViewController.profileImages[uid] {
                     profileImageView.image = profileImage
                 } else {
                     let profileImageRef = self.storage.reference(withPath: "profileImages/\(uid).JPG")
@@ -105,11 +105,11 @@ class ActivityViewController: UIViewController {
                         if error == nil {
                             let profileImage = UIImage(data: data!)!
                             self.profileImageView.image = profileImage
-                            ActivitiesViewController.profileImages.updateValue(profileImage, forKey: uid)
+                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
                         } else {
                             let profileImage = UIImage(named: "ProfileImagePlaceholder")!
                             self.profileImageView.image = profileImage
-                            ActivitiesViewController.profileImages.updateValue(profileImage, forKey: uid)
+                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
                         }
                     }
                 }

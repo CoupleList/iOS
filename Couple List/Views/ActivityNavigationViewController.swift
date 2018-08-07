@@ -17,6 +17,6 @@ class ActivityNavigationViewController: UINavigationController {
         navigationBar.barStyle = .black
         navigationBar.tintColor = .white
         
-        pushViewController(ActivitiesViewController(), animated: true)
+        pushViewController(ActivitiesTableViewController(), animated: true)
     }
 }

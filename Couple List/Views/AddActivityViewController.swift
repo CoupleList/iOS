@@ -103,7 +103,7 @@ class AddActivityViewController: UIViewController {
         
         let uid = Auth.auth().currentUser!.uid
         
-        if let profileImage = ActivitiesViewController.profileImages[uid] {
+        if let profileImage = ActivitiesTableViewController.profileImages[uid] {
             profileImageView.image = profileImage
         } else {
             let profileImageRef = self.storage.reference(withPath: "profileImages/\(uid).JPG")
@@ -111,7 +111,7 @@ class AddActivityViewController: UIViewController {
                 if error == nil {
                     let profileImage = UIImage(data: data!)!
                     self.profileImageView.image = profileImage
-                    ActivitiesViewController.profileImages.updateValue(profileImage, forKey: uid)
+                    ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
                 }
             }
         }

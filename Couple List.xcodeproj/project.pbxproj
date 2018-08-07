@@ -10,6 +10,7 @@
 		7807D7B620CCD64100E734C6 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807D7B520CCD64100E734C6 /* Products.swift */; };
 		7827198820CCD2090033CADE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827198720CCD2090033CADE /* StoreKit.framework */; };
 		7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7827198920CCD4250033CADE /* PurchaseHelper.swift */; };
+		7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */; };
 		7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846CA0B20EF46F300879807 /* AccountDataViewController.swift */; };
 		784A625B2112ACCE00127812 /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625A2112ACCE00127812 /* CLTextField.swift */; };
 		784A625D2112AEA900127812 /* CLBasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625C2112AEA900127812 /* CLBasicViewController.swift */; };
@@ -20,7 +21,7 @@
 		784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */; };
 		784E0E2920D6E18A006D6AAE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */; };
 		784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */; };
-		786F1ED920F00CFB00E54B97 /* ActivityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1ED820F00CFB00E54B97 /* ActivityCollectionViewCell.swift */; };
+		786F1ED920F00CFB00E54B97 /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */; };
 		786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */; };
 		786F1EE020F080A600E54B97 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDF20F080A600E54B97 /* ActivityViewController.swift */; };
 		7895607220D4C72D00509E41 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7895607120D4C72D00509E41 /* UserSettings.swift */; };
@@ -34,7 +35,6 @@
 		78E8EF2E20ED9E7500B06F34 /* CLPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */; };
 		78E8EF3020ED9F3100B06F34 /* CLSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2F20ED9F3100B06F34 /* CLSecondaryButton.swift */; };
 		78E8EF3220ED9FBE00B06F34 /* CLFullScreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF3120ED9FBE00B06F34 /* CLFullScreenButton.swift */; };
-		78E8EF3620EDBE4D00B06F34 /* ActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF3520EDBE4D00B06F34 /* ActivitiesViewController.swift */; };
 		78E8EF3820EDCA6C00B06F34 /* AddActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF3720EDCA6C00B06F34 /* AddActivityViewController.swift */; };
 		78E8EF3A20EDD3B100B06F34 /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF3920EDD3B100B06F34 /* SettingsNavigationController.swift */; };
 		78E8EF3C20EDD3CB00B06F34 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF3B20EDD3CB00B06F34 /* AccountSettingsViewController.swift */; };
@@ -51,6 +51,7 @@
 		7807D7B520CCD64100E734C6 /* Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		7827198720CCD2090033CADE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7827198920CCD4250033CADE /* PurchaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHelper.swift; sourceTree = "<group>"; };
+		7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 		7846CA0B20EF46F300879807 /* AccountDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataViewController.swift; sourceTree = "<group>"; };
 		784A625A2112ACCE00127812 /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
 		784A625C2112AEA900127812 /* CLBasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBasicViewController.swift; sourceTree = "<group>"; };
@@ -61,7 +62,7 @@
 		784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		786F1ED820F00CFB00E54B97 /* ActivityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCollectionViewCell.swift; sourceTree = "<group>"; };
+		786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
 		786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditActivityViewController.swift; sourceTree = "<group>"; };
 		786F1EDF20F080A600E54B97 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		7895607120D4C72D00509E41 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPrimaryButton.swift; sourceTree = "<group>"; };
 		78E8EF2F20ED9F3100B06F34 /* CLSecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSecondaryButton.swift; sourceTree = "<group>"; };
 		78E8EF3120ED9FBE00B06F34 /* CLFullScreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLFullScreenButton.swift; sourceTree = "<group>"; };
-		78E8EF3520EDBE4D00B06F34 /* ActivitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesViewController.swift; sourceTree = "<group>"; };
 		78E8EF3720EDCA6C00B06F34 /* AddActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityViewController.swift; sourceTree = "<group>"; };
 		78E8EF3920EDD3B100B06F34 /* SettingsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigationController.swift; sourceTree = "<group>"; };
 		78E8EF3B20EDD3CB00B06F34 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
@@ -125,10 +125,10 @@
 				78E8EF3720EDCA6C00B06F34 /* AddActivityViewController.swift */,
 				7846CA0B20EF46F300879807 /* AccountDataViewController.swift */,
 				78E8EF3B20EDD3CB00B06F34 /* AccountSettingsViewController.swift */,
-				78E8EF3520EDBE4D00B06F34 /* ActivitiesViewController.swift */,
-				786F1ED820F00CFB00E54B97 /* ActivityCollectionViewCell.swift */,
+				786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */,
 				78F82B9920EDEC7B001A6A92 /* ActivityHistoryTableViewCell.swift */,
 				784E0E2420D6E144006D6AAE /* ActivityNavigationViewController.swift */,
+				7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */,
 				786F1EDF20F080A600E54B97 /* ActivityViewController.swift */,
 				786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */,
 				78E8EF3D20EDD50800B06F34 /* FeedbackViewController.swift */,
@@ -361,16 +361,16 @@
 				7807D7B620CCD64100E734C6 /* Products.swift in Sources */,
 				78E8EF2A20ED9C9000B06F34 /* CLTitleLabel.swift in Sources */,
 				7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */,
-				786F1ED920F00CFB00E54B97 /* ActivityCollectionViewCell.swift in Sources */,
+				786F1ED920F00CFB00E54B97 /* ActivityTableViewCell.swift in Sources */,
 				78E8EF3820EDCA6C00B06F34 /* AddActivityViewController.swift in Sources */,
 				784A625F2112C06700127812 /* CLStackView.swift in Sources */,
 				78E8EF2C20ED9DBC00B06F34 /* CLDescriptionLabel.swift in Sources */,
 				784E0E2320D6DFB8006D6AAE /* MainViewController.swift in Sources */,
 				78E8EF3C20EDD3CB00B06F34 /* AccountSettingsViewController.swift in Sources */,
+				7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */,
 				786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */,
 				784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */,
 				784A625D2112AEA900127812 /* CLBasicViewController.swift in Sources */,
-				78E8EF3620EDBE4D00B06F34 /* ActivitiesViewController.swift in Sources */,
 				7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */,
 				78E8EF3A20EDD3B100B06F34 /* SettingsNavigationController.swift in Sources */,
 				7895607420D4C8C600509E41 /* StartViewController.swift in Sources */,

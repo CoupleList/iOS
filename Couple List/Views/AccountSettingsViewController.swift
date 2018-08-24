@@ -15,6 +15,16 @@ import FirebaseStorage
 
 class AccountSettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.bounces = true
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.indicatorStyle = .black
+        scrollView.backgroundColor = .clear
+        return scrollView
+    }()
+    
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -33,53 +43,45 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         return aiv
     }()
     
-    let addProfileImageButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 75.0
-        button.addTarget(self, action: #selector(handleSetProfileImage), for: .touchUpInside)
-        return button
+    let displayNameLabel = CLTitleLabel(text: "")
+    
+    let setProfileImageItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "AccountProfilePicture")
+        clSettingsItem.title = "Set Profile Picture"
+        clSettingsItem.details = "Select a picture to be used"
+        return clSettingsItem
     }()
     
-    let setDisplayNameButton: CLSecondaryButton = {
-        let button = CLSecondaryButton(title: "")
-        button.addTarget(self, action: #selector(setDisplayName), for: .touchUpInside)
-        return button
+    let setDisplayNameItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "AccountDisplayName")
+        clSettingsItem.title = "Set Display Name"
+        clSettingsItem.details = "Set a display name to be used"
+        return clSettingsItem
     }()
     
-    let resetPasswordButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "change password")
-        button.setTitleColor(UIColor.init(named: "AppleBlue"), for: .normal)
-        button.addTarget(self, action: #selector(handlePasswordChange), for: .touchUpInside)
-        return button
-    }()
-    
-    let accountDataButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "account data")
-        button.addTarget(self, action: #selector(handleViewAccountData), for: .touchUpInside)
-        return button
-    }()
-    
-    let deleteAccountButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "delete account")
-        button.setTitleColor(UIColor.init(named: "AppleRed"), for: .normal)
-        button.addTarget(self, action: #selector(handleDeleteAccount), for: .touchUpInside)
-        return button
+    let changePasswordItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "AccountChangePassword")
+        clSettingsItem.title = "Change Password"
+        clSettingsItem.details = "Change your password"
+        return clSettingsItem
     }()
     
     var ref: DatabaseReference!
     var storage: Storage!
     var profileImage: UIImage? {
         didSet {
-            addProfileImageButton.setTitle("", for: .normal)
             profileImageActivityIndicator.stopAnimating()
             profileImageView.image = profileImage
         }
     }
     var displayName: String? {
         didSet {
-            setDisplayNameButton.setTitle(displayName!.isEmpty ? "Set Display Name": displayName, for: .normal)
+            if let displayName = displayName {
+                displayNameLabel.text = displayName.isEmpty ? "" : displayName
+            }
         }
     }
     
@@ -205,47 +207,56 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     fileprivate func setupView() {
-        view.addSubview(profileImageView)
-        profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40.0).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 150.0).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        view.addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
-        view.addSubview(addProfileImageButton)
-        addProfileImageButton.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 0.0).isActive = true
-        addProfileImageButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 0.0).isActive = true
-        addProfileImageButton.leftAnchor.constraint(equalTo: profileImageView.leftAnchor, constant: 0.0).isActive = true
-        addProfileImageButton.rightAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 0.0).isActive = true
+        setProfileImageItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSetProfileImage)))
+        setDisplayNameItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setDisplayName)))
+        changePasswordItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlePasswordChange)))
         
-        view.addSubview(profileImageActivityIndicator)
-        profileImageActivityIndicator.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 0.0).isActive = true
-        profileImageActivityIndicator.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 0.0).isActive = true
-        profileImageActivityIndicator.leftAnchor.constraint(equalTo: profileImageView.leftAnchor, constant: 0.0).isActive = true
-        profileImageActivityIndicator.rightAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 0.0).isActive = true
+        let provileImageViewContainer: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
         
-        view.addSubview(setDisplayNameButton)
-        setDisplayNameButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10.0).isActive = true
-        setDisplayNameButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0).isActive = true
-        setDisplayNameButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0).isActive = true
-        setDisplayNameButton.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        provileImageViewContainer.addSubview(profileImageView)
+        profileImageView.topAnchor.constraint(equalTo: provileImageViewContainer.topAnchor, constant: 0).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: provileImageViewContainer.bottomAnchor, constant: 0).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: provileImageViewContainer.centerXAnchor).isActive = true
         
-        view.addSubview(resetPasswordButton)
-        resetPasswordButton.topAnchor.constraint(equalTo: setDisplayNameButton.bottomAnchor, constant: 10.0).isActive = true
-        resetPasswordButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        resetPasswordButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        resetPasswordButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        let settingsSubViews: [UIView] = [
+            CLSettingsItemSpacer(),
+            provileImageViewContainer,
+            CLSettingsItemSpacer(),
+            displayNameLabel,
+            CLSettingsItemSpacer(),
+            setProfileImageItem,
+            setDisplayNameItem,
+            CLSettingsItemSpacer(),
+            changePasswordItem
+        ]
         
-        view.addSubview(deleteAccountButton)
-        deleteAccountButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10.0).isActive = true
-        deleteAccountButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        deleteAccountButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        deleteAccountButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        let settingsStackView = UIStackView(arrangedSubviews: settingsSubViews)
+        settingsStackView.translatesAutoresizingMaskIntoConstraints = false
+        settingsStackView.axis = .vertical
+        settingsStackView.alignment = .fill
+        settingsStackView.distribution = .fill
+        settingsStackView.spacing = 0
         
-//        view.addSubview(accountDataButton)
-//        accountDataButton.bottomAnchor.constraint(equalTo: deleteAccountButton.topAnchor, constant: -10.0).isActive = true
-//        accountDataButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-//        accountDataButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-//        accountDataButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        scrollView.addSubview(settingsStackView)
+        settingsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
+        settingsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
+        settingsStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        settingsStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        
+        scrollView.bounds = view.bounds
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
     }
     
     fileprivate func loadProfileImage() {
@@ -255,7 +266,6 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         profileImageRef.getData(maxSize: 8 * 1024 * 1024) { data, error in
             if error != nil {
                 self.profileImageActivityIndicator.stopAnimating()
-                self.addProfileImageButton.setTitle("Set Profile Picture", for: .normal)
             } else {
                 self.profileImage = UIImage(data: data!)
             }
@@ -286,7 +296,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         
         uploadTask.observe(.failure) { snapshot in
             uploadTask.removeAllObservers()
-            if let error = snapshot.error as? NSError {
+            if let error = snapshot.error as NSError? {
                 let alert = UIAlertController(title: "Error Updating Profile Picture", message: "\(error.localizedDescription) Would you like to retry?", preferredStyle: .alert)
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -317,9 +327,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     fileprivate func loadDisplayName() {
-        ref.child("users/\(Auth.auth().currentUser!.uid)/displayName").observeSingleEvent(of: .value, with: {
-            (snapshot) in
-            
+        ref.child("users/\(Auth.auth().currentUser!.uid)/displayName").observeSingleEvent(of: .value, with: { snapshot in
             self.displayName = snapshot.exists() ? snapshot.value as! String : ""
         })
     }
@@ -374,8 +382,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
                 if error != nil {
                     let errorAlert = UIAlertController(title: "Error Changing Password", message: error!.localizedDescription, preferredStyle: .alert)
                     
-                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: {
-                        _ in
+                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
                         self.displayChangePasswordAlert()
                     })
                     

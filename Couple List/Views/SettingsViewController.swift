@@ -83,36 +83,25 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         view.backgroundColor = UIColor.init(named: "MainColor")
         title = "Settings"
         
-        let topStackView = UIStackView(arrangedSubviews: [submitFeedbackButton, accountSettingsButton])
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
-        topStackView.axis = .horizontal
-        topStackView.alignment = .fill
-        topStackView.distribution = .fillEqually
-        topStackView.spacing = 10.0
+        view.addSubview(submitFeedbackButton)
+        submitFeedbackButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
+        submitFeedbackButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
         
-        view.addSubview(topStackView)
-        topStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
-        topStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        topStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        topStackView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        view.addSubview(accountSettingsButton)
+        accountSettingsButton.topAnchor.constraint(equalTo: submitFeedbackButton.bottomAnchor, constant: 10.0).isActive = true
+        accountSettingsButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
         
         view.addSubview(shareListButton)
-        shareListButton.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10.0).isActive = true
-        shareListButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        shareListButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        shareListButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        shareListButton.topAnchor.constraint(equalTo: accountSettingsButton.bottomAnchor, constant: 10.0).isActive = true
+        shareListButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
         
         view.addSubview(removeAdsButton)
         removeAdsButton.topAnchor.constraint(equalTo: shareListButton.bottomAnchor, constant: 10.0).isActive = true
-        removeAdsButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        removeAdsButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        removeAdsButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        removeAdsButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
         
         view.addSubview(restorePurchasesButton)
         restorePurchasesButton.topAnchor.constraint(equalTo: removeAdsButton.bottomAnchor, constant: 10.0).isActive = true
-        restorePurchasesButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        restorePurchasesButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        restorePurchasesButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        restorePurchasesButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
         
         view.addSubview(disclaimerLabel)
         disclaimerLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8.0).isActive = true
@@ -128,9 +117,8 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         
         view.addSubview(bottomStackView)
         bottomStackView.bottomAnchor.constraint(equalTo: disclaimerLabel.topAnchor, constant: -8.0).isActive = true
-        bottomStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        bottomStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        bottomStackView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        bottomStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
+        bottomStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10.0).isActive = true
         
         ref = Database.database().reference()
     }

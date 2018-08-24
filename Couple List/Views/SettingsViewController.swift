@@ -40,12 +40,14 @@ class SettingsViewController: UIViewController, MFMessageComposeViewControllerDe
     
     let removeAdsButton: CLPrimaryButton = {
         let button = CLPrimaryButton(title: "remove ads ($0.99)")
+        button.isHidden = true
         button.addTarget(self, action: #selector(handleShareList), for: .touchUpInside)
         return button
     }()
     
     let restorePurchasesButton: CLPrimaryButton = {
         let button = CLPrimaryButton(title: "restore purchases")
+        button.isHidden = true
         button.addTarget(self, action: #selector(handleShareList), for: .touchUpInside)
         return button
     }()

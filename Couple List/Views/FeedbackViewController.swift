@@ -62,22 +62,24 @@ class FeedbackViewController: UIViewController {
     }
     
     @objc func handleSubmit() {
-        let key = ref.child("feedback/\(Auth.auth().currentUser!.uid)/").childByAutoId().key
-        ref.child("feedback/\(Auth.auth().currentUser!.uid)/\(key)").setValue([
-            "respondViaEmail": emailContactSwitch.isOn,
-            "feedback": feedbackTextView.text
-            ])
-        
-        let alert = UIAlertController(title: "Thanks for the feedback!", message: "Any suggestions are greatly appreciated and will be addressed prompty.", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
-            (_)in
-           self.navigationController?.popViewController(animated: true)
-        })
-        
-        alert.addAction(okAction)
-        
-        present(alert, animated: true, completion: nil)
+        if feedbackTextView.text.count > 0 && feedbackTextView.text != "Feedback..." {
+            let key = ref.child("feedback/\(Auth.auth().currentUser!.uid)/").childByAutoId().key
+            ref.child("feedback/\(Auth.auth().currentUser!.uid)/\(key)").setValue([
+                "respondViaEmail": emailContactSwitch.isOn,
+                "feedback": feedbackTextView.text
+                ])
+            
+            let alert = UIAlertController(title: "Thanks for the feedback!", message: "Any suggestions are greatly appreciated and will be addressed prompty.", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
+                (_)in
+                self.navigationController?.popViewController(animated: true)
+            })
+            
+            alert.addAction(okAction)
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc func dismissKeyboard() {
@@ -113,7 +115,6 @@ class FeedbackViewController: UIViewController {
 }
 
 extension FeedbackViewController: UITextViewDelegate {
-
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if (textView.text! == "Feedback...") {

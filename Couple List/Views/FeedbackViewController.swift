@@ -56,7 +56,7 @@ class FeedbackViewController: UIViewController {
         if feedbackTextView.text.count > 0 && feedbackTextView.text != "Feedback..." {
             let key = ref.child("feedback/\(Auth.auth().currentUser!.uid)/").childByAutoId().key
             ref.child("feedback/\(Auth.auth().currentUser!.uid)/\(key)").setValue([
-                "respondViaEmail": anonymousItem.isOn,
+                "respondViaEmail": !anonymousItem.isOn,
                 "feedback": feedbackTextView.text
                 ])
             

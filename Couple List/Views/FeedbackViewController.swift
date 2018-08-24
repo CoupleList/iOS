@@ -15,13 +15,13 @@ class FeedbackViewController: UIViewController {
     
     var ref: DatabaseReference!
     
-    let anonymousItem: CLSettingsInputItem = {
-        let clSettingsInputItem = CLSettingsInputItem()
-        clSettingsInputItem.iconImage = UIImage.init(named: "FeedbackAnonymous")
-        clSettingsInputItem.title = "Remain Anonymous?"
-        clSettingsInputItem.details = "Send feedback without email address"
-        clSettingsInputItem.isOn = true
-        return clSettingsInputItem
+    let anonymousItem: CLSettingsSwitchInputItem = {
+        let clSettingsSwitchInputItem = CLSettingsSwitchInputItem()
+        clSettingsSwitchInputItem.iconImage = UIImage.init(named: "FeedbackAnonymous")
+        clSettingsSwitchInputItem.title = "Remain Anonymous?"
+        clSettingsSwitchInputItem.details = "Send feedback without email address"
+        clSettingsSwitchInputItem.isOn = true
+        return clSettingsSwitchInputItem
     }()
     
     let feedbackTextView: UITextView = {

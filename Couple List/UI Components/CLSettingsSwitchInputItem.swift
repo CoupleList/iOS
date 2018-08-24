@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CLSettingsInputItem: UIView {
+class CLSettingsSwitchInputItem: UIView {
     
     fileprivate let iconImageView: UIImageView = {
         let imageView = UIImageView()

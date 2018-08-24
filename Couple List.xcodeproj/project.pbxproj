@@ -14,6 +14,7 @@
 		7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846CA0B20EF46F300879807 /* AccountDataViewController.swift */; };
 		7849F269212FAA28006CD186 /* CLSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F268212FAA28006CD186 /* CLSettingsItem.swift */; };
 		7849F26B212FAE74006CD186 /* CLSettingsItemSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */; };
+		7849F26D212FB6B2006CD186 /* CLSettingsInputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F26C212FB6B2006CD186 /* CLSettingsInputItem.swift */; };
 		784A625B2112ACCE00127812 /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625A2112ACCE00127812 /* CLTextField.swift */; };
 		784A625D2112AEA900127812 /* CLBasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625C2112AEA900127812 /* CLBasicViewController.swift */; };
 		784A625F2112C06700127812 /* CLStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625E2112C06700127812 /* CLStackView.swift */; };
@@ -58,6 +59,7 @@
 		7846CA0B20EF46F300879807 /* AccountDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataViewController.swift; sourceTree = "<group>"; };
 		7849F268212FAA28006CD186 /* CLSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItem.swift; sourceTree = "<group>"; };
 		7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItemSpacer.swift; sourceTree = "<group>"; };
+		7849F26C212FB6B2006CD186 /* CLSettingsInputItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsInputItem.swift; sourceTree = "<group>"; };
 		784A625A2112ACCE00127812 /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
 		784A625C2112AEA900127812 /* CLBasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBasicViewController.swift; sourceTree = "<group>"; };
 		784A625E2112C06700127812 /* CLStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLStackView.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				784A625E2112C06700127812 /* CLStackView.swift */,
 				784A625C2112AEA900127812 /* CLBasicViewController.swift */,
 				784BED8621194FCC00F68B60 /* CLCard.swift */,
+				7849F26C212FB6B2006CD186 /* CLSettingsInputItem.swift */,
 				7849F268212FAA28006CD186 /* CLSettingsItem.swift */,
 				7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */,
 			);
@@ -394,6 +397,7 @@
 				784E0E2320D6DFB8006D6AAE /* MainViewController.swift in Sources */,
 				78E8EF3C20EDD3CB00B06F34 /* AccountSettingsViewController.swift in Sources */,
 				784BED8721194FCC00F68B60 /* CLCard.swift in Sources */,
+				7849F26D212FB6B2006CD186 /* CLSettingsInputItem.swift in Sources */,
 				7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */,
 				786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */,
 				784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */,

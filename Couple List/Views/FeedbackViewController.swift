@@ -15,21 +15,13 @@ class FeedbackViewController: UIViewController {
     
     var ref: DatabaseReference!
     
-    let emailContactLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Allow the developer (Kirin Patel) to contact you via your email address regarding your feedback?"
-        label.numberOfLines = 0
-        label.textColor = .white
-        return label
-    }()
-    
-    let emailContactSwitch: UISwitch = {
-        let s = UISwitch()
-        s.translatesAutoresizingMaskIntoConstraints = false
-        s.onTintColor = .white
-        s.isOn = true
-        return s
+    let anonymousItem: CLSettingsInputItem = {
+        let clSettingsInputItem = CLSettingsInputItem()
+        clSettingsInputItem.iconImage = UIImage.init(named: "FeedbackAnonymous")
+        clSettingsInputItem.title = "Remain Anonymous?"
+        clSettingsInputItem.details = "Send feedback without email address"
+        clSettingsInputItem.isOn = true
+        return clSettingsInputItem
     }()
     
     let feedbackTextView: UITextView = {
@@ -40,7 +32,6 @@ class FeedbackViewController: UIViewController {
         textView.text = "Feedback..."
         textView.font = UIFont.systemFont(ofSize: 15.0)
         textView.returnKeyType = .done
-        textView.layer.cornerRadius = 12.0
         return textView
     }()
     
@@ -65,7 +56,7 @@ class FeedbackViewController: UIViewController {
         if feedbackTextView.text.count > 0 && feedbackTextView.text != "Feedback..." {
             let key = ref.child("feedback/\(Auth.auth().currentUser!.uid)/").childByAutoId().key
             ref.child("feedback/\(Auth.auth().currentUser!.uid)/\(key)").setValue([
-                "respondViaEmail": emailContactSwitch.isOn,
+                "respondViaEmail": anonymousItem.isOn,
                 "feedback": feedbackTextView.text
                 ])
             
@@ -87,26 +78,28 @@ class FeedbackViewController: UIViewController {
     }
     
     fileprivate func setupView() {
-        view.addSubview(emailContactLabel)
-        emailContactLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
-        emailContactLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8.0).isActive = true
-        emailContactLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8.0).isActive = true
+        let settingsSubViews: [UIView] = [
+            anonymousItem,
+            CLSettingsItemSpacer(),
+            feedbackTextView,
+            CLSettingsItemSpacer(),
+            submitButton,
+            CLSettingsItemSpacer()
+        ]
         
-        view.addSubview(emailContactSwitch)
-        emailContactSwitch.topAnchor.constraint(equalTo: emailContactLabel.bottomAnchor, constant: 4.0).isActive = true
-        emailContactSwitch.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8.0).isActive = true
+        let settingsStackView = UIStackView(arrangedSubviews: settingsSubViews)
+        settingsStackView.translatesAutoresizingMaskIntoConstraints = false
+        settingsStackView.axis = .vertical
+        settingsStackView.alignment = .fill
+        settingsStackView.distribution = .fill
+        settingsStackView.spacing = 0
         
-        view.addSubview(submitButton)
-        submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10.0).isActive = true
-        submitButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        submitButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        submitButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        view.addSubview(settingsStackView)
+        settingsStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        settingsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        settingsStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        settingsStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
-        view.addSubview(feedbackTextView)
-        feedbackTextView.topAnchor.constraint(equalTo: emailContactSwitch.bottomAnchor, constant: 10.0).isActive = true
-        feedbackTextView.bottomAnchor.constraint(equalTo: submitButton.topAnchor, constant: -10.0).isActive = true
-        feedbackTextView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8.0).isActive = true
-        feedbackTextView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8.0).isActive = true
         feedbackTextView.delegate = self
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

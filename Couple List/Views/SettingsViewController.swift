@@ -17,64 +17,80 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
     
     var ref: DatabaseReference!
     
-    let submitFeedbackButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "feedback")
-        button.setTitleColor(UIColor.init(named: "AppleBlue"), for: .normal)
-        button.addTarget(self, action: #selector(handleSubmitFeedback), for: .touchUpInside)
-        return button
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.bounces = true
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.indicatorStyle = .black
+        scrollView.backgroundColor = .clear
+        return scrollView
     }()
     
-    let accountSettingsButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "account")
-        button.setTitleColor(UIColor.init(named: "AppleBlue"), for: .normal)
-        button.addTarget(self, action: #selector(handleViewAccountSettings), for: .touchUpInside)
-        return button
+    let submitFeedbackItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsFeedback")
+        clSettingsItem.title = "Feedback"
+        clSettingsItem.details = "Provide feedback on feature you like/dislike"
+        return clSettingsItem
     }()
     
-    let shareListButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "share list")
-        button.setTitleColor(UIColor.init(named: "AppleBlue"), for: .normal)
-        button.addTarget(self, action: #selector(handleShareList), for: .touchUpInside)
-        return button
+    let accountSettingsItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsAccount")
+        clSettingsItem.title = "Account Settings"
+        clSettingsItem.details = "Set and change account information"
+        return clSettingsItem
     }()
     
-    let removeAdsButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "remove ads ($0.99)")
-        button.isHidden = true
-        button.addTarget(self, action: #selector(handleShareList), for: .touchUpInside)
-        return button
+    let shareListItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsShare")
+        clSettingsItem.title = "Share List"
+        clSettingsItem.details = "Invite your partner to help"
+        return clSettingsItem
     }()
     
-    let restorePurchasesButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "restore purchases")
-        button.isHidden = true
-        button.addTarget(self, action: #selector(handleShareList), for: .touchUpInside)
-        return button
+    let removeAdsItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.isHidden = true
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsRemoveAds")
+        clSettingsItem.title = "Remove Ads"
+        clSettingsItem.details = "Get rid of pesky ads"
+        return clSettingsItem
     }()
     
-    let leaveListButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "leave list")
-        button.setTitleColor(UIColor.init(named: "AppleRed"), for: .normal)
-        button.addTarget(self, action: #selector(handleLeaveList), for: .touchUpInside)
-        return button
+    let restorePurchasesItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.isHidden = true
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsRestore")
+        clSettingsItem.title = "Restore Purchases"
+        clSettingsItem.details = "Re-remove ads from your list"
+        return clSettingsItem
     }()
     
-    let logoutButton: CLPrimaryButton = {
-        let button = CLPrimaryButton(title: "logout")
-        button.setTitleColor(UIColor.init(named: "AppleRed"), for: .normal)
-        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
-        return button
+    let leaveItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsLeave")
+        clSettingsItem.title = "Leave List"
+        clSettingsItem.details = "Remove your account from this list"
+        return clSettingsItem
     }()
     
-    let disclaimerLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Icons obtained from icons8.com."
-        label.numberOfLines = 0
-        label.textColor = .white
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        return label
+    let logoutItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "SettingsLogout")
+        clSettingsItem.title = "Logout"
+        clSettingsItem.details = "Sign out of the app"
+        return clSettingsItem
+    }()
+    
+    let disclaimerItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "icons8")
+        clSettingsItem.title = "Icons8"
+        clSettingsItem.details = "Some icons obtained from icons8.com"
+        return clSettingsItem
     }()
     
     override func viewDidLoad() {
@@ -83,42 +99,49 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         view.backgroundColor = UIColor.init(named: "MainColor")
         title = "Settings"
         
-        view.addSubview(submitFeedbackButton)
-        submitFeedbackButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0).isActive = true
-        submitFeedbackButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
+        view.addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
-        view.addSubview(accountSettingsButton)
-        accountSettingsButton.topAnchor.constraint(equalTo: submitFeedbackButton.bottomAnchor, constant: 10.0).isActive = true
-        accountSettingsButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
+        submitFeedbackItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSubmitFeedback)))
+        accountSettingsItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewAccountSettings)))
+        shareListItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShareList)))
+        leaveItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLeaveList)))
+        logoutItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLogout)))
+        disclaimerItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewIcons8)))
         
-        view.addSubview(shareListButton)
-        shareListButton.topAnchor.constraint(equalTo: accountSettingsButton.bottomAnchor, constant: 10.0).isActive = true
-        shareListButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
+        let settingsSubViews: [UIView] = [
+            submitFeedbackItem,
+            CLSettingsItemSpacer(),
+            accountSettingsItem,
+            shareListItem,
+            CLSettingsItemSpacer(),
+            removeAdsItem,
+            restorePurchasesItem,
+            CLSettingsItemSpacer(),
+            leaveItem,
+            logoutItem,
+            CLSettingsItemSpacer(),
+            disclaimerItem
+        ]
         
-        view.addSubview(removeAdsButton)
-        removeAdsButton.topAnchor.constraint(equalTo: shareListButton.bottomAnchor, constant: 10.0).isActive = true
-        removeAdsButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
+        let settingsStackView = UIStackView(arrangedSubviews: settingsSubViews)
+        settingsStackView.translatesAutoresizingMaskIntoConstraints = false
+        settingsStackView.axis = .vertical
+        settingsStackView.alignment = .fill
+        settingsStackView.distribution = .fill
+        settingsStackView.spacing = 0
         
-        view.addSubview(restorePurchasesButton)
-        restorePurchasesButton.topAnchor.constraint(equalTo: removeAdsButton.bottomAnchor, constant: 10.0).isActive = true
-        restorePurchasesButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
+        scrollView.addSubview(settingsStackView)
+        settingsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
+        settingsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
+        settingsStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        settingsStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
-        view.addSubview(disclaimerLabel)
-        disclaimerLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8.0).isActive = true
-        disclaimerLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 40.0).isActive = true
-        disclaimerLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -40.0).isActive = true
-        
-        let bottomStackView = UIStackView(arrangedSubviews: [leaveListButton, logoutButton])
-        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
-        bottomStackView.axis = .horizontal
-        bottomStackView.alignment = .fill
-        bottomStackView.distribution = .fillEqually
-        bottomStackView.spacing = 10.0
-        
-        view.addSubview(bottomStackView)
-        bottomStackView.bottomAnchor.constraint(equalTo: disclaimerLabel.topAnchor, constant: -8.0).isActive = true
-        bottomStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10.0).isActive = true
-        bottomStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10.0).isActive = true
+        scrollView.bounds = view.bounds
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
         
         ref = Database.database().reference()
     }
@@ -128,8 +151,8 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         
         ref.child("lists/\(AppDelegate.settings.listKey)/noAds").observeSingleEvent(of: .value, with: { (snapshot) in
             let hasAds = snapshot.exists() && snapshot.value as! Bool
-            self.removeAdsButton.isHidden = hasAds
-            self.restorePurchasesButton.isHidden = hasAds
+            self.removeAdsItem.isHidden = hasAds
+            self.restorePurchasesItem.isHidden = hasAds
         })
     }
     
@@ -200,6 +223,12 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
+        }
+    }
+    
+    @objc func handleViewIcons8() {
+        if let url = URL(string: "https://icons8.com") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 }

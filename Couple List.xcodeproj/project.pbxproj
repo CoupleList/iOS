@@ -12,6 +12,8 @@
 		7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7827198920CCD4250033CADE /* PurchaseHelper.swift */; };
 		7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */; };
 		7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846CA0B20EF46F300879807 /* AccountDataViewController.swift */; };
+		7849F269212FAA28006CD186 /* CLSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F268212FAA28006CD186 /* CLSettingsItem.swift */; };
+		7849F26B212FAE74006CD186 /* CLSettingsItemSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */; };
 		784A625B2112ACCE00127812 /* CLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625A2112ACCE00127812 /* CLTextField.swift */; };
 		784A625D2112AEA900127812 /* CLBasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625C2112AEA900127812 /* CLBasicViewController.swift */; };
 		784A625F2112C06700127812 /* CLStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A625E2112C06700127812 /* CLStackView.swift */; };
@@ -54,6 +56,8 @@
 		7827198920CCD4250033CADE /* PurchaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHelper.swift; sourceTree = "<group>"; };
 		7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 		7846CA0B20EF46F300879807 /* AccountDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataViewController.swift; sourceTree = "<group>"; };
+		7849F268212FAA28006CD186 /* CLSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItem.swift; sourceTree = "<group>"; };
+		7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItemSpacer.swift; sourceTree = "<group>"; };
 		784A625A2112ACCE00127812 /* CLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTextField.swift; sourceTree = "<group>"; };
 		784A625C2112AEA900127812 /* CLBasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBasicViewController.swift; sourceTree = "<group>"; };
 		784A625E2112C06700127812 /* CLStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLStackView.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 				784A625E2112C06700127812 /* CLStackView.swift */,
 				784A625C2112AEA900127812 /* CLBasicViewController.swift */,
 				784BED8621194FCC00F68B60 /* CLCard.swift */,
+				7849F268212FAA28006CD186 /* CLSettingsItem.swift */,
+				7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 				7807D7B620CCD64100E734C6 /* Products.swift in Sources */,
 				78E8EF2A20ED9C9000B06F34 /* CLTitleLabel.swift in Sources */,
 				7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */,
+				7849F26B212FAE74006CD186 /* CLSettingsItemSpacer.swift in Sources */,
 				786F1ED920F00CFB00E54B97 /* ActivityTableViewCell.swift in Sources */,
 				78E8EF3820EDCA6C00B06F34 /* AddActivityViewController.swift in Sources */,
 				784A625F2112C06700127812 /* CLStackView.swift in Sources */,
@@ -399,6 +406,7 @@
 				78E8EF2E20ED9E7500B06F34 /* CLPrimaryButton.swift in Sources */,
 				78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */,
 				784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */,
+				7849F269212FAA28006CD186 /* CLSettingsItem.swift in Sources */,
 				786F1EE020F080A600E54B97 /* ActivityViewController.swift in Sources */,
 				784E0E2920D6E18A006D6AAE /* SettingsViewController.swift in Sources */,
 				78F82B9A20EDEC7B001A6A92 /* ActivityHistoryTableViewCell.swift in Sources */,

@@ -111,43 +111,39 @@ class ActivitiesTableViewController: UITableViewController {
                 let title = childSnapshot.childSnapshot(forPath: "title").value as! String
                 let desc = childSnapshot.childSnapshot(forPath: "description").value as! String
                 let isDone = childSnapshot.childSnapshot(forPath: "done").value as! Bool
-                var person: String?
+                let activity = Activity(key: childSnapshot.key, title: title, desc: desc)!
                 
                 if childSnapshot.childSnapshot(forPath: "person").exists() {
-                    person = childSnapshot.childSnapshot(forPath: "person").value as! String
-                    
-                    if ActivitiesTableViewController.profileImages.index(forKey: person!) == nil {
-                        ActivitiesTableViewController.profileImages.updateValue(UIImage(named: "ProfileImagePlaceholder")!, forKey: person!)
-                        
-                        if person! == Auth.auth().currentUser!.uid {
-                            ActivitiesTableViewController.profileDisplayNames.updateValue("You", forKey: person!)
-                        } else {
-                            self.ref.child("users/\(person!)/displayName").observeSingleEvent(of: .value, with: {
-                                (snapshot) in
-                                if snapshot.exists() {
-                                    ActivitiesTableViewController.profileDisplayNames.updateValue(snapshot.value as! String, forKey: person!)
+                    if let person = childSnapshot.childSnapshot(forPath: "person").value as? String {
+                        activity.person = person
+                        if ActivitiesTableViewController.profileImages.index(forKey: person) == nil {
+                            ActivitiesTableViewController.profileImages.updateValue(UIImage(named: "ProfileImagePlaceholder")!, forKey: person)
+                            
+                            if person == Auth.auth().currentUser!.uid {
+                                ActivitiesTableViewController.profileDisplayNames.updateValue("You", forKey: person)
+                            } else {
+                                self.ref.child("users/\(person)/displayName").observeSingleEvent(of: .value, with: {
+                                    (snapshot) in
+                                    if snapshot.exists() {
+                                        ActivitiesTableViewController.profileDisplayNames.updateValue(snapshot.value as! String, forKey: person)
+                                        
+                                        self.tableView.reloadData()
+                                    }
+                                })
+                            }
+                            
+                            let profileImageRef = self.storage.reference(withPath: "profileImages/\(person).JPG")
+                            profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                                if error == nil {
+                                    ActivitiesTableViewController.profileImages.updateValue(UIImage(data: data!)!, forKey: person)
                                     
                                     self.tableView.reloadData()
                                 }
-                            })
-                        }
-                        
-                        let profileImageRef = self.storage.reference(withPath: "profileImages/\(person!).JPG")
-                        profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                            if error == nil {
-                                ActivitiesTableViewController.profileImages.updateValue(UIImage(data: data!)!, forKey: person!)
-                                
-                                self.tableView.reloadData()
                             }
                         }
                     }
                 }
-                
-                let activity = Activity(key: childSnapshot.key, title: title, desc: desc)!
                 activity.isDone = isDone
-                if person != nil {
-                    activity.person = person
-                }
                 
                 self.activities.append(activity)
             }

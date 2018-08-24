@@ -51,6 +51,12 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         return clSettingsItem
     }()
     
+    let adsSpacer: CLSettingsItemSpacer = {
+        let clSettingsItemSpacer = CLSettingsItemSpacer()
+        clSettingsItemSpacer.isHidden = true
+        return clSettingsItemSpacer
+    }()
+    
     let removeAdsItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
         clSettingsItem.isHidden = true
@@ -117,7 +123,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
             CLSettingsItemSpacer(),
             accountSettingsItem,
             shareListItem,
-            CLSettingsItemSpacer(),
+            adsSpacer,
             removeAdsItem,
             restorePurchasesItem,
             CLSettingsItemSpacer(),
@@ -151,6 +157,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         
         ref.child("lists/\(AppDelegate.settings.listKey)/noAds").observeSingleEvent(of: .value, with: { (snapshot) in
             let hasAds = snapshot.exists() && snapshot.value as! Bool
+            self.adsSpacer.isHidden = hasAds
             self.removeAdsItem.isHidden = hasAds
             self.restorePurchasesItem.isHidden = hasAds
         })

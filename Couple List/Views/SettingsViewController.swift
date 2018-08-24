@@ -13,7 +13,7 @@ import FirebaseDatabase
 import FirebaseDynamicLinks
 import MessageUI
 
-class SettingsViewController: UIViewController, MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate {
+class SettingsViewController: UIViewController, UINavigationControllerDelegate {
     
     var ref: DatabaseReference!
     
@@ -149,23 +149,6 @@ class SettingsViewController: UIViewController, MFMessageComposeViewControllerDe
         return .lightContent
     }
     
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        switch (result) {
-        case .sent:
-            let alert = UIAlertController(title: "List Shared!", message: "Your list was shared with your S.O.", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            alert.addAction(okAction)
-            
-            self.present(alert, animated: true, completion: nil)
-            break;
-        case .failed:
-            break;
-        case .cancelled:
-            break;
-        }
-    }
-    
     @objc func handleSubmitFeedback() {
         navigationController?.pushViewController(FeedbackViewController(), animated: true)
     }
@@ -180,7 +163,7 @@ class SettingsViewController: UIViewController, MFMessageComposeViewControllerDe
         
         Analytics.logEvent("share_list", parameters: [
             "device": "iOS",
-            "link": link
+            "link": link.absoluteString
             ])
         
         let analyticsParams = DynamicLinkGoogleAnalyticsParameters(source: "iOS", medium: "app", campaign: "nil")
@@ -209,17 +192,9 @@ class SettingsViewController: UIViewController, MFMessageComposeViewControllerDe
                 link = shortURL?.absoluteString ?? ""
             }
             
-            guard MFMessageComposeViewController.canSendText() else {
-                let shareContent: String = "Hey, help me make our Couple List! \(link)"
-                let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)
-                self.present(activityViewController, animated: true, completion: {})
-                return
-            }
-            
-            let messageController = MFMessageComposeViewController()
-            messageController.delegate = self
-            messageController.body = "Hey, help me make our Couple List! \(link)"
-            self.present(messageController, animated: true, completion: {})
+            let shareContent: String = "Hey, help me make our Couple List! \(link)"
+            let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)
+            self.present(activityViewController, animated: true, completion: {})
         }
     }
     

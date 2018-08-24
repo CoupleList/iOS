@@ -14,57 +14,17 @@ import FirebaseStorage
 
 class ActivityViewController: UIViewController {
     
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 20.0
-        imageView.layer.masksToBounds = true
-        return imageView
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.bounces = true
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.indicatorStyle = .black
+        scrollView.backgroundColor = .clear
+        return scrollView
     }()
     
-    let personLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 1
-        label.textColor = UIColor.init(named: "MainColor")
-        label.font = UIFont.systemFont(ofSize: 20.0, weight: .light)
-        return label
-    }()
-    
-    let cardView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textColor = UIColor.init(named: "MainColor")
-        label.font = UIFont.systemFont(ofSize: 30.0, weight: .medium)
-        return label
-    }()
-    
-    let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textColor = UIColor.init(named: "MainColor")
-        label.font = UIFont.systemFont(ofSize: 24.0, weight: .light)
-        return label
-    }()
-    
-    let activityImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "ProfileImagePlaceholder")!
-        return imageView
-    }()
+    let clCard = CLCard()
     
     let deleteButton: UIButton = {
         let button = UIButton(type: .system)
@@ -88,38 +48,7 @@ class ActivityViewController: UIViewController {
     
     var activity: Activity! {
         didSet {
-            if let uid = activity.person {
-                if let displayName = ActivitiesTableViewController.profileDisplayNames[uid] {
-                    if activity.isDone {
-                        personLabel.text = "\(displayName) and \(displayName == "You" ? "your S.O." : "you")"
-                    } else {
-                        personLabel.text = "\(displayName) want\(displayName == "You" ? "" : "s") to"
-                    }
-                }
-                
-                if let profileImage = ActivitiesTableViewController.profileImages[uid] {
-                    profileImageView.image = profileImage
-                } else {
-                    let profileImageRef = self.storage.reference(withPath: "profileImages/\(uid).JPG")
-                    profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                        if error == nil {
-                            let profileImage = UIImage(data: data!)!
-                            self.profileImageView.image = profileImage
-                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
-                        } else {
-                            let profileImage = UIImage(named: "ProfileImagePlaceholder")!
-                            self.profileImageView.image = profileImage
-                            ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
-                        }
-                    }
-                }
-                
-                profileImageView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-                profileImageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-            }
-            
-            titleLabel.text = activity.title
-            descriptionLabel.text = activity.desc
+            clCard.activity = activity
             editButton.isHidden = activity.isDone
             editButton.setTitleColor(editButton.isEnabled ? UIColor.init(named: "MainColor") : .gray, for: .normal)
         }
@@ -160,40 +89,30 @@ class ActivityViewController: UIViewController {
     }
     
     fileprivate func setupView() {
-        view.addSubview(cardView)
-        cardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0).isActive = true
-        cardView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0).isActive = true
-        cardView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0).isActive = true
-        cardView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        view.addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
-        cardView.addSubview(profileImageView)
-        profileImageView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10.0).isActive = true
-        profileImageView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
+        scrollView.addSubview(clCard)
+        clCard.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0.0).isActive = true
+        clCard.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0.0).isActive = true
+        clCard.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0).isActive = true
+        clCard.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0).isActive = true
         
-        cardView.addSubview(personLabel)
-        personLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 10.0).isActive = true
-        personLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
-        personLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        clCard.bottomView.addSubview(deleteButton)
+        deleteButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 0.0).isActive = true
+        deleteButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0.0).isActive = true
+        deleteButton.leftAnchor.constraint(equalTo: clCard.bottomView.leftAnchor, constant: 10.0).isActive = true
         
-        cardView.addSubview(titleLabel)
-        titleLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 0.0).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
+        clCard.bottomView.addSubview(editButton)
+        editButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 0.0).isActive = true
+        editButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0.0).isActive = true
+        editButton.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10.0).isActive = true
         
-        cardView.addSubview(descriptionLabel)
-        descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0.0).isActive = true
-        descriptionLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
-        descriptionLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
-        
-        cardView.addSubview(deleteButton)
-        deleteButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 0.0).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
-        deleteButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10.0).isActive = true
-        
-        cardView.addSubview(editButton)
-        editButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 0.0).isActive = true
-        editButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0.0).isActive = true
-        editButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10.0).isActive = true
+        scrollView.bounds = view.bounds
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
     }
 }
 

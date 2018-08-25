@@ -145,9 +145,7 @@ class CLEditableCard: UIView {
             } else if let location = activity.location {
                 setupMapView(location: location)
             } else {
-                richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
-                richContentStackView.addArrangedSubview(addImageContainer)
-                richContentStackView.addArrangedSubview(addLocationContainer)
+                resetRichContent()
             }
         }
     }
@@ -191,9 +189,6 @@ class CLEditableCard: UIView {
         personLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         
         addLocationContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectLocation)))
-        
-        richContentStackView.addArrangedSubview(addImageContainer)
-        richContentStackView.addArrangedSubview(addLocationContainer)
         
         cardView.addSubview(richContentStackView)
         richContentStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10).isActive = true
@@ -245,6 +240,12 @@ class CLEditableCard: UIView {
         mapView.setRegion(region, animated: true)
         mapView.delegate = self
         richContentStackView.addArrangedSubview(mapView)
+    }
+    
+    fileprivate func resetRichContent() {
+        richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
+//        richContentStackView.addArrangedSubview(addImageContainer)
+        richContentStackView.addArrangedSubview(addLocationContainer)
     }
 }
 

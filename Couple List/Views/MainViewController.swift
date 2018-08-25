@@ -77,6 +77,8 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                                 } else {
                                     CL.shared.setNoAds(noAds: false)
                                 }
+                            } else {
+                                CL.shared.setNoAds(noAds: false)
                             }
                         })
                     } else if !snapshot.exists() {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -48,17 +49,14 @@ class AddActivityViewController: UIViewController {
         title = "Add Activity"
         
         ref = Database.database().reference()
-        
-        setupView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        clEditableCard.delegate = self
         
         let key = ref.child("lists/\(CL.shared.userSettings.listKey)/activities").childByAutoId().key
         let newActivity = Activity(key: key, title: "Activity Title", desc: "Activity Description")!
         newActivity.person = Auth.auth().currentUser!.uid
         activity = newActivity
+        
+        setupView()
     }
     
     @objc func handleAdd() {
@@ -67,7 +65,20 @@ class AddActivityViewController: UIViewController {
         activity = clEditableCard.activity
         if activity.title != "Activity Title" {
             let desc = activity.desc != "Activity Description" ? activity.desc : ""
-            ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue(["title": activity.title, "description": desc, "done": false, "person": Auth.auth().currentUser!.uid])
+            if let location = activity.location {
+                ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue([
+                    "title": activity.title,
+                    "description": desc,
+                    "location": [
+                        "lat": location.coordinate.latitude,
+                        "long": location.coordinate.longitude
+                    ],
+                    "done": false,
+                    "person": Auth.auth().currentUser!.uid
+                    ])
+            } else {
+                ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue(["title": activity.title, "description": desc, "done": false, "person": Auth.auth().currentUser!.uid])
+            }
             
             navigationController?.popViewController(animated: true)
         } else {
@@ -100,5 +111,40 @@ class AddActivityViewController: UIViewController {
         
         scrollView.bounds = view.bounds
         scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
+    }
+}
+
+extension AddActivityViewController: CLEditableCardDelegate {
+    
+    func userWantsToAddLocation() {
+        let mapKitLocationFinder = MapKitLocationFinder()
+        mapKitLocationFinder.clEditableCardDelegate = self
+        navigationController?.pushViewController(mapKitLocationFinder, animated: true)
+    }
+    
+    func userAddedLocation(location: MKPlacemark) {
+        activity.location = location
+        clEditableCard.activity = activity
+    }
+    
+    func userSeletedLocation() {
+        let alert = UIAlertController(title: "Location Settings", message: "Change or remove the location of this activity.", preferredStyle: .alert)
+        
+        let changeAction = UIAlertAction(title: "Change", style: .default) { _ in
+            let mapKitLocationFinder = MapKitLocationFinder()
+            mapKitLocationFinder.clEditableCardDelegate = self
+            self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
+        }
+        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { _ in
+            self.activity.location = nil
+            self.clEditableCard.activity = self.activity
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(changeAction)
+        alert.addAction(removeAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
 }

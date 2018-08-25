@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import MapKit
 
 class CLCard: UIView {
+    
+    fileprivate let cardView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
     
     fileprivate let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -28,11 +36,14 @@ class CLCard: UIView {
         return label
     }()
     
-    fileprivate let cardView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
+    fileprivate let richContentStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        return stackView
     }()
     
     fileprivate let titleLabel: UILabel = {
@@ -71,6 +82,7 @@ class CLCard: UIView {
     
     internal lazy var widthConstraint = profileImageView.widthAnchor.constraint(equalToConstant: 40.0)
     internal lazy var heightConstraint = profileImageView.heightAnchor.constraint(equalToConstant: 40.0)
+    internal lazy var richContentHeightConstraint = richContentStackView.heightAnchor.constraint(equalToConstant: 150)
     
     var activity: Activity! {
         didSet {
@@ -104,6 +116,11 @@ class CLCard: UIView {
             
             if let image = activity.image {
                 activityImageView.image = image
+            } else if let location = activity.location {
+                setupMapView(location: location)
+            } else {
+                richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
+                richContentHeightConstraint.isActive = false
             }
         }
     }
@@ -137,8 +154,13 @@ class CLCard: UIView {
         personLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         personLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         
+        cardView.addSubview(richContentStackView)
+        richContentStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10).isActive = true
+        richContentStackView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
+        richContentStackView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
+        
         cardView.addSubview(titleLabel)
-        titleLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 0).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: 0).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         
@@ -152,5 +174,32 @@ class CLCard: UIView {
         bottomView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0).isActive = true
         bottomView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
         bottomView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
+    }
+    
+    fileprivate func setupMapView(location: MKPlacemark) {
+        richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
+        richContentHeightConstraint.isActive = true
+        let mapView = MKMapView()
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.isPitchEnabled = false
+        mapView.isRotateEnabled = false
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location.coordinate
+        if let name = location.name {
+            annotation.title = name
+        } else {
+            annotation.title = "Activity Location"
+        }
+        if let city = location.locality, let state = location.administrativeArea {
+            annotation.subtitle = "\(city) \(state)"
+        } else {
+            annotation.subtitle = activity.title
+        }
+        mapView.addAnnotation(annotation)
+        let span = MKCoordinateSpanMake(0.015, 0.015)
+        let region = MKCoordinateRegionMake(location.coordinate, span)
+        mapView.setRegion(region, animated: true)
+        richContentStackView.addArrangedSubview(mapView)
     }
 }

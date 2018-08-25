@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -63,6 +64,7 @@ class EditActivityViewController: UIViewController {
         title = "Edit Activity"
         
         ref = Database.database().reference()
+        clEditableCard.delegate = self
         
         setupView()
     }
@@ -71,10 +73,38 @@ class EditActivityViewController: UIViewController {
         view.endEditing(true)
         
         activity = clEditableCard.activity
-        ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").updateChildValues(["title": activity.title, "description": activity.desc, "done": activity.isDone, "person": activity.person!, "lastEditor": Auth.auth().currentUser!.uid])
-        
-        delegate.activityWasEdited(activity)
-        navigationController?.popViewController(animated: true)
+        if activity.title != "Activity Title" {
+            let desc = activity.desc != "Activity Description" ? activity.desc : ""
+            if let location = activity.location {
+                ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue([
+                    "title": activity.title,
+                    "description": desc,
+                    "location": [
+                        "lat": location.coordinate.latitude,
+                        "long": location.coordinate.longitude
+                    ],
+                    "done": false,
+                    "person": Auth.auth().currentUser!.uid
+                    ])
+            } else {
+                ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue([
+                    "title": activity.title,
+                    "description": desc,
+                    "location": nil,
+                    "done": false,
+                    "person": Auth.auth().currentUser!.uid
+                    ])
+            }
+            
+            navigationController?.popViewController(animated: true)
+        } else {
+            let alert = UIAlertController(title: "Missing Activity Title", message: "A title is required in order to create an activity!", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc func handleComplete() {
@@ -123,5 +153,40 @@ class EditActivityViewController: UIViewController {
         
         scrollView.bounds = view.bounds
         scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
+    }
+}
+
+extension EditActivityViewController: CLEditableCardDelegate {
+    
+    func userWantsToAddLocation() {
+        let mapKitLocationFinder = MapKitLocationFinder()
+        mapKitLocationFinder.clEditableCardDelegate = self
+        navigationController?.pushViewController(mapKitLocationFinder, animated: true)
+    }
+    
+    func userAddedLocation(location: MKPlacemark) {
+        activity.location = location
+        clEditableCard.activity = activity
+    }
+    
+    func userSeletedLocation() {
+        let alert = UIAlertController(title: "Location Settings", message: "Change or remove the location of this activity.", preferredStyle: .alert)
+        
+        let changeAction = UIAlertAction(title: "Change", style: .default) { _ in
+            let mapKitLocationFinder = MapKitLocationFinder()
+            mapKitLocationFinder.clEditableCardDelegate = self
+            self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
+        }
+        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { _ in
+            self.activity.location = nil
+            self.clEditableCard.activity = self.activity
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(changeAction)
+        alert.addAction(removeAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
 }

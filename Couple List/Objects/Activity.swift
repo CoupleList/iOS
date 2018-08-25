@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class Activity: NSObject {
     
@@ -15,8 +16,8 @@ class Activity: NSObject {
     var desc: String
     var person: String?
     var image: UIImage?
+    var location: MKPlacemark?
     var isDone: Bool
-    var isAd: Bool = false
     
     init?(key: String, title: String, desc: String) {
         guard !key.isEmpty && !title.isEmpty else {

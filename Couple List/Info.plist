@@ -41,6 +41,10 @@
 	<string>Save photos taken for activities and profile picture.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Save photos taken for activities and profile picture.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Find near by activities.</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

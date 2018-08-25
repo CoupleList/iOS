@@ -12,6 +12,7 @@
 		7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7827198920CCD4250033CADE /* PurchaseHelper.swift */; };
 		7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */; };
 		7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846CA0B20EF46F300879807 /* AccountDataViewController.swift */; };
+		78484D222131A06900F50534 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78484D212131A06900F50534 /* LocationTableViewCell.swift */; };
 		7849F269212FAA28006CD186 /* CLSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F268212FAA28006CD186 /* CLSettingsItem.swift */; };
 		7849F26B212FAE74006CD186 /* CLSettingsItemSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */; };
 		7849F26D212FB6B2006CD186 /* CLSettingsSwitchInputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F26C212FB6B2006CD186 /* CLSettingsSwitchInputItem.swift */; };
@@ -36,6 +37,10 @@
 		78ADF7621EE3A8C600C5EB36 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ADF7611EE3A8C600C5EB36 /* Activity.swift */; };
 		78DD9CD32130CFAA00DF30E8 /* CLEditableCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CD22130CFAA00DF30E8 /* CLEditableCard.swift */; };
 		78DD9CD52130F2C100DF30E8 /* CL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CD42130F2C100DF30E8 /* CL.swift */; };
+		78DD9CD72130FBF600DF30E8 /* CLSettingsProgressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CD62130FBF600DF30E8 /* CLSettingsProgressItem.swift */; };
+		78DD9CD9213108FA00DF30E8 /* MapKitLocationFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CD8213108FA00DF30E8 /* MapKitLocationFinder.swift */; };
+		78DD9CDB21310DC900DF30E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DD9CDA21310DC900DF30E8 /* MapKit.framework */; };
+		78DD9CDD2131113700DF30E8 /* LocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CDC2131113700DF30E8 /* LocationTableViewController.swift */; };
 		78E8EF2A20ED9C9000B06F34 /* CLTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2920ED9C9000B06F34 /* CLTitleLabel.swift */; };
 		78E8EF2C20ED9DBC00B06F34 /* CLDescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2B20ED9DBC00B06F34 /* CLDescriptionLabel.swift */; };
 		78E8EF2E20ED9E7500B06F34 /* CLPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */; };
@@ -59,6 +64,7 @@
 		7827198920CCD4250033CADE /* PurchaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHelper.swift; sourceTree = "<group>"; };
 		7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 		7846CA0B20EF46F300879807 /* AccountDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataViewController.swift; sourceTree = "<group>"; };
+		78484D212131A06900F50534 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		7849F268212FAA28006CD186 /* CLSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItem.swift; sourceTree = "<group>"; };
 		7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItemSpacer.swift; sourceTree = "<group>"; };
 		7849F26C212FB6B2006CD186 /* CLSettingsSwitchInputItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsSwitchInputItem.swift; sourceTree = "<group>"; };
@@ -85,6 +91,10 @@
 		78ADF7611EE3A8C600C5EB36 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		78DD9CD22130CFAA00DF30E8 /* CLEditableCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEditableCard.swift; sourceTree = "<group>"; };
 		78DD9CD42130F2C100DF30E8 /* CL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CL.swift; sourceTree = "<group>"; };
+		78DD9CD62130FBF600DF30E8 /* CLSettingsProgressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsProgressItem.swift; sourceTree = "<group>"; };
+		78DD9CD8213108FA00DF30E8 /* MapKitLocationFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitLocationFinder.swift; sourceTree = "<group>"; };
+		78DD9CDA21310DC900DF30E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		78DD9CDC2131113700DF30E8 /* LocationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewController.swift; sourceTree = "<group>"; };
 		78E8EF2920ED9C9000B06F34 /* CLTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTitleLabel.swift; sourceTree = "<group>"; };
 		78E8EF2B20ED9DBC00B06F34 /* CLDescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLDescriptionLabel.swift; sourceTree = "<group>"; };
 		78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPrimaryButton.swift; sourceTree = "<group>"; };
@@ -107,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D85C47BF82C94C989987DA37 /* Pods_Couple_List.framework in Frameworks */,
+				78DD9CDB21310DC900DF30E8 /* MapKit.framework in Frameworks */,
 				7827198820CCD2090033CADE /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,6 +128,7 @@
 		47F2AAC7A902D55F34BB0ED8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78DD9CDA21310DC900DF30E8 /* MapKit.framework */,
 				7827198720CCD2090033CADE /* StoreKit.framework */,
 				E9CC8470662945435B1C7B16 /* Pods_Couple_List.framework */,
 			);
@@ -146,7 +158,10 @@
 				78E8EF3D20EDD50800B06F34 /* FeedbackViewController.swift */,
 				78F82B9520EDE9EF001A6A92 /* HistoryNavigationViewController.swift */,
 				784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */,
+				78484D212131A06900F50534 /* LocationTableViewCell.swift */,
+				78DD9CDC2131113700DF30E8 /* LocationTableViewController.swift */,
 				784E0E2220D6DFB8006D6AAE /* MainViewController.swift */,
+				78DD9CD8213108FA00DF30E8 /* MapKitLocationFinder.swift */,
 				784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */,
 				784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */,
 				78E8EF3920EDD3B100B06F34 /* SettingsNavigationController.swift */,
@@ -218,6 +233,7 @@
 				7849F268212FAA28006CD186 /* CLSettingsItem.swift */,
 				7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */,
 				78DD9CD22130CFAA00DF30E8 /* CLEditableCard.swift */,
+				78DD9CD62130FBF600DF30E8 /* CLSettingsProgressItem.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -273,6 +289,9 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
 							com.apple.Push = {
@@ -392,6 +411,7 @@
 				78F82B9820EDEA86001A6A92 /* ActivityHistory.swift in Sources */,
 				78E8EF3E20EDD50800B06F34 /* FeedbackViewController.swift in Sources */,
 				78E8EF3020ED9F3100B06F34 /* CLSecondaryButton.swift in Sources */,
+				78DD9CD72130FBF600DF30E8 /* CLSettingsProgressItem.swift in Sources */,
 				7807D7B620CCD64100E734C6 /* Products.swift in Sources */,
 				78E8EF2A20ED9C9000B06F34 /* CLTitleLabel.swift in Sources */,
 				7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */,
@@ -404,13 +424,16 @@
 				78E8EF3C20EDD3CB00B06F34 /* AccountSettingsViewController.swift in Sources */,
 				784BED8721194FCC00F68B60 /* CLCard.swift in Sources */,
 				7849F26D212FB6B2006CD186 /* CLSettingsSwitchInputItem.swift in Sources */,
+				78DD9CD9213108FA00DF30E8 /* MapKitLocationFinder.swift in Sources */,
 				7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */,
 				786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */,
 				784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */,
 				784A625D2112AEA900127812 /* CLBasicViewController.swift in Sources */,
 				7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */,
 				78E8EF3A20EDD3B100B06F34 /* SettingsNavigationController.swift in Sources */,
+				78484D222131A06900F50534 /* LocationTableViewCell.swift in Sources */,
 				7895607420D4C8C600509E41 /* StartViewController.swift in Sources */,
+				78DD9CDD2131113700DF30E8 /* LocationTableViewController.swift in Sources */,
 				784E0E2520D6E144006D6AAE /* ActivityNavigationViewController.swift in Sources */,
 				78F82B9620EDE9EF001A6A92 /* HistoryNavigationViewController.swift in Sources */,
 				78E8EF2E20ED9E7500B06F34 /* CLPrimaryButton.swift in Sources */,

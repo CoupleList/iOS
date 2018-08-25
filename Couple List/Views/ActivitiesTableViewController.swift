@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -156,6 +157,14 @@ class ActivitiesTableViewController: UITableViewController {
                                     self.tableView.reloadData()
                                 }
                             }
+                        }
+                    }
+                    
+                    if childSnapshot.childSnapshot(forPath: "location").exists() {
+                        if let lat = childSnapshot.childSnapshot(forPath: "location/lat").value as? Double,
+                            let long = childSnapshot.childSnapshot(forPath: "location/long").value as? Double {
+                            let location = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
+                            activity.location = location
                         }
                     }
                 }

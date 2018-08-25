@@ -21,7 +21,6 @@ import os.log
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var ref: DatabaseReference!
-    static var settings: UserSettings = UserSettings(listKey: "", listCode: "")!
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -83,12 +82,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     private func loadDynamicLink(link : String) {
         if (!link.isEmpty) {
-            AppDelegate.settings = UserSettings.generateFromLink(link: link)
+            CL.shared.userSettings = UserSettings.generateFromLink(link: link)
             let userID = Auth.auth().currentUser?.uid
             if userID != nil {
                 ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
                     if (!snapshot.exists()) {
-                        self.ref.child("users/\(userID!)/list").setValue(["key": AppDelegate.settings.listKey, "code": AppDelegate.settings.listCode])
+                        self.ref.child("users/\(userID!)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
                     }
                 }) { (error) in
                     Analytics.logEvent("register_pressed", parameters: [

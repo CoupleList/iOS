@@ -55,7 +55,7 @@ class AddActivityViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let key = ref.child("lists/\(AppDelegate.settings.listKey)/activities").childByAutoId().key
+        let key = ref.child("lists/\(CL.shared.userSettings.listKey)/activities").childByAutoId().key
         let newActivity = Activity(key: key, title: "Activity Title", desc: "Activity Description")!
         newActivity.person = Auth.auth().currentUser!.uid
         activity = newActivity
@@ -67,7 +67,7 @@ class AddActivityViewController: UIViewController {
         activity = clEditableCard.activity
         if activity.title != "Activity Title" {
             let desc = activity.desc != "Activity Description" ? activity.desc : ""
-            ref.child("lists/\(AppDelegate.settings.listKey)/activities/\(activity.key)").setValue(["title": activity.title, "description": desc, "done": false, "person": Auth.auth().currentUser!.uid])
+            ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue(["title": activity.title, "description": desc, "done": false, "person": Auth.auth().currentUser!.uid])
             
             navigationController?.popViewController(animated: true)
         } else {

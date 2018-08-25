@@ -59,7 +59,7 @@ class HistoryTableViewController: UITableViewController {
     }
     
     fileprivate func loadData() {
-        Database.database().reference().child("lists/\(AppDelegate.settings.listKey)/history").queryLimited(toLast: 25).observe(.value, with: {
+        Database.database().reference().child("lists/\(CL.shared.userSettings.listKey)/history").queryLimited(toLast: 25).observe(.value, with: {
             (snapshot) in
             self.activityHistory = [ActivityHistory]()
             

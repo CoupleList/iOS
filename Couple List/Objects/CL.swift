@@ -13,6 +13,7 @@ class CL {
     
     static let shared = CL()
     
+    var userSettings: UserSettings = UserSettings.init(listKey: "", listCode: "")!
     var profileDisplayNames = [String:String]()
     var profileImages = [String:UIImage]()
 }

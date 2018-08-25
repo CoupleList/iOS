@@ -70,7 +70,7 @@ class ActivityViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let deleteAction = UIAlertAction(title: "Delete Activity", style: .destructive, handler: {
             _ in
-            self.ref.child("lists/\(AppDelegate.settings.listKey)/activities/\(self.activity.key)").removeValue()
+            self.ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(self.activity.key)").removeValue()
             self.navigationController!.popViewController(animated: true)
         })
         

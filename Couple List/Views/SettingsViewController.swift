@@ -155,7 +155,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ref.child("lists/\(AppDelegate.settings.listKey)/noAds").observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("lists/\(CL.shared.userSettings.listKey)/noAds").observeSingleEvent(of: .value, with: { (snapshot) in
             let hasAds = snapshot.exists() && snapshot.value as! Bool
             self.adsSpacer.isHidden = hasAds
             self.removeAdsItem.isHidden = hasAds
@@ -176,7 +176,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @objc func handleShareList() {
-        guard let link = URL(string: "https://couple-list.firebaseapp.com?link=\(AppDelegate.settings.listKey)?key=\(AppDelegate.settings.listCode)") else { return }
+        guard let link = URL(string: "https://couple-list.firebaseapp.com?link=\(CL.shared.userSettings.listKey)?key=\(CL.shared.userSettings.listCode)") else { return }
         let components = DynamicLinkComponents(link: link, domain: "sa6cz.app.goo.gl")
         
         Analytics.logEvent("share_list", parameters: [

@@ -60,20 +60,20 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                             let childSnapshot = child as! DataSnapshot
                             
                             if childSnapshot.key != "list" && childSnapshot.childSnapshot(forPath: "code").exists() {
-                                AppDelegate.settings.listKey = childSnapshot.key
-                                AppDelegate.settings.listCode = childSnapshot.childSnapshot(forPath: "code").value as! String
+                                CL.shared.userSettings.listKey = childSnapshot.key
+                                CL.shared.userSettings.listCode = childSnapshot.childSnapshot(forPath: "code").value as! String
                                 
-                                self.ref.child("/users/\(user!.uid)/list").setValue(["key": AppDelegate.settings.listKey, "code": AppDelegate.settings.listCode])
+                                self.ref.child("/users/\(user!.uid)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
                             }
                         }
                     } else if snapshot.exists() && snapshot.childSnapshot(forPath: "list").exists() {
-                        AppDelegate.settings.listKey = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "key").value as! String
-                        AppDelegate.settings.listCode = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "code").value as! String
+                        CL.shared.userSettings.listKey = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "key").value as! String
+                        CL.shared.userSettings.listCode = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "code").value as! String
                     } else if !snapshot.exists() {
                         self.dismiss(animated: true, completion: nil)
                     }
                     
-                    self.ref.child("lists").child(AppDelegate.settings.listKey).child("tokens").child(user!.uid).setValue(Messaging.messaging().fcmToken)
+                    self.ref.child("lists").child(CL.shared.userSettings.listKey).child("tokens").child(user!.uid).setValue(Messaging.messaging().fcmToken)
                     
                     self.viewControllers = [ navigationTab, historyTab, settingsTab ]
                     self.selectedIndex = 0

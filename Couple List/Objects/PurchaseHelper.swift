@@ -150,6 +150,6 @@ extension PurchaseHelper: SKPaymentTransactionObserver {
     }
     
     fileprivate func removeAds() {
-        Database.database().reference().child("lists").child(AppDelegate.settings.listKey).updateChildValues(["noAds": true])
+        Database.database().reference().child("lists").child(CL.shared.userSettings.listKey).updateChildValues(["noAds": true])
     }
 }

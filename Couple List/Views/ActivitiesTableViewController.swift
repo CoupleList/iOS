@@ -99,7 +99,7 @@ class ActivitiesTableViewController: UITableViewController {
     }
     
     fileprivate func loadData() {
-        ref.child("lists/\(AppDelegate.settings.listKey)/activities").observe(.value, with: { snapshot in
+        ref.child("lists/\(CL.shared.userSettings.listKey)/activities").observe(.value, with: { snapshot in
             
             self.activities.removeAll()
             self.animatedRows.removeAll()

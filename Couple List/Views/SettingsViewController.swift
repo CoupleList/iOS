@@ -95,7 +95,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         let clSettingsItem = CLSettingsItem()
         clSettingsItem.iconImage = UIImage.init(named: "icons8")
         clSettingsItem.title = "Icons8"
-        clSettingsItem.details = "Some icons obtained from icons8.com"
+        clSettingsItem.details = "Some icons used are from icons8.com"
         return clSettingsItem
     }()
     
@@ -227,6 +227,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
             "device": "iOS"
             ])
         do {
+            CL.shared.userSettings = UserSettings.init(listKey: "", listCode: "")!
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)

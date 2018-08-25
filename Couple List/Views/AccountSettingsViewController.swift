@@ -69,6 +69,15 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         return clSettingsItem
     }()
     
+    let accountDataIem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.iconImage = UIImage.init(named: "AccountData")
+        clSettingsItem.title = "View Account Data"
+        clSettingsItem.details = "View all your account data"
+        return clSettingsItem
+        
+    }()
+    
     var ref: DatabaseReference!
     var storage: Storage!
     var profileImage: UIImage? {
@@ -155,7 +164,17 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     @objc func handleViewAccountData() {
-        navigationController?.pushViewController(AccountDataViewController(), animated: true)
+        let alert = UIAlertController(title: "View Account Data?", message: "Please be aware that there may be sensative and private information within this screen. Please ensure that you are in a private and secure place to prevent this infromation from being seen by others.", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "View", style: .default) { _ in
+            self.navigationController?.pushViewController(AccountDataViewController(), animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleDeleteAccount() {
@@ -216,6 +235,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         setProfileImageItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSetProfileImage)))
         setDisplayNameItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setDisplayName)))
         changePasswordItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlePasswordChange)))
+        accountDataIem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewAccountData)))
         
         let provileImageViewContainer: UIView = {
             let view = UIView()

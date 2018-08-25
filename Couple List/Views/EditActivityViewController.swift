@@ -96,6 +96,7 @@ class EditActivityViewController: UIViewController {
                     ])
             }
             
+            delegate.activityWasEdited(activity)
             navigationController?.popViewController(animated: true)
         } else {
             let alert = UIAlertController(title: "Missing Activity Title", message: "A title is required in order to create an activity!", preferredStyle: .alert)

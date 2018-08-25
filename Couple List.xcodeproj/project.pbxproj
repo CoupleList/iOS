@@ -34,6 +34,8 @@
 		78AB80351EE38D54008ACCC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78AB80341EE38D54008ACCC3 /* Assets.xcassets */; };
 		78AB80381EE38D54008ACCC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78AB80361EE38D54008ACCC3 /* LaunchScreen.storyboard */; };
 		78ADF7621EE3A8C600C5EB36 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ADF7611EE3A8C600C5EB36 /* Activity.swift */; };
+		78DD9CD32130CFAA00DF30E8 /* CLEditableCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CD22130CFAA00DF30E8 /* CLEditableCard.swift */; };
+		78DD9CD52130F2C100DF30E8 /* CL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DD9CD42130F2C100DF30E8 /* CL.swift */; };
 		78E8EF2A20ED9C9000B06F34 /* CLTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2920ED9C9000B06F34 /* CLTitleLabel.swift */; };
 		78E8EF2C20ED9DBC00B06F34 /* CLDescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2B20ED9DBC00B06F34 /* CLDescriptionLabel.swift */; };
 		78E8EF2E20ED9E7500B06F34 /* CLPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */; };
@@ -81,6 +83,8 @@
 		78AB80371EE38D54008ACCC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78AB80391EE38D54008ACCC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78ADF7611EE3A8C600C5EB36 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		78DD9CD22130CFAA00DF30E8 /* CLEditableCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEditableCard.swift; sourceTree = "<group>"; };
+		78DD9CD42130F2C100DF30E8 /* CL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CL.swift; sourceTree = "<group>"; };
 		78E8EF2920ED9C9000B06F34 /* CLTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLTitleLabel.swift; sourceTree = "<group>"; };
 		78E8EF2B20ED9DBC00B06F34 /* CLDescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLDescriptionLabel.swift; sourceTree = "<group>"; };
 		78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPrimaryButton.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				7807D7B520CCD64100E734C6 /* Products.swift */,
 				7895607120D4C72D00509E41 /* UserSettings.swift */,
 				78F82B9720EDEA86001A6A92 /* ActivityHistory.swift */,
+				78DD9CD42130F2C100DF30E8 /* CL.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				7849F26C212FB6B2006CD186 /* CLSettingsSwitchInputItem.swift */,
 				7849F268212FAA28006CD186 /* CLSettingsItem.swift */,
 				7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */,
+				78DD9CD22130CFAA00DF30E8 /* CLEditableCard.swift */,
 			);
 			path = "UI Components";
 			sourceTree = "<group>";
@@ -237,6 +243,7 @@
 				78AB80271EE38D54008ACCC3 /* Frameworks */,
 				78AB80281EE38D54008ACCC3 /* Resources */,
 				3641B3DFE4751076C270F38A /* [CP] Embed Pods Frameworks */,
+				DE5E31B470C41BC2F6A70928 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -356,6 +363,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DE5E31B470C41BC2F6A70928 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -394,9 +416,11 @@
 				78E8EF2E20ED9E7500B06F34 /* CLPrimaryButton.swift in Sources */,
 				78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */,
 				784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */,
+				78DD9CD52130F2C100DF30E8 /* CL.swift in Sources */,
 				7849F269212FAA28006CD186 /* CLSettingsItem.swift in Sources */,
 				786F1EE020F080A600E54B97 /* ActivityViewController.swift in Sources */,
 				784E0E2920D6E18A006D6AAE /* SettingsViewController.swift in Sources */,
+				78DD9CD32130CFAA00DF30E8 /* CLEditableCard.swift in Sources */,
 				78F82B9A20EDEC7B001A6A92 /* ActivityHistoryTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

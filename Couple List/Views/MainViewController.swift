@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseMessaging
+import FirebaseStorage
 
 class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
@@ -24,6 +25,19 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         tabBar.tintColor = .white
         
         delegate = self
+        
+        let uid = Auth.auth().currentUser!.uid
+        ActivitiesTableViewController.profileDisplayNames.updateValue("You", forKey: uid)
+        let profileImageRef = Storage.storage().reference(withPath: "profileImages/\(uid).JPG")
+        profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let data = data {
+                if let profileImage = UIImage(data: data) {
+                    ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
+                }
+            } else {
+                ActivitiesTableViewController.profileImages.updateValue(UIImage.init(named: "ProfileImagePlaceholder")!, forKey: uid)
+            }
+        }
         
         let navigationTab = ActivityNavigationViewController()
         navigationTab.tabBarItem = UITabBarItem(title: "Activities", image: UIImage(named: "ActivitiesImage"), selectedImage: nil)

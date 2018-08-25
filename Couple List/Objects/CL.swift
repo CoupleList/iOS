@@ -16,4 +16,12 @@ class CL {
     var userSettings: UserSettings = UserSettings.init(listKey: "", listCode: "")!
     var profileDisplayNames = [String:String]()
     var profileImages = [String:UIImage]()
+    
+    func setNoAds(noAds: Bool) {
+        UserDefaults.standard.set(noAds, forKey: "noAds")
+    }
+    
+    func noAds() -> Bool {
+        return UserDefaults.standard.bool(forKey: "noAds")
+    }
 }

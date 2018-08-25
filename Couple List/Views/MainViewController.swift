@@ -52,7 +52,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         
         handler = Auth.auth().addStateDidChangeListener { (auth, user) in
             if user == nil {
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true)
             } else {
                 self.ref.child("users/\(user!.uid)").observeSingleEvent(of: .value, with: { (snapshot) in
                     if snapshot.exists() && !snapshot.childSnapshot(forPath: "list").exists() {
@@ -63,14 +63,24 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                                 CL.shared.userSettings.listKey = childSnapshot.key
                                 CL.shared.userSettings.listCode = childSnapshot.childSnapshot(forPath: "code").value as! String
                                 
-                                self.ref.child("/users/\(user!.uid)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
+                                self.ref.child("users/\(user!.uid)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
                             }
                         }
                     } else if snapshot.exists() && snapshot.childSnapshot(forPath: "list").exists() {
                         CL.shared.userSettings.listKey = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "key").value as! String
                         CL.shared.userSettings.listCode = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "code").value as! String
+                        
+                        self.ref.child("lists/\(CL.shared.userSettings.listKey)/noAds").observeSingleEvent(of: .value, with: { snapshot in
+                            if snapshot.exists() {
+                                if let noAds = snapshot.value as? Bool {
+                                    CL.shared.setNoAds(noAds: noAds)
+                                } else {
+                                    CL.shared.setNoAds(noAds: false)
+                                }
+                            }
+                        })
                     } else if !snapshot.exists() {
-                        self.dismiss(animated: true, completion: nil)
+                        self.dismiss(animated: true)
                     }
                     
                     self.ref.child("lists").child(CL.shared.userSettings.listKey).child("tokens").child(user!.uid).setValue(Messaging.messaging().fcmToken)

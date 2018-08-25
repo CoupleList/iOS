@@ -13,7 +13,7 @@ import FirebaseDatabase
 import FirebaseDynamicLinks
 import MessageUI
 
-class SettingsViewController: UIViewController, UINavigationControllerDelegate {
+class SettingsViewController: UIViewController {
     
     var ref: DatabaseReference!
     
@@ -176,13 +176,10 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @objc func handleShareList() {
-        guard let link = URL(string: "https://couple-list.firebaseapp.com?link=\(CL.shared.userSettings.listKey)?key=\(CL.shared.userSettings.listCode)") else { return }
+        let alert = UIAlertController(title: "Creating Sharable Link", message: "Please wait while the link is generated.", preferredStyle: .alert)
+        present(alert, animated: true)
+        guard let link = URL(string: "https://couplelist.app?link=\(CL.shared.userSettings.listKey)?key=\(CL.shared.userSettings.listCode)") else { return }
         let components = DynamicLinkComponents(link: link, domain: "sa6cz.app.goo.gl")
-        
-        Analytics.logEvent("share_list", parameters: [
-            "device": "iOS",
-            "link": link.absoluteString
-            ])
         
         let analyticsParams = DynamicLinkGoogleAnalyticsParameters(source: "iOS", medium: "app", campaign: "nil")
         components.analyticsParameters = analyticsParams
@@ -203,16 +200,25 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
         components.options = options
         
         components.shorten { (shortURL, warnings, error) in
+            alert.dismiss(animated: true)
             var link: String
             if error != nil {
                 link = components.url?.absoluteString ?? ""
             } else {
                 link = shortURL?.absoluteString ?? ""
             }
-            
             let shareContent: String = "Hey, help me make our Couple List! \(link)"
-            let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)
-            self.present(activityViewController, animated: true, completion: {})
+            
+            guard MFMessageComposeViewController.canSendText() else {
+                let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)
+                self.present(activityViewController, animated: true, completion: {})
+                return
+            }
+            
+            let messageController = MFMessageComposeViewController()
+            messageController.messageComposeDelegate = self
+            messageController.body = shareContent
+            self.present(messageController, animated: true, completion: {})
         }
     }
     
@@ -237,6 +243,36 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate {
     @objc func handleViewIcons8() {
         if let url = URL(string: "https://icons8.com") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+}
+
+extension SettingsViewController: MFMessageComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        print(result)
+        controller.dismiss(animated: true)
+        switch (result) {
+        case .sent:
+            let alert = UIAlertController(title: "List Shared!", message: "Your list was shared with your S.O.", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            break;
+        case .failed:
+            let alert = UIAlertController(title: "Unable to Share List Shared!", message: "There was an error sharing your list!", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+                
+            }
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            break;
+        case .cancelled:
+            break;
         }
     }
 }

@@ -31,7 +31,7 @@ class ActivityNavigationViewController: UINavigationController {
         bannerView.delegate = self
         bannerView.adUnitID = "ca-app-pub-9026572937829340/1144713796"
         bannerView.rootViewController = self
-        bannerView.load(GADRequest())
+        bannerView.isAutoloadEnabled = true
         toolbar.addSubview(bannerView)
     }
 }

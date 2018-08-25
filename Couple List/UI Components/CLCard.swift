@@ -10,7 +10,7 @@ import UIKit
 
 class CLCard: UIView {
     
-    internal let profileImageView: UIImageView = {
+    fileprivate let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -19,7 +19,7 @@ class CLCard: UIView {
         return imageView
     }()
     
-    internal let personLabel: UILabel = {
+    fileprivate let personLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
@@ -28,14 +28,14 @@ class CLCard: UIView {
         return label
     }()
     
-    internal let cardView: UIView = {
+    fileprivate let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
     
-    internal let titleLabel: UILabel = {
+    fileprivate let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -44,7 +44,7 @@ class CLCard: UIView {
         return label
     }()
     
-    internal let descriptionLabel: UILabel = {
+    fileprivate let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -53,7 +53,7 @@ class CLCard: UIView {
         return label
     }()
     
-    internal let activityImageView: UIImageView = {
+    fileprivate let activityImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill

@@ -24,4 +24,12 @@ class CL {
     func noAds() -> Bool {
         return UserDefaults.standard.bool(forKey: "noAds")
     }
+    
+    func setDisplayName(displayName: String) {
+        UserDefaults.standard.set(displayName, forKey: "displayName")
+    }
+    
+    func displayName() -> String {
+        return UserDefaults.standard.string(forKey: "displayName") ?? ""
+    }
 }

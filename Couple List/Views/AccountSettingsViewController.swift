@@ -43,7 +43,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         return aiv
     }()
     
-    let displayNameLabel = CLTitleLabel(text: "")
+    let displayNameLabel = CLTitleLabel(text: CL.shared.displayName())
     
     let setProfileImageItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()

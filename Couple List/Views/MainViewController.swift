@@ -55,6 +55,12 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                 self.dismiss(animated: true)
             } else {
                 self.ref.child("users/\(user!.uid)").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if snapshot.childSnapshot(forPath: "displayName").exists() {
+                        if let displayName = snapshot.childSnapshot(forPath: "displayName").value as? String {
+                            CL.shared.setDisplayName(displayName: displayName)
+                        }
+                    }
+                    
                     if snapshot.exists() && !snapshot.childSnapshot(forPath: "list").exists() {
                         for child in snapshot.children.allObjects {
                             let childSnapshot = child as! DataSnapshot

@@ -50,7 +50,6 @@ class ActivityViewController: UIViewController {
         didSet {
             clCard.activity = activity
             editButton.isHidden = activity.isDone
-            editButton.setTitleColor(editButton.isEnabled ? UIColor.init(named: "MainColor") : .gray, for: .normal)
         }
     }
     
@@ -116,7 +115,7 @@ class ActivityViewController: UIViewController {
     }
 }
 
-extension ActivityViewController: ActivityEditedDelegate {
+extension ActivityViewController: EditActivityViewControllerDelegate {
     
     func activityWasEdited(_ activity: Activity) {
         self.activity = activity

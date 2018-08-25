@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 import FirebaseDatabase
 
 class CLEditableCard: UIView {
@@ -18,6 +17,7 @@ class CLEditableCard: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
+        imageView.image = UIImage(named: "ProfileImagePlaceholder")!
         return imageView
     }()
     

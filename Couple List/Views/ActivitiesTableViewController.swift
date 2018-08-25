@@ -20,7 +20,6 @@ class ActivitiesTableViewController: UITableViewController {
     var storage: Storage!
     var activities = [Activity]()
     var animatedRows = [Int]()
-    var bannerView: GADBannerView!
     let cellIdentifier = "ActivityTableViewCell"
     
     override func viewDidLoad() {
@@ -28,9 +27,6 @@ class ActivitiesTableViewController: UITableViewController {
         
         setupView()
         loadData()
-        if !CL.shared.noAds() {
-            loadBannerView()
-        }
     }
     
     @objc func handleAdd() {
@@ -100,15 +96,6 @@ class ActivitiesTableViewController: UITableViewController {
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
         navigationController?.navigationBar.topItem?.rightBarButtonItem = addButton
-    }
-    
-    fileprivate func loadBannerView() {
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        bannerView.adUnitID = "ca-app-pub-9026572937829340/1144713796"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-        navigationController?.isToolbarHidden = false
-        navigationController?.toolbar.addSubview(bannerView)
     }
     
     fileprivate func loadData() {

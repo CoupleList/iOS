@@ -28,7 +28,9 @@ class ActivitiesTableViewController: UITableViewController {
         
         setupView()
         loadData()
-        loadBannerView()
+        if !CL.shared.noAds() {
+            loadBannerView()
+        }
     }
     
     @objc func handleAdd() {
@@ -105,14 +107,8 @@ class ActivitiesTableViewController: UITableViewController {
         bannerView.adUnitID = "ca-app-pub-9026572937829340/1144713796"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        navigationController?.toolbar.isHidden = false
+        navigationController?.isToolbarHidden = false
         navigationController?.toolbar.addSubview(bannerView)
-//        view.addSubview(bannerView)
-//        bannerView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0).isActive = true
-//        bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//        bannerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-//        bannerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
     }
     
     fileprivate func loadData() {
@@ -173,8 +169,6 @@ class ActivitiesTableViewController: UITableViewController {
             
             self.activities.reverse()
             self.tableView.reloadData()
-            
-            print(self.activities.count)
         })
     }
 }

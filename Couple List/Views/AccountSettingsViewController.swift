@@ -260,6 +260,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     fileprivate func loadProfileImage() {
+        profileImage = CL.shared.profileImages[Auth.auth().currentUser!.uid]
         profileImageActivityIndicator.startAnimating()
         let profileImageRef = storage.reference(withPath:"profileImages/\(Auth.auth().currentUser!.uid).JPG")
         
@@ -291,7 +292,7 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
             
             self.present(alert, animated: true, completion: nil)
             
-            ActivitiesTableViewController.profileImages.updateValue(image, forKey: uid)
+            CL.shared.profileImages.updateValue(image, forKey: uid)
         }
         
         uploadTask.observe(.failure) { snapshot in

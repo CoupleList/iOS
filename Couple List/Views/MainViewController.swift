@@ -27,15 +27,15 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         delegate = self
         
         let uid = Auth.auth().currentUser!.uid
-        ActivitiesTableViewController.profileDisplayNames.updateValue("You", forKey: uid)
+        CL.shared.profileDisplayNames.updateValue("You", forKey: uid)
         let profileImageRef = Storage.storage().reference(withPath: "profileImages/\(uid).JPG")
         profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
             if let data = data {
                 if let profileImage = UIImage(data: data) {
-                    ActivitiesTableViewController.profileImages.updateValue(profileImage, forKey: uid)
+                    CL.shared.profileImages.updateValue(profileImage, forKey: uid)
                 }
             } else {
-                ActivitiesTableViewController.profileImages.updateValue(UIImage.init(named: "ProfileImagePlaceholder")!, forKey: uid)
+                CL.shared.profileImages.updateValue(UIImage.init(named: "ProfileImagePlaceholder")!, forKey: uid)
             }
         }
         

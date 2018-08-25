@@ -76,7 +76,7 @@ class CLEditableCard: UIView {
     var activity: Activity! {
         didSet {
             if let person = activity.person {
-                if let displayName = ActivitiesTableViewController.profileDisplayNames[person] {
+                if let displayName = CL.shared.profileDisplayNames[person] {
                     if activity.isDone {
                         personLabel.text = "\(displayName) and \(displayName == "You" ? "your S.O." : "you")"
                     } else {
@@ -86,7 +86,7 @@ class CLEditableCard: UIView {
                     personLabel.text = ""
                 }
                 
-                if let profileImage = ActivitiesTableViewController.profileImages[person] {
+                if let profileImage = CL.shared.profileImages[person] {
                     profileImageView.image = profileImage
                     cardView.setNeedsLayout()
                 }

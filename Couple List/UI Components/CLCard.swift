@@ -200,6 +200,18 @@ class CLCard: UIView {
         let span = MKCoordinateSpanMake(0.015, 0.015)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: true)
+        mapView.delegate = self
         richContentStackView.addArrangedSubview(mapView)
+    }
+}
+
+extension CLCard: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let location = activity.location {
+            let mapItem = MKMapItem(placemark: location)
+            let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+            mapItem.openInMaps(launchOptions: launchOptions)
+        }
     }
 }

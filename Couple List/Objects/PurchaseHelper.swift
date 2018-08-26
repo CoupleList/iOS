@@ -111,7 +111,9 @@ extension PurchaseHelper: SKPaymentTransactionObserver {
         deliverPurchaseNotificationFor(identifier: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
         
-        removeAds()
+        if (transaction.transactionIdentifier == Products.RemoveAds) {
+            removeAds()
+        }
     }
     
     private func restore(transaction: SKPaymentTransaction) {
@@ -122,7 +124,9 @@ extension PurchaseHelper: SKPaymentTransactionObserver {
         deliverPurchaseNotificationFor(identifier: productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
         
-        removeAds()
+        if (productIdentifier == Products.RemoveAds) {
+            removeAds()
+        }
     }
     
     private func fail(transaction: SKPaymentTransaction) {

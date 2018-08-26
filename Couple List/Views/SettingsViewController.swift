@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -99,61 +100,43 @@ class SettingsViewController: UIViewController {
         return clSettingsItem
     }()
     
+    var products = [SKProduct]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.init(named: "MainColor")
         title = "Settings"
         
-        view.addSubview(scrollView)
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        
-        submitFeedbackItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSubmitFeedback)))
-        accountSettingsItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewAccountSettings)))
-        shareListItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShareList)))
-        leaveItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLeaveList)))
-        logoutItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLogout)))
-        disclaimerItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewIcons8)))
-        
-        let settingsSubViews: [UIView] = [
-            submitFeedbackItem,
-            CLSettingsItemSpacer(),
-            accountSettingsItem,
-            shareListItem,
-            adsSpacer,
-            removeAdsItem,
-            restorePurchasesItem,
-            CLSettingsItemSpacer(),
-            leaveItem,
-            logoutItem,
-            CLSettingsItemSpacer(),
-            disclaimerItem
-        ]
-        
-        let settingsStackView = UIStackView(arrangedSubviews: settingsSubViews)
-        settingsStackView.translatesAutoresizingMaskIntoConstraints = false
-        settingsStackView.axis = .vertical
-        settingsStackView.alignment = .fill
-        settingsStackView.distribution = .fill
-        settingsStackView.spacing = 0
-        
-        scrollView.addSubview(settingsStackView)
-        settingsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
-        settingsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
-        settingsStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        settingsStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        
-        scrollView.bounds = view.bounds
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
-        
         ref = Database.database().reference()
+        
+        setupView()
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
+                                               name: NSNotification.Name(rawValue: PurchaseHelper.PurchaseNotification),
+                                               object: nil)
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Products.store.requestProducts({success, products in
+            self.products = []
+            
+            if success {
+                self.products = products!
+            }
+        })
+    }
+    
+    @objc func handlePurchaseNotification(_ notification: Notification) {
+        print("LOADING ADS")
+        guard let productID = notification.object as? String else { return }
+        
+        for (_, product) in products.enumerated() {
+            guard product.productIdentifier == productID else { continue }
+            
+            print("ADS: \(product.localizedTitle)")
+        }
     }
     
     @objc func handleSubmitFeedback() {
@@ -200,15 +183,26 @@ class SettingsViewController: UIViewController {
             
             guard MFMessageComposeViewController.canSendText() else {
                 let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)
-                self.present(activityViewController, animated: true, completion: {})
+                self.present(activityViewController, animated: true)
                 return
             }
             
             let messageController = MFMessageComposeViewController()
             messageController.messageComposeDelegate = self
             messageController.body = shareContent
-            self.present(messageController, animated: true, completion: {})
+            self.present(messageController, animated: true)
         }
+    }
+    
+    @objc func handleRemoveAds() {
+        if !CL.shared.noAds() && products.count > 0 {
+            Products.store.buyProduct(self.products[0], view: self)
+        }
+    }
+    
+    @objc func handleRestorePurchases() {
+        Products.store.setupView(self)
+        SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
     @objc func handleLeaveList() {
@@ -231,33 +225,72 @@ class SettingsViewController: UIViewController {
     
     @objc func handleViewIcons8() {
         if let url = URL(string: "https://icons8.com") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [:])
         }
+    }
+    
+    fileprivate func setupView() {
+        view.addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        
+        submitFeedbackItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSubmitFeedback)))
+        accountSettingsItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewAccountSettings)))
+        shareListItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShareList)))
+        removeAdsItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRemoveAds)))
+        restorePurchasesItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRestorePurchases)))
+        leaveItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLeaveList)))
+        logoutItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLogout)))
+        disclaimerItem.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewIcons8)))
+        
+        let settingsSubViews: [UIView] = [
+            submitFeedbackItem,
+            CLSettingsItemSpacer(),
+            accountSettingsItem,
+            shareListItem,
+            adsSpacer,
+            removeAdsItem,
+            restorePurchasesItem,
+            CLSettingsItemSpacer(),
+            leaveItem,
+            logoutItem,
+            CLSettingsItemSpacer(),
+            disclaimerItem
+        ]
+        
+        let settingsStackView = UIStackView(arrangedSubviews: settingsSubViews)
+        settingsStackView.translatesAutoresizingMaskIntoConstraints = false
+        settingsStackView.axis = .vertical
+        settingsStackView.alignment = .fill
+        settingsStackView.distribution = .fill
+        settingsStackView.spacing = 0
+        
+        scrollView.addSubview(settingsStackView)
+        settingsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
+        settingsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
+        settingsStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        settingsStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        
+        scrollView.bounds = view.bounds
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
     }
 }
 
 extension SettingsViewController: MFMessageComposeViewControllerDelegate {
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        print(result)
         controller.dismiss(animated: true)
         switch (result) {
         case .sent:
             let alert = UIAlertController(title: "List Shared!", message: "Your list was shared with your S.O.", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            alert.addAction(okAction)
-            
-            self.present(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true)
             break;
         case .failed:
             let alert = UIAlertController(title: "Unable to Share List Shared!", message: "There was an error sharing your list!", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
-                
-            }
-            alert.addAction(okAction)
-            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
             self.present(alert, animated: true, completion: nil)
             break;
         case .cancelled:

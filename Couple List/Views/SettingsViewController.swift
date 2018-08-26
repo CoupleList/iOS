@@ -224,6 +224,7 @@ class SettingsViewController: UIViewController {
         do {
             CL.shared.userSettings = UserSettings.init(listKey: "", listCode: "")!
             try Auth.auth().signOut()
+            self.dismiss(animated: true)
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }

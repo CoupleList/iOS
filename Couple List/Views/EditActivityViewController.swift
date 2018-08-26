@@ -125,6 +125,8 @@ class EditActivityViewController: UIViewController {
         
         alert.addAction(completeAction)
         alert.addAction(cancelAction)
+        alert.popoverPresentationController?.sourceView = completeButton
+        alert.popoverPresentationController?.sourceRect = completeButton.bounds
         
         present(alert, animated: true, completion: nil)
     }

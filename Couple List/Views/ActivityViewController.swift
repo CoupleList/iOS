@@ -67,7 +67,7 @@ class ActivityViewController: UIViewController {
     @objc func handleDelete() {
         let alert = UIAlertController(title: "Delete Activity?", message: "Deleting this activity means that you and your S.O. can no longer track progress for it. This is a destructive process and is not reversable.", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let deleteAction = UIAlertAction(title: "Delete Activity", style: .destructive, handler: {
             _ in
             self.ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(self.activity.key)").removeValue()
@@ -76,8 +76,10 @@ class ActivityViewController: UIViewController {
         
         alert.addAction(cancelAction)
         alert.addAction(deleteAction)
+        alert.popoverPresentationController?.sourceView = deleteButton
+        alert.popoverPresentationController?.sourceRect = deleteButton.bounds
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
     
     @objc func handleEdit() {

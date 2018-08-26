@@ -201,7 +201,7 @@ class AccountSettingsViewController: UIViewController {
             self.displayName = displayName
             self.ref.child("users/\(Auth.auth().currentUser!.uid)/displayName").setValue(displayName.count > 0 ? displayName : nil)
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(okAction)
         alert.addAction(cancelAction)
@@ -278,6 +278,8 @@ class AccountSettingsViewController: UIViewController {
     }
     
     fileprivate func uploadProfileImage(image: UIImage) {
+        let alert = UIAlertController(title: "Uploading Profile Picture", message: "Please wait while your profile picture is uploading.", preferredStyle: .alert)
+        present(alert, animated: true)
         profileImageActivityIndicator.startAnimating()
         
         if let data = UIImageJPEGRepresentation(image, 0.3) {
@@ -289,14 +291,11 @@ class AccountSettingsViewController: UIViewController {
             
             uploadTask.observe(.success) { snapshot in
                 uploadTask.removeAllObservers()
+                alert.dismiss(animated: true)
                 self.profileImage = image
                 
                 let alert = UIAlertController(title: "Profile Picture Updated", message: "Your profile picture was uploaded and set!", preferredStyle: .alert)
-                
-                let okAction = UIAlertAction(title: "Ok", style: .default)
-                
-                alert.addAction(okAction)
-                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default))
                 self.present(alert, animated: true)
                 
                 CL.shared.profileImages.updateValue(image, forKey: uid)
@@ -306,29 +305,21 @@ class AccountSettingsViewController: UIViewController {
                 uploadTask.removeAllObservers()
                 if let error = snapshot.error as NSError? {
                     let alert = UIAlertController(title: "Error Updating Profile Picture", message: "\(error.localizedDescription) Would you like to retry?", preferredStyle: .alert)
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
                     let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
                         _ in
                         self.uploadProfileImage(image: image)
                     })
-                    
-                    alert.addAction(cancelAction)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                     alert.addAction(retryAction)
-                    
                     self.present(alert, animated: true)
                 } else {
-                    let alert = UIAlertController(title: "Error Updating Profile Picture}", message: "There was an unknown error that occurred while uploading your profile picture. Would you like to retry?", preferredStyle: .alert)
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                    let alert = UIAlertController(title: "Error Updating Profile Picture", message: "There was an unknown error that occurred while uploading your profile picture. Would you like to retry?", preferredStyle: .alert)
                     let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
                         _ in
                         self.uploadProfileImage(image: image)
                     })
-                    
-                    alert.addAction(cancelAction)
+                    alert.addAction( UIAlertAction(title: "Cancel", style: .cancel))
                     alert.addAction(retryAction)
-                    
                     self.present(alert, animated: true)
                 }
             }

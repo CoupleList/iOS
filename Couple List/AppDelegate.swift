@@ -53,10 +53,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)
-        if (dynamicLink?.url?.absoluteString != nil) {
-            loadDynamicLink(link: (dynamicLink?.url?.absoluteString)!)
+        if let link = dynamicLink?.url?.absoluteString {
+            loadDynamicLink(link: link)
+            return true
         }
+        
         return false
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        let handled = DynamicLinks.dynamicLinks().handleUniversalLink(userActivity.webpageURL!) { (dynamicLink, error) in
+            if let link = dynamicLink?.url?.absoluteString {
+                self.loadDynamicLink(link: link)
+            }
+        }
+        
+        return handled
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -81,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     private func loadDynamicLink(link : String) {
-        if (!link.isEmpty) {
+        if !link.isEmpty {
             CL.shared.userSettings = UserSettings.generateFromLink(link: link)
             let userID = Auth.auth().currentUser?.uid
             if userID != nil {
@@ -90,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         self.ref.child("users/\(userID!)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
                     }
                 }) { (error) in
-                    Analytics.logEvent("register_pressed", parameters: [
+                    Analytics.logEvent("error_joining_list", parameters: [
                         "device": "iOS",
                         "error": error.localizedDescription,
                         "link": link

@@ -129,13 +129,10 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
-        print("LOADING ADS")
         guard let productID = notification.object as? String else { return }
         
-        for (_, product) in products.enumerated() {
+        for product in products {
             guard product.productIdentifier == productID else { continue }
-            
-            print("ADS: \(product.localizedTitle)")
         }
     }
     
@@ -206,9 +203,18 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func handleLeaveList() {
-        Analytics.logEvent("leave_list", parameters: [
-            "device": "iOS"
-            ])
+        let alert = UIAlertController(title: "Are you sure you want to leave your list?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Leave list", style: .destructive, handler: { _ in
+            Analytics.logEvent("leave_list", parameters: [
+                "device": "iOS"
+                ])
+            self.ref.child("lists/\(CL.shared.userSettings.listKey)/tokens").child(Auth.auth().currentUser!.uid).removeValue()
+            CL.shared.userSettings = UserSettings.init(listKey: "", listCode: "")!
+            self.ref.child("users/\(Auth.auth().currentUser!.uid)").removeValue()
+            self.dismiss(animated: true)
+        }))
+        present(alert, animated: true)
     }
     
     @objc func handleLogout() {

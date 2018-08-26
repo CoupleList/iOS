@@ -51,10 +51,8 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         ref = Database.database().reference()
         
         handler = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if user == nil {
-                self.dismiss(animated: true)
-            } else {
-                self.ref.child("users/\(user!.uid)").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let user = user {
+                self.ref.child("users/\(user.uid)").observeSingleEvent(of: .value, with: { (snapshot) in
                     if snapshot.childSnapshot(forPath: "displayName").exists() {
                         if let displayName = snapshot.childSnapshot(forPath: "displayName").value as? String {
                             CL.shared.setDisplayName(displayName: displayName)
@@ -69,12 +67,12 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                                 CL.shared.userSettings.listKey = childSnapshot.key
                                 CL.shared.userSettings.listCode = childSnapshot.childSnapshot(forPath: "code").value as! String
                                 
-                                self.ref.child("users/\(user!.uid)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
+                                self.ref.child("users/\(user.uid)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
                             }
                         }
                     } else if snapshot.exists() && snapshot.childSnapshot(forPath: "list").exists() {
-                        CL.shared.userSettings.listKey = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "key").value as! String
-                        CL.shared.userSettings.listCode = snapshot.childSnapshot(forPath: "list").childSnapshot(forPath: "code").value as! String
+                        CL.shared.userSettings.listKey = snapshot.childSnapshot(forPath: "list/key").value as! String
+                        CL.shared.userSettings.listCode = snapshot.childSnapshot(forPath: "list/code").value as! String
                         
                         self.ref.child("lists/\(CL.shared.userSettings.listKey)/noAds").observeSingleEvent(of: .value, with: { snapshot in
                             if snapshot.exists() {
@@ -87,15 +85,19 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                                 CL.shared.setNoAds(noAds: false)
                             }
                         })
-                    } else if !snapshot.exists() {
-                        self.dismiss(animated: true)
                     }
                     
-                    self.ref.child("lists").child(CL.shared.userSettings.listKey).child("tokens").child(user!.uid).setValue(Messaging.messaging().fcmToken)
-                    
-                    self.viewControllers = [ navigationTab, historyTab, settingsTab ]
-                    self.selectedIndex = 0
+                    if !snapshot.exists() || CL.shared.userSettings.listKey.isEmpty {
+                        self.dismiss(animated: true)
+                    } else {
+                        self.ref.child("lists/\(CL.shared.userSettings.listKey)/tokens/\(user.uid)").setValue(Messaging.messaging().fcmToken)
+                        
+                        self.viewControllers = [ navigationTab, historyTab, settingsTab ]
+                        self.selectedIndex = 0
+                    }
                 })
+            } else {
+                self.dismiss(animated: true)
             }
         }
     }

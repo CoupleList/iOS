@@ -50,10 +50,16 @@ class StartViewController: CLBasicViewController {
         
         handler = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
-                self.ref.child("users/\(user.uid)").observeSingleEvent(of: .value, with: { (snapshot) in
-                    let view = MainViewController()
-                    view.modalTransitionStyle = .crossDissolve
-                    self.present(view, animated: true, completion: nil)
+                self.ref.child("users/\(user.uid)").observeSingleEvent(of: .value, with: { snapshot in
+                    if snapshot.exists() {
+                        let view = MainViewController()
+                        view.modalTransitionStyle = .crossDissolve
+                        self.present(view, animated: true)
+                    } else {
+                        let view = SetListViewController()
+                        view.modalTransitionStyle = .crossDissolve
+                        self.present(view, animated: true)
+                    }
                 })
             } else {
                 self.animateView()

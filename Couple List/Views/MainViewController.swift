@@ -26,6 +26,42 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         
         delegate = self
         
+        ref = Database.database().reference()
+        
+        verifyCanAccesList()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let handler = handler {
+            Auth.auth().removeStateDidChangeListener(handler)
+        }
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        return true;
+    }
+    
+    fileprivate func verifyCanAccesList() {
+        ref.child("users/\(Auth.auth().currentUser!.uid)/list").observeSingleEvent(of: .value, with: { snapshot in
+            if let key = snapshot.childSnapshot(forPath: "key").value as? String {
+                self.ref.child("lists/\(key)").observeSingleEvent(of: .value, with: { _ in
+                    self.loadList()
+                }, withCancel: { _ in
+                    self.ref.child("users/\(Auth.auth().currentUser!.uid)/list/code").removeValue(completionBlock: { (_, _) in
+                        let alert = UIAlertController(title: "Cannot view list", message: "You do not have permission to view this list.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                            self.dismiss(animated: true)
+                        }))
+                        self.present(alert, animated: true)
+                    })
+                })
+            }
+        })
+    }
+    
+    fileprivate func loadList() {
         let uid = Auth.auth().currentUser!.uid
         CL.shared.profileDisplayNames.updateValue("You", forKey: uid)
         let profileImageRef = Storage.storage().reference(withPath: "profileImages/\(uid).JPG")
@@ -47,8 +83,6 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         
         let settingsTab = SettingsNavigationViewController()
         settingsTab.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "SettingsImage"), selectedImage: nil)
-        
-        ref = Database.database().reference()
         
         handler = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
@@ -100,15 +134,5 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                 self.dismiss(animated: true)
             }
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        Auth.auth().removeStateDidChangeListener(handler!)
-    }
-    
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        return true;
     }
 }

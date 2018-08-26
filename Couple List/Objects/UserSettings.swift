@@ -20,10 +20,9 @@ class UserSettings: NSObject {
     
     class func generateFromLink(link: String) -> UserSettings {
         let link = link.replacingOccurrences(of: "%3D", with: "=")
-        let listKey = link.split(separator: "?")[1].split(separator: "=")[1]
-        let listCode = link.split(separator: "?")[2].split(separator: "=")[1].split(separator: "&")[0]
+        let listKey = link.split(separator: "?")[1].split(separator: "=")[1].split(separator: "&")[0]
         
-        return UserSettings(listKey: listKey.description, listCode: listCode.description)!
+        return UserSettings(listKey: listKey.description, listCode: "")!
     }
     
     func reset() {

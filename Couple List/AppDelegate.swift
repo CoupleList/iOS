@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if userID != nil {
                 ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
                     if (!snapshot.exists()) {
-                        self.ref.child("users/\(userID!)/list").setValue(["key": CL.shared.userSettings.listKey, "code": CL.shared.userSettings.listCode])
+                        self.ref.child("users/\(userID!)/list").setValue(["key": CL.shared.userSettings.listKey])
                     }
                 }) { (error) in
                     Analytics.logEvent("error_joining_list", parameters: [

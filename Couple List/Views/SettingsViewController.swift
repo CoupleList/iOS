@@ -147,7 +147,10 @@ class SettingsViewController: UIViewController {
     @objc func handleShareList() {
         let alert = UIAlertController(title: "Creating Sharable Link", message: "Please wait while the link is generated.", preferredStyle: .alert)
         present(alert, animated: true)
-        guard let link = URL(string: "https://couplelist.app?link=\(CL.shared.userSettings.listKey)?key=\(CL.shared.userSettings.listCode)") else { return }
+        guard let link = URL(string: "https://couplelist.app?link=\(CL.shared.userSettings.listKey)") else {
+            // TODO: Display error
+            return
+        }
         let components = DynamicLinkComponents(link: link, domain: "sa6cz.app.goo.gl")
         
         let analyticsParams = DynamicLinkGoogleAnalyticsParameters(source: "iOS", medium: "app", campaign: "nil")
@@ -155,7 +158,7 @@ class SettingsViewController: UIViewController {
         
         let iOSParams = DynamicLinkIOSParameters(bundleID: "com.kirinpatel.couplelist")
         iOSParams.fallbackURL = URL(string: link.absoluteString)
-        iOSParams.minimumAppVersion = "1.0.0"
+        iOSParams.minimumAppVersion = "2.0.0"
         iOSParams.appStoreID = "1310979486"
         components.iOSParameters = iOSParams
         
@@ -176,7 +179,7 @@ class SettingsViewController: UIViewController {
             } else {
                 link = shortURL?.absoluteString ?? ""
             }
-            let shareContent: String = "Hey, help me make our Couple List! \(link)"
+            let shareContent: String = "Hey, help me make our Couple List! Click this link below then use the password \"\(CL.shared.userSettings.listCode)\". \(link)"
             
             guard MFMessageComposeViewController.canSendText() else {
                 let activityViewController = UIActivityViewController(activityItems: [shareContent as NSString], applicationActivities: nil)

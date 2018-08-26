@@ -51,11 +51,17 @@ class StartViewController: CLBasicViewController {
         handler = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
                 self.ref.child("users/\(user.uid)").observeSingleEvent(of: .value, with: { snapshot in
-                    if snapshot.exists() {
+                    if snapshot.exists() && snapshot.childSnapshot(forPath: "list/key").exists() && snapshot.childSnapshot(forPath: "list/code").exists() {
                         let view = MainViewController()
                         view.modalTransitionStyle = .crossDissolve
                         self.present(view, animated: true)
                     } else {
+                        if snapshot.childSnapshot(forPath: "list/key").exists() {
+                            if let key = snapshot.childSnapshot(forPath: "list/key").value as? String {
+                                CL.shared.userSettings.listKey = key
+                            }
+                        }
+                        
                         let view = SetListViewController()
                         view.modalTransitionStyle = .crossDissolve
                         self.present(view, animated: true)

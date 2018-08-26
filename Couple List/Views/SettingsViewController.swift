@@ -53,13 +53,13 @@ class SettingsViewController: UIViewController {
     
     let adsSpacer: CLSettingsItemSpacer = {
         let clSettingsItemSpacer = CLSettingsItemSpacer()
-        clSettingsItemSpacer.isHidden = true
+        clSettingsItemSpacer.isHidden = CL.shared.noAds()
         return clSettingsItemSpacer
     }()
     
     let removeAdsItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.isHidden = true
+        clSettingsItem.isHidden = CL.shared.noAds()
         clSettingsItem.iconImage = UIImage.init(named: "SettingsRemoveAds")
         clSettingsItem.title = "Remove Ads"
         clSettingsItem.details = "Get rid of pesky ads"
@@ -68,7 +68,7 @@ class SettingsViewController: UIViewController {
     
     let restorePurchasesItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.isHidden = true
+        clSettingsItem.isHidden = CL.shared.noAds()
         clSettingsItem.iconImage = UIImage.init(named: "SettingsRestore")
         clSettingsItem.title = "Restore Purchases"
         clSettingsItem.details = "Re-remove ads from your list"
@@ -150,17 +150,6 @@ class SettingsViewController: UIViewController {
         scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
         
         ref = Database.database().reference()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        ref.child("lists/\(CL.shared.userSettings.listKey)/noAds").observeSingleEvent(of: .value, with: { (snapshot) in
-            let hasAds = snapshot.exists() && snapshot.value as! Bool
-            self.adsSpacer.isHidden = hasAds
-            self.removeAdsItem.isHidden = hasAds
-            self.restorePurchasesItem.isHidden = hasAds
-        })
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

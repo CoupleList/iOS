@@ -13,7 +13,7 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseStorage
 
-class AccountSettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AccountSettingsViewController: UIViewController {
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -116,22 +116,6 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         if displayName == nil {
             loadDisplayName()
         }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            if let localFile = info[UIImagePickerControllerImageURL] as? URL {
-                uploadProfileImage(image: selectedImage, url: localFile)
-            } else {
-                
-            }
-        }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     @objc func handleSetProfileImage() {
@@ -293,57 +277,63 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         }
     }
     
-    fileprivate func uploadProfileImage(image: UIImage, url: URL) {
+    fileprivate func uploadProfileImage(image: UIImage) {
         profileImageActivityIndicator.startAnimating()
         
-        let uid = Auth.auth().currentUser!.uid
-        let profileImageRef = storage.reference(withPath: "profileImages/\(uid)_original_\(image.imageOrientation.rawValue).JPG")
-        let uploadTask = profileImageRef.putFile(from: url)
-        
-        uploadTask.observe(.success) { snapshot in
-            uploadTask.removeAllObservers()
-            self.profileImage = image
+        if let data = UIImageJPEGRepresentation(image, 0.3) {
+            let uid = Auth.auth().currentUser!.uid
+            let profileImageRef = storage.reference(withPath: "profileImages/\(uid)_original_\(image.imageOrientation.rawValue).JPG")
+            let metaData = StorageMetadata()
+            metaData.contentType = "image/jpg"
+            let uploadTask = profileImageRef.putData(data, metadata: metaData)
             
-            let alert = UIAlertController(title: "Profile Picture Updated", message: "Your profile picture was uploaded and set!", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            
-            alert.addAction(okAction)
-            
-            self.present(alert, animated: true, completion: nil)
-            
-            CL.shared.profileImages.updateValue(image, forKey: uid)
-        }
-        
-        uploadTask.observe(.failure) { snapshot in
-            uploadTask.removeAllObservers()
-            if let error = snapshot.error as NSError? {
-                let alert = UIAlertController(title: "Error Updating Profile Picture", message: "\(error.localizedDescription) Would you like to retry?", preferredStyle: .alert)
+            uploadTask.observe(.success) { snapshot in
+                uploadTask.removeAllObservers()
+                self.profileImage = image
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
-                    _ in
-                    self.uploadProfileImage(image: image, url: url)
-                })
+                let alert = UIAlertController(title: "Profile Picture Updated", message: "Your profile picture was uploaded and set!", preferredStyle: .alert)
                 
-                alert.addAction(cancelAction)
-                alert.addAction(retryAction)
+                let okAction = UIAlertAction(title: "Ok", style: .default)
                 
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertController(title: "Error Updating Profile Picture}", message: "There was an unknown error that occurred while uploading your profile picture. Would you like to retry?", preferredStyle: .alert)
+                alert.addAction(okAction)
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
-                    _ in
-                    self.uploadProfileImage(image: image, url: url)
-                })
+                self.present(alert, animated: true)
                 
-                alert.addAction(cancelAction)
-                alert.addAction(retryAction)
-                
-                self.present(alert, animated: true, completion: nil)
+                CL.shared.profileImages.updateValue(image, forKey: uid)
             }
+            
+            uploadTask.observe(.failure) { snapshot in
+                uploadTask.removeAllObservers()
+                if let error = snapshot.error as NSError? {
+                    let alert = UIAlertController(title: "Error Updating Profile Picture", message: "\(error.localizedDescription) Would you like to retry?", preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                    let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
+                        _ in
+                        self.uploadProfileImage(image: image)
+                    })
+                    
+                    alert.addAction(cancelAction)
+                    alert.addAction(retryAction)
+                    
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "Error Updating Profile Picture}", message: "There was an unknown error that occurred while uploading your profile picture. Would you like to retry?", preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                    let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
+                        _ in
+                        self.uploadProfileImage(image: image)
+                    })
+                    
+                    alert.addAction(cancelAction)
+                    alert.addAction(retryAction)
+                    
+                    self.present(alert, animated: true)
+                }
+            }
+        } else {
+            
         }
     }
     
@@ -428,5 +418,19 @@ class AccountSettingsViewController: UIViewController, UIImagePickerControllerDe
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AccountSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        dismiss(animated: true, completion: nil)
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            uploadProfileImage(image: selectedImage)
+        }
     }
 }

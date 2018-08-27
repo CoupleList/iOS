@@ -122,25 +122,19 @@ class AccountSettingsViewController: UIViewController {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
-        let alert = UIAlertController(title: "Set Profile Picture", message: "Please take or choose a picture to use as your profile picture.", preferredStyle: .alert)
-        
-        let cameraAction = UIAlertAction(title: "Take a Picture", style: .default) {
+        let alert = UIAlertController(title: "Set Profile Picture", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Take a Photo", style: .default) {
             _ in
             imagePickerController.sourceType = .camera
-            self.present(imagePickerController, animated: true, completion: nil)
-        }
-        let photoAction = UIAlertAction(title: "Choose a Picture", style: .default) {
+            self.present(imagePickerController, animated: true)
+        })
+        alert.addAction(UIAlertAction(title: "Choose from Camera Roll", style: .default) {
             _ in
             imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true, completion: nil)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(cameraAction)
-        alert.addAction(photoAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+            self.present(imagePickerController, animated: true)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     @objc func handlePasswordChange() {
@@ -148,65 +142,54 @@ class AccountSettingsViewController: UIViewController {
     }
     
     @objc func handleViewAccountData() {
-        let alert = UIAlertController(title: "View Account Data?", message: "Please be aware that there may be sensative and private information within this screen. Please ensure that you are in a private and secure place to prevent this infromation from being seen by others.", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "View", style: .default) { _ in
+        let alert = UIAlertController(title: "View Account Data?", message: "Please be aware that there may be sensitive information presented. Please ensure that you are in a secure location to prevent this information from being visible to others.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "View", style: .default) { _ in
             self.navigationController?.pushViewController(AccountDataViewController(), animated: true)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     @objc func handleDeleteAccount() {
-        let alert = UIAlertController(title: "Are you sure you want to delete your account?", message: "Deleting your account will delete all data associated with your account. This is a destructive process and is not reversable.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Are you sure you want to delete your account?", message: "Deleting your account will delete all data associated with your account.", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let deleteAction = UIAlertAction(title: "Delete Account", style: .destructive, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             _ in
-            let confirmAlert = UIAlertController(title: "Permanently Delete Account", message: "Please ensure you want to delete your account as your decision is not reverable.", preferredStyle: .actionSheet)
+            let confirmAlert = UIAlertController(title: "Are you sure you want to permanently delete this account?", message: "", preferredStyle: .alert)
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let deleteAction = UIAlertAction(title: "Permanently Delete Account", style: .destructive, handler: {
-                _ in
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                // TODO: Add code to actually delete account
             })
             
             confirmAlert.addAction(cancelAction)
             confirmAlert.addAction(deleteAction)
             
-            self.present(confirmAlert, animated: true, completion: nil)
+            self.present(confirmAlert, animated: true)
         })
         
         alert.addAction(cancelAction)
         alert.addAction(deleteAction)
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
     
     @objc func setDisplayName() {
         let alert = UIAlertController(title: "Set Display Name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField{ (textField) -> Void in
-            textField.keyboardType = .default
+        alert.addTextField { textField in
             textField.placeholder = "Display Name"
         }
-        
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: {
-            _ in
-            let displayName: String = alert.textFields![0].text!
-            
-            self.displayName = displayName
-            self.ref.child("users/\(Auth.auth().currentUser!.uid)/displayName").setValue(displayName.count > 0 ? displayName : nil)
-        })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            if let displayName = alert.textFields![0].text {
+                self.displayName = displayName
+                self.ref.child("users/\(Auth.auth().currentUser!.uid)/displayName").setValue(!displayName.isEmpty ? displayName : nil)
+            } else {
+                // TODO: add error alert
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     fileprivate func setupView() {

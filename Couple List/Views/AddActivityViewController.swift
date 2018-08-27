@@ -82,12 +82,9 @@ class AddActivityViewController: UIViewController {
             
             navigationController?.popViewController(animated: true)
         } else {
-            let alert = UIAlertController(title: "Missing Activity Title", message: "A title is required in order to create an activity!", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Missing Title", message: "A title is required to create an activity.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .default))
+            present(alert, animated: true)
         }
     }
     
@@ -128,23 +125,18 @@ extension AddActivityViewController: CLEditableCardDelegate {
     }
     
     func userSeletedLocation() {
-        let alert = UIAlertController(title: "Location Settings", message: "Change or remove the location of this activity.", preferredStyle: .alert)
-        
-        let changeAction = UIAlertAction(title: "Change", style: .default) { _ in
+        // TODO: Remove alert & add dynamic option list within mapkit window
+        let alert = UIAlertController(title: "Location Options", message: "Change or remove the location for this activity.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Change", style: .default) { _ in
             let mapKitLocationFinder = MapKitLocationFinder()
             mapKitLocationFinder.clEditableCardDelegate = self
             self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
-        }
-        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { _ in
+        })
+        alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
             self.activity.location = nil
             self.clEditableCard.activity = self.activity
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(changeAction)
-        alert.addAction(removeAction)
-        alert.addAction(cancelAction)
-        
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
     }
 }

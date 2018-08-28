@@ -90,18 +90,18 @@ class StartViewController: CLBasicViewController {
                 "error": "Blank Email Address or Password"
                 ])
             
-            let alert = UIAlertController(title: "Missing information", message: "An email address and password are required to sign in!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Missing Information", message: "An email address and password are required to sign in.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
             return
         } else if !email.contains("@") && !email.contains(".") {
             Analytics.logEvent("error_handling_login", parameters: [
                 "error": "Incorrect Email Address"
                 ])
             
-            let alert = UIAlertController(title: "Missing information", message: "A valid email address is required to sign in!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Missing Information", message: "A valid email address is required to sign in.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
             return
         }
         
@@ -112,8 +112,8 @@ class StartViewController: CLBasicViewController {
                     ])
                 
                 let alert = UIAlertController(title: "Error", message: "Unable to login.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
             } else {
                 self.emailAddressTextField.text = ""
                 self.passwordTextField.text = ""
@@ -123,7 +123,7 @@ class StartViewController: CLBasicViewController {
     
     @objc func handleRegister() {
         Analytics.logEvent("handle_register", parameters: [:])
-        present(RegisterViewController(), animated: true, completion: nil)
+        present(RegisterViewController(), animated: true)
     }
     
     @objc func handleForgotPassword() {
@@ -143,18 +143,18 @@ class StartViewController: CLBasicViewController {
                         "error": "Blank Email Address"
                         ])
                     
-                    let alert = UIAlertController(title: "Missing information", message: "An email address is required!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Missing Information", message: "An email address is required.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
                     return
                 } else if !email.contains("@") && !email.contains(".") {
                     Analytics.logEvent("error_handling_forgot_password", parameters: [
                         "error": "Incorrect Email Address"
                         ])
                     
-                    let alert = UIAlertController(title: "Missing information", message: "A valid email address is required to sign in!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Missing Information", message: "A valid email address is required to sign in.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
                     return
                 }
                 
@@ -165,8 +165,8 @@ class StartViewController: CLBasicViewController {
                             ])
                         
                         let alert = UIAlertController(title: "Error", message: "Unable to send password reset email.", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
                         return
                     }
                 })
@@ -175,9 +175,9 @@ class StartViewController: CLBasicViewController {
                     "error": "Unknown"
                     ])
                 
-                let alert = UIAlertController(title: "Missing information", message: "An email address is required!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "Missing Information", message: "An email address is required.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
                 return
             }
         }
@@ -188,14 +188,14 @@ class StartViewController: CLBasicViewController {
         alert.addAction(sendAction)
         alert.addAction(cancelAction)
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
     
     fileprivate func setupView() {
         titleLabel.text = "Couple List"
         titleLabel.alpha = 0
         
-        descriptionLabel.text = "A simple, all in one place to keep track of what you and your S.O. do."
+        descriptionLabel.text = "A simple, all in one place to keep track of what you and your partner do together."
         descriptionLabel.alpha = 0
         
         centerStack.alpha = 0

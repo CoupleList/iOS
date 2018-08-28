@@ -91,7 +91,7 @@ class SetListViewController: UIViewController {
     }
     
     @objc func handleCreateList() {
-        let alert = UIAlertController(title: "Add a password to your list", message: "This password will make sure only you and your partner can access your list. The password can be anything you like.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add a Password", message: "This password will make sure only you and your partner can access your list. The password can be anything you'd like.", preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "List Password"
         }
@@ -99,7 +99,7 @@ class SetListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Set", style: .default, handler: { _ in
             if let code = alert.textFields?[0].text {
                 if code.isEmpty {
-                    self.displayError(title: "Unable to create list", message: "A password is required!")
+                    self.displayError(title: "Unable to create list", message: "A password is required.")
                 } else {
                     self.createList(code: code)
                 }
@@ -111,8 +111,8 @@ class SetListViewController: UIViewController {
     }
     
     @objc func handleJoinList() {
-        let alert = UIAlertController(title: "Join list", message: "To join your partner's Couple List, request that they share it with you from within the settings of Couple List.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        let alert = UIAlertController(title: "Join Couple List", message: "To join your partner's list, request that they share it with you from within their list settings.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
     
@@ -141,7 +141,7 @@ class SetListViewController: UIViewController {
     
     fileprivate func displayError(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
     
@@ -164,7 +164,7 @@ class SetListViewController: UIViewController {
     }
     
     fileprivate func displayEnterPasswordAlert() {
-        let alert = UIAlertController(title: "Join list", message: "Please provide the password to join this list.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Join List", message: "Please enter the list password to join.", preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "List Password"
         }
@@ -172,7 +172,7 @@ class SetListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { _ in
             if let code = alert.textFields?[0].text {
                 if code.isEmpty {
-                    self.displayError(title: "Unable to join list", message: "A password is required!")
+                    self.displayError(title: "Unable to join list", message: "A password is required.")
                 } else {
                     self.joinList(code: code)
                 }

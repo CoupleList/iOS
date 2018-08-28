@@ -99,20 +99,16 @@ class EditActivityViewController: UIViewController {
             delegate.activityWasEdited(activity)
             navigationController?.popViewController(animated: true)
         } else {
-            let alert = UIAlertController(title: "Missing Activity Title", message: "A title is required in order to create an activity!", preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-            
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Missing Activity Title", message: "A title is required in order to create an activity.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
         }
     }
     
     @objc func handleComplete() {
-        let alert = UIAlertController(title: "Complete Activity", message: "Completing \"\(activity.title)\" will signify progress made with your S.O, but, the activity will no longer be editable.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Complete Activity", message: "Completing \"\(activity.title)\" will signify progress made with your partner, but, the activity will no longer be configurable.", preferredStyle: .actionSheet)
         
-        let completeAction = UIAlertAction(title: "Complete", style: .default, handler: {
-            _ in
+        let completeAction = UIAlertAction(title: "Complete", style: .default, handler: { _ in
             self.activity = self.clEditableCard.activity
             self.activity.isDone = true
             
@@ -121,14 +117,12 @@ class EditActivityViewController: UIViewController {
             self.delegate.activityWasEdited(self.activity)
             self.navigationController?.popViewController(animated: true)
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
         alert.addAction(completeAction)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.popoverPresentationController?.sourceView = completeButton
         alert.popoverPresentationController?.sourceRect = completeButton.bounds
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
     
     fileprivate func setupView() {
@@ -184,11 +178,9 @@ extension EditActivityViewController: CLEditableCardDelegate {
             self.activity.location = nil
             self.clEditableCard.activity = self.activity
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
         alert.addAction(changeAction)
         alert.addAction(removeAction)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(alert, animated: true)
     }

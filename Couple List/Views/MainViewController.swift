@@ -51,7 +51,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                 }, withCancel: { _ in
                     self.ref.child("users/\(Auth.auth().currentUser!.uid)/list/code").removeValue(completionBlock: { (_, _) in
                         let alert = UIAlertController(title: "Cannot view list", message: "You do not have permission to view this list.", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                             self.dismiss(animated: true)
                         }))
                         self.present(alert, animated: true)

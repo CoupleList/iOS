@@ -46,14 +46,11 @@ class MapKitLocationFinder: UIViewController {
     @objc func setActivityLocation() {
         if let name = selectedPin?.name {
             let action = UIAlertController(title: "Set Activity Location?", message: "Would you like to set the activity's location to \(name)?", preferredStyle: .alert)
-            
-            let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
+            action.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                 self.clEditableCardDelegate?.userAddedLocation(location: self.selectedPin!)
                 self.navigationController?.popViewController(animated: true)
-            }
-            let cancelAction = UIAlertAction(title: "No", style: .cancel)
-            action.addAction(yesAction)
-            action.addAction(cancelAction)
+            })
+            action.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             
             present(action, animated: true)
         }

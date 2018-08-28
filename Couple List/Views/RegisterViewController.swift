@@ -64,27 +64,27 @@ class RegisterViewController: CLBasicViewController {
                 "error": "Blank Display Name, Email Address, Password or Confirm Password"
                 ])
             
-            let alert = UIAlertController(title: "Missing information", message: "A display name, email address, password, and password confirmation are required to register!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Missing Information", message: "A display name, email address, password, and password confirmation are required to register.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
             return
         } else if !email.contains("@") && !email.contains(".") {
             Analytics.logEvent("error_handling_register", parameters: [
                 "error": "Incorrect Email Address"
                 ])
             
-            let alert = UIAlertController(title: "Missing information", message: "A valid email address is required to sign in!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Missing information", message: "A valid email address is required to sign in.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
             return
         } else if password != confirmPassword {
             Analytics.logEvent("error_handling_register", parameters: [
                 "error": "Mismatching passwords"
                 ])
             
-            let alert = UIAlertController(title: "Incorrect information", message: "The provided passwords do not match!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Incorrect information", message: "The provided passwords do not match.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
             return
         }
         
@@ -95,15 +95,15 @@ class RegisterViewController: CLBasicViewController {
                     ])
                 
                 let alert = UIAlertController(title: "Error", message: "Unable to complete registration.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
             } else {
                 if let user = auth?.user {
                     Database.database().reference().child("users/\(user.uid)/displayName").setValue(displayName)
                 }
                 
                 Analytics.logEvent("handled_register", parameters: [:])
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true)
             }
         })
     }
@@ -111,7 +111,7 @@ class RegisterViewController: CLBasicViewController {
     fileprivate func setupView() {
         titleLabel.text = "Register"
         
-        descriptionLabel.text = "Create an account to get started!"
+        descriptionLabel.text = "Create an account to get started."
         
         centerStack.addArrangedSubview(displayNameTextField)
         displayNameTextField.heightAnchor.constraint(equalToConstant: 35).isActive = true

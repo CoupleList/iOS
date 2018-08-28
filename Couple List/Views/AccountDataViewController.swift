@@ -73,7 +73,7 @@ class AccountDataViewController: UIViewController {
     }
     
     fileprivate func loadAccountData() {
-        let uid = Auth.auth().currentUser!.uid
+//        let uid = Auth.auth().currentUser!.uid
 //        ref.child("users/\(uid)").observeSingleEvent(of: .value) { snapshot in
 //            for (index, child) in snapshot.children.enumerated() {
 //                let _ = child as! DataSnapshot

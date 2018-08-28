@@ -139,9 +139,9 @@ extension PurchaseHelper: SKPaymentTransactionObserver {
         SKPaymentQueue.default().finishTransaction(transaction)
         
         let alert = UIAlertController(title: "Unable to complete transaction", message: transaction.error?.localizedDescription ?? "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default))
         
-        view?.present(alert, animated: true, completion: nil)
+        view?.present(alert, animated: true)
     }
     
     private func deliverPurchaseNotificationFor(identifier: String?) {

@@ -19,7 +19,7 @@ class FeedbackViewController: UIViewController {
         let clSettingsSwitchInputItem = CLSettingsSwitchInputItem()
         clSettingsSwitchInputItem.iconImage = UIImage.init(named: "FeedbackAnonymous")
         clSettingsSwitchInputItem.title = "Remain Anonymous?"
-        clSettingsSwitchInputItem.details = "Send feedback without email address"
+        clSettingsSwitchInputItem.details = "Send feedback without an email address"
         clSettingsSwitchInputItem.isOn = true
         return clSettingsSwitchInputItem
     }()
@@ -62,14 +62,14 @@ class FeedbackViewController: UIViewController {
             
             let alert = UIAlertController(title: "Thanks for the feedback!", message: "Any suggestions are greatly appreciated and will be addressed prompty.", preferredStyle: .alert)
             
-            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
                 (_)in
                 self.navigationController?.popViewController(animated: true)
             })
             
             alert.addAction(okAction)
             
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
         }
     }
     

@@ -208,7 +208,7 @@ class SettingsViewController: UIViewController {
     @objc func handleLeaveList() {
         let alert = UIAlertController(title: "Are you sure you want to leave your list?", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Leave list", style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { _ in
             Analytics.logEvent("leave_list", parameters: [
                 "device": "iOS"
                 ])
@@ -294,13 +294,13 @@ extension SettingsViewController: MFMessageComposeViewControllerDelegate {
         controller.dismiss(animated: true)
         switch (result) {
         case .sent:
-            let alert = UIAlertController(title: "List Shared!", message: "Your list was shared with your S.O.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            let alert = UIAlertController(title: "List Shared", message: "Your list was shared with your partner.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
             self.present(alert, animated: true)
             break;
         case .failed:
-            let alert = UIAlertController(title: "Unable to Share List Shared!", message: "There was an error sharing your list!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            let alert = UIAlertController(title: "Unable to Share List", message: "There was an error sharing your list.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
             self.present(alert, animated: true, completion: nil)
             break;
         case .cancelled:

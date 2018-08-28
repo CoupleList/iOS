@@ -83,7 +83,7 @@ class AddActivityViewController: UIViewController {
             navigationController?.popViewController(animated: true)
         } else {
             let alert = UIAlertController(title: "Missing Title", message: "A title is required to create an activity.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .default))
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true)
         }
     }

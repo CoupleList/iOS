@@ -180,7 +180,7 @@ class AccountSettingsViewController: UIViewController {
         alert.addTextField { textField in
             textField.placeholder = "Display Name"
         }
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
             if let displayName = alert.textFields![0].text {
                 self.displayName = displayName
                 self.ref.child("users/\(Auth.auth().currentUser!.uid)/displayName").setValue(!displayName.isEmpty ? displayName : nil)
@@ -261,7 +261,7 @@ class AccountSettingsViewController: UIViewController {
     }
     
     fileprivate func uploadProfileImage(image: UIImage) {
-        let alert = UIAlertController(title: "Uploading Profile Picture", message: "Please wait while your profile picture is uploading.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Uploading Profile Picture", message: "Please wait while your profile picture is uploading...", preferredStyle: .alert)
         present(alert, animated: true)
         profileImageActivityIndicator.startAnimating()
         
@@ -277,8 +277,8 @@ class AccountSettingsViewController: UIViewController {
                 alert.dismiss(animated: true)
                 self.profileImage = image
                 
-                let alert = UIAlertController(title: "Profile Picture Updated", message: "Your profile picture was uploaded and set!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                let alert = UIAlertController(title: "Profile Picture Updated", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true)
                 
                 CL.shared.profileImages.updateValue(image, forKey: uid)
@@ -288,21 +288,17 @@ class AccountSettingsViewController: UIViewController {
                 uploadTask.removeAllObservers()
                 if let error = snapshot.error as NSError? {
                     let alert = UIAlertController(title: "Error Updating Profile Picture", message: "\(error.localizedDescription) Would you like to retry?", preferredStyle: .alert)
-                    let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
-                        _ in
-                        self.uploadProfileImage(image: image)
-                    })
                     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                    alert.addAction(retryAction)
+                    alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                        self.uploadProfileImage(image: image)
+                    }))
                     self.present(alert, animated: true)
                 } else {
                     let alert = UIAlertController(title: "Error Updating Profile Picture", message: "There was an unknown error that occurred while uploading your profile picture. Would you like to retry?", preferredStyle: .alert)
-                    let retryAction = UIAlertAction(title: "Retry", style: .default, handler: {
-                        _ in
-                        self.uploadProfileImage(image: image)
-                    })
                     alert.addAction( UIAlertAction(title: "Cancel", style: .cancel))
-                    alert.addAction(retryAction)
+                    alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                        self.uploadProfileImage(image: image)
+                    }))
                     self.present(alert, animated: true)
                 }
             }
@@ -331,34 +327,31 @@ class AccountSettingsViewController: UIViewController {
             textField.placeholder = "Verify Password"
         }
         
-        let okAction = UIAlertAction(title: "Change Password", style: .default) {
-            _ in
+        let okAction = UIAlertAction(title: "Change Password", style: .default) { _ in
             let password: String = alert.textFields![0].text!
             let verifyPassword: String = alert.textFields![1].text!
             
             if password.isEmpty || verifyPassword.isEmpty  {
-                let errorAlert = UIAlertController(title: "Error Changing Password", message: "A new password must be provided!", preferredStyle: .alert)
+                let errorAlert = UIAlertController(title: "Error Changing Password", message: "A new password must be provided.", preferredStyle: .alert)
                 
-                let okAction = UIAlertAction(title: "Ok", style: .default, handler: {
-                    _ in
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
                     self.displayChangePasswordAlert()
                 })
                 
                 errorAlert.addAction(okAction)
                 
-                self.present(errorAlert, animated: true, completion: nil)
+                self.present(errorAlert, animated: true)
                 return
             } else if password != verifyPassword {
-                let errorAlert = UIAlertController(title: "Error Changing Password", message: "The provided passwords must match!", preferredStyle: .alert)
+                let errorAlert = UIAlertController(title: "Error Changing Password", message: "The provided passwords do not match.", preferredStyle: .alert)
                 
-                let okAction = UIAlertAction(title: "Ok", style: .default, handler: {
-                    _ in
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
                     self.displayChangePasswordAlert()
                 })
                 
                 errorAlert.addAction(okAction)
                 
-                self.present(errorAlert, animated: true, completion: nil)
+                self.present(errorAlert, animated: true)
                 return
             }
             
@@ -366,43 +359,34 @@ class AccountSettingsViewController: UIViewController {
                 (error) in
                 if error != nil {
                     let errorAlert = UIAlertController(title: "Error Changing Password", message: error!.localizedDescription, preferredStyle: .alert)
-                    
-                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         self.displayChangePasswordAlert()
-                    })
-                    
-                    errorAlert.addAction(okAction)
-                    
-                    self.present(errorAlert, animated: true, completion: nil)
+                    }))
+                    self.present(errorAlert, animated: true)
                     return
                 }
                 
-                let successAlert = UIAlertController(title: "Password Updated", message: "Your account password has been successfully updated!", preferredStyle: .alert)
+                let successAlert = UIAlertController(title: "Password Updated", message: "Your account password has been successfully updated.", preferredStyle: .alert)
+                successAlert.addAction(UIAlertAction(title: "OK", style: .default))
                 
-                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                
-                successAlert.addAction(okAction)
-                
-                self.present(successAlert, animated: true, completion: nil)
+                self.present(successAlert, animated: true)
             })
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
         alert.addAction(okAction)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 }
 
 extension AccountSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             uploadProfileImage(image: selectedImage)
         }

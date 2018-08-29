@@ -106,6 +106,14 @@ class CLEditableCard: UIView {
         return view
     }()
     
+    fileprivate let datePicker: UIDatePicker = {
+       let datePicker = UIDatePicker()
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.minimumDate = datePicker.date
+        datePicker.minuteInterval = 10
+        return datePicker
+    }()
+    
     let bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -196,8 +204,14 @@ class CLEditableCard: UIView {
         richContentStackView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
         richContentStackView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
+        cardView.addSubview(datePicker)
+        datePicker.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: -15).isActive = true
+        datePicker.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
+        datePicker.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
+        datePicker.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        
         cardView.addSubview(titleTextView)
-        titleTextView.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: 0).isActive = true
+        titleTextView.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 0).isActive = true
         titleTextView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
         titleTextView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         titleTextView.delegate = self

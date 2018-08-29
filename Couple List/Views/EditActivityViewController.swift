@@ -74,7 +74,7 @@ class EditActivityViewController: UIViewController {
         
         activity = clEditableCard.activity
         if activity.title != "Activity Title" {
-            let desc = activity.desc != "Activity Description" ? activity.desc : ""
+            let desc = activity.desc != "Additional Notes" ? activity.desc : ""
             if let location = activity.location {
                 ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue([
                     "title": activity.title,

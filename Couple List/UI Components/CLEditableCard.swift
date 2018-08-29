@@ -138,7 +138,7 @@ class CLEditableCard: UIView {
             }
             
             titleTextView.text = activity.title
-            descriptionTextView.text = activity.desc.isEmpty ? "Activity Description" : activity.desc
+            descriptionTextView.text = activity.desc.isEmpty ? "Additional Notes" : activity.desc
             
             if let image = activity.image {
                 richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
@@ -252,7 +252,7 @@ class CLEditableCard: UIView {
 extension CLEditableCard: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text! == (textView == titleTextView ? activity.title : activity.desc.isEmpty ? "Activity Description" : activity.desc) {
+        if textView.text! == (textView == titleTextView ? activity.title : activity.desc.isEmpty ? "Additional Notes" : activity.desc) {
             textView.text = ""
             textView.textColor = UIColor.init(named: "MainColor")
         }
@@ -261,7 +261,7 @@ extension CLEditableCard: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if textView.text! == "" {
-            textView.text = textView.font?.pointSize == 30 ? activity.title : activity.desc.isEmpty ? "Activity Description" : activity.desc
+            textView.text = textView.font?.pointSize == 30 ? activity.title : activity.desc.isEmpty ? "Additional Notes" : activity.desc
             textView.textColor = .gray
         } else {
             if textView == titleTextView {

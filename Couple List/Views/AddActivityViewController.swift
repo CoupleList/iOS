@@ -52,7 +52,7 @@ class AddActivityViewController: UIViewController {
         clEditableCard.delegate = self
         
         let key = ref.child("lists/\(CL.shared.userSettings.listKey)/activities").childByAutoId().key
-        let newActivity = Activity(key: key, title: "Activity Title", desc: "Activity Description")!
+        let newActivity = Activity(key: key, title: "Activity Title", desc: "Additional Notes")!
         newActivity.person = Auth.auth().currentUser!.uid
         activity = newActivity
         
@@ -64,7 +64,7 @@ class AddActivityViewController: UIViewController {
         
         activity = clEditableCard.activity
         if activity.title != "Activity Title" {
-            let desc = activity.desc != "Activity Description" ? activity.desc : ""
+            let desc = activity.desc != "Additional Notes" ? activity.desc : ""
             if let location = activity.location {
                 ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue([
                     "title": activity.title,

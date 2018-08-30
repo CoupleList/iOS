@@ -75,6 +75,7 @@ class EditActivityViewController: UIViewController {
         activity = clEditableCard.activity
         if activity.title != "Activity Title" {
             let desc = activity.desc != "Additional Notes" ? activity.desc : ""
+            let date = activity.date != nil ? activity.date!.timeIntervalSince1970 : nil
             if let location = activity.location {
                 ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(activity.key)").setValue([
                     "title": activity.title,
@@ -83,6 +84,7 @@ class EditActivityViewController: UIViewController {
                         "lat": location.coordinate.latitude,
                         "long": location.coordinate.longitude
                     ],
+                    "date": date,
                     "done": false,
                     "person": Auth.auth().currentUser!.uid
                     ])
@@ -91,6 +93,7 @@ class EditActivityViewController: UIViewController {
                     "title": activity.title,
                     "description": desc,
                     "location": nil,
+                    "date": date,
                     "done": false,
                     "person": Auth.auth().currentUser!.uid
                     ])

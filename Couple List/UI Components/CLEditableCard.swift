@@ -111,6 +111,7 @@ class CLEditableCard: UIView {
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.minimumDate = datePicker.date
         datePicker.minuteInterval = 10
+        datePicker.addTarget(self, action: #selector(handleDateSelected), for: .valueChanged)
         return datePicker
     }()
     
@@ -155,6 +156,11 @@ class CLEditableCard: UIView {
             } else {
                 resetRichContent()
             }
+            
+            if let date = activity.date {
+                datePicker.date = date
+            }
+            
         }
     }
     
@@ -171,6 +177,14 @@ class CLEditableCard: UIView {
     @objc func handleSelectLocation() {
         if let delegate = delegate {
             delegate.userWantsToAddLocation()
+        }
+    }
+    
+    @objc func handleDateSelected() {
+        if (Int(Date().timeIntervalSince1970)/86400 == Int(datePicker.date.timeIntervalSince1970)/86400) {
+            activity.date = nil
+        } else {
+            activity.date = datePicker.date
         }
     }
     
@@ -311,4 +325,3 @@ extension CLEditableCard: MKMapViewDelegate {
         }
     }
 }
-

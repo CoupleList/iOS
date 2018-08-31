@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import StoreKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -116,6 +117,7 @@ class EditActivityViewController: UIViewController {
             
             self.delegate.activityWasEdited(self.activity)
             self.navigationController?.popViewController(animated: true)
+            SKStoreReviewController.requestReview()
         })
         alert.addAction(completeAction)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))

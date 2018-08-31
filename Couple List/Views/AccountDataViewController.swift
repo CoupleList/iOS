@@ -30,6 +30,13 @@ class AccountDataViewController: UIViewController {
         return clSettingsProgressItem
     }()
     
+    let testingItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.title = CL.shared.userSettings.listKey
+        clSettingsItem.details = Auth.auth().currentUser!.uid
+        return clSettingsItem
+    }()
+    
     var ref: DatabaseReference!
     
     override func viewDidLoad() {
@@ -52,7 +59,7 @@ class AccountDataViewController: UIViewController {
         scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
         let accountSettingsSubViews: [UIView] = [
-            userProgressItem
+            testingItem
         ]
         
         let accountSettingsStackView = UIStackView(arrangedSubviews: accountSettingsSubViews)

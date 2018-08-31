@@ -226,7 +226,9 @@ class AccountSettingsViewController: UIViewController {
             setProfileImageItem,
             setDisplayNameItem,
             CLSettingsItemSpacer(),
-            changePasswordItem
+            changePasswordItem,
+            CLSettingsItemSpacer(),
+            accountDataIem
         ]
         
         let settingsStackView = UIStackView(arrangedSubviews: settingsSubViews)

@@ -82,7 +82,7 @@ class CLCard: UIView {
     
     internal lazy var widthConstraint = profileImageView.widthAnchor.constraint(equalToConstant: 40.0)
     internal lazy var heightConstraint = profileImageView.heightAnchor.constraint(equalToConstant: 40.0)
-    internal lazy var richContentHeightConstraint = richContentStackView.heightAnchor.constraint(equalToConstant: 150)
+    internal lazy var richContentHeightConstraint = richContentStackView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 350 : 200)
     
     var activity: Activity! {
         didSet {

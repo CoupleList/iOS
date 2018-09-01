@@ -194,7 +194,7 @@ class CLEditableCard: UIView {
         richContentStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10).isActive = true
         richContentStackView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
         richContentStackView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
-        richContentStackView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        richContentStackView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 350 : 200).isActive = true
         
         cardView.addSubview(titleTextView)
         titleTextView.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: 0).isActive = true

@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol CLCardDelegate: class {
+    func getDirectionsForActivity(placemark: CLPlacemark)
+}
+
 class CLCard: UIView {
     
     fileprivate let cardView: UIView = {
@@ -125,6 +129,7 @@ class CLCard: UIView {
         }
     }
     var activityLocation: CLPlacemark?
+    var delegate: CLCardDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -137,11 +142,9 @@ class CLCard: UIView {
     }
     
     @objc func handleGetDirections() {
-        if let location = activityLocation {
-            if let addressDictionary = location.addressDictionary as! [String:AnyObject]?, let coordinate = location.location?.coordinate {
-                let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: addressDictionary))
-                let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
-                mapItem.openInMaps(launchOptions: launchOptions)
+        if let delegate = delegate {
+            if let placemark = activityLocation {
+                delegate.getDirectionsForActivity(placemark: placemark)
             }
         }
     }

@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
+
+protocol ActivityTableViewCellDelegate: class {
+    func getDirectionsForActivity(placemark: CLPlacemark)
+}
 
 class ActivityTableViewCell: UITableViewCell {
     
@@ -32,6 +37,7 @@ class ActivityTableViewCell: UITableViewCell {
             doneIndicator.isHidden = !activity.isDone
         }
     }
+    var delegate: ActivityTableViewCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,6 +57,7 @@ class ActivityTableViewCell: UITableViewCell {
         clCard.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -8.0).isActive = true
         clCard.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor, constant: 0.0).isActive = true
         clCard.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor, constant: 0.0).isActive = true
+        clCard.delegate = self
         
         clCard.bottomView.addSubview(doneIndicator)
         doneIndicator.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 4.0).isActive = true
@@ -58,5 +65,14 @@ class ActivityTableViewCell: UITableViewCell {
         doneIndicator.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10.0).isActive = true
         doneIndicator.widthAnchor.constraint(equalToConstant: 10.0).isActive = true
         doneIndicator.heightAnchor.constraint(equalToConstant: 10.0).isActive = true
+    }
+}
+
+extension ActivityTableViewCell: CLCardDelegate {
+    
+    func getDirectionsForActivity(placemark: CLPlacemark) {
+        if let delegate = delegate {
+            delegate.getDirectionsForActivity(placemark: placemark)
+        }
     }
 }

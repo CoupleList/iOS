@@ -149,6 +149,7 @@ class CLEditableCard: UIView {
             }
         }
     }
+    var activityLocation: CLPlacemark?
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -222,19 +223,9 @@ class CLEditableCard: UIView {
         mapView.isZoomEnabled = false
         mapView.isPitchEnabled = false
         mapView.isRotateEnabled = false
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location.coordinate
-        if let name = location.name {
-            annotation.title = name
-        } else {
-            annotation.title = "Activity Location"
+        getLocation(location: CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)) { annotation in
+            mapView.addAnnotation(annotation)
         }
-        if let city = location.locality, let state = location.administrativeArea {
-            annotation.subtitle = "\(city) \(state)"
-        } else {
-            annotation.subtitle = activity.title
-        }
-        mapView.addAnnotation(annotation)
         let span = MKCoordinateSpanMake(0.015, 0.015)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: true)
@@ -246,6 +237,26 @@ class CLEditableCard: UIView {
         richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
 //        richContentStackView.addArrangedSubview(addImageContainer)
         richContentStackView.addArrangedSubview(addLocationContainer)
+    }
+    
+    fileprivate func getLocation(location: CLLocation, _ completion: @escaping (_ annotation: MKPointAnnotation) -> Void) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let _ = error { return }
+            
+            guard let placemark = placemarks?.first else { return }
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location.coordinate
+            annotation.title = placemark.name
+            if let city = placemark.locality, let state = placemark.administrativeArea {
+                annotation.subtitle = "\(city) \(state)"
+            }
+            
+            self.activityLocation = placemark
+            completion(annotation)
+        }
     }
 }
 

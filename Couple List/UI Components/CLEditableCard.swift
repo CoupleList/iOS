@@ -15,7 +15,6 @@ protocol CLEditableCardDelegate: class {
     func userWantsToChangeLocation()
     func userWantsToRemoveLocation()
     func userAddedLocation(location: MKPlacemark)
-    func userSeletedLocation()
 }
 
 class CLEditableCard: UIView {
@@ -165,7 +164,8 @@ class CLEditableCard: UIView {
     
     @objc func handleSelectLocation() {
         if let delegate = delegate {
-            delegate.userSeletedLocation()
+            guard activity.location == nil else { return }
+            delegate.userWantsToAddLocation()
         }
     }
     

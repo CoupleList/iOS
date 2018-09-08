@@ -144,20 +144,4 @@ extension AddActivityViewController: CLEditableCardDelegate {
         activity.location = location
         clEditableCard.activity = activity
     }
-    
-    func userSeletedLocation() {
-        // TODO: Remove alert & add dynamic option list within mapkit window
-        let alert = UIAlertController(title: "Location Options", message: "Change or remove the location for this activity.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Change", style: .default) { _ in
-            let mapKitLocationFinder = MapKitLocationFinder()
-            mapKitLocationFinder.clEditableCardDelegate = self
-            self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
-        })
-        alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
-            self.activity.location = nil
-            self.clEditableCard.activity = self.activity
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        present(alert, animated: true)
-    }
 }

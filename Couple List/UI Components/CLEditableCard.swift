@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 protocol CLEditableCardDelegate: class {
     func userWantsToAddLocation()
+    func userWantsToChangeLocation()
     func userWantsToRemoveLocation()
     func userAddedLocation(location: MKPlacemark)
     func userSeletedLocation()
@@ -164,7 +165,13 @@ class CLEditableCard: UIView {
     
     @objc func handleSelectLocation() {
         if let delegate = delegate {
-            delegate.userWantsToAddLocation()
+            delegate.userSeletedLocation()
+        }
+    }
+    
+    @objc func handleChangeLocation() {
+        if let delegate = delegate {
+            delegate.userWantsToChangeLocation()
         }
     }
     
@@ -307,15 +314,6 @@ extension CLEditableCard: UITextViewDelegate {
     }
 }
 
-//extension CLEditableCard: MKMapViewDelegate {
-//
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        if let delegate = delegate {
-//            delegate.userSeletedLocation()
-//        }
-//    }
-//}
-
 extension CLEditableCard: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -327,10 +325,20 @@ extension CLEditableCard: MKMapViewDelegate {
         pinView?.markerTintColor = UIColor.init(named: "MainColor")
         pinView?.animatesWhenAdded = true
         pinView?.canShowCallout = true
+        let changeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
+        changeDirectionsButton.setBackgroundImage(UIImage.init(named: "ChangeDirections"), for: .normal)
+        changeDirectionsButton.addTarget(self, action: #selector(handleChangeLocation), for: .touchUpInside)
         let removeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
         removeDirectionsButton.setBackgroundImage(UIImage.init(named: "RemoveDirections"), for: .normal)
         removeDirectionsButton.addTarget(self, action: #selector(handleRemoveLocation), for: .touchUpInside)
-        pinView?.rightCalloutAccessoryView = removeDirectionsButton
+        let stackView = UIStackView(frame: CGRect(origin: .zero, size: CGSize(width: 68, height: 30)))
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        stackView.addArrangedSubview(changeDirectionsButton)
+        stackView.addArrangedSubview(removeDirectionsButton)
+        pinView?.rightCalloutAccessoryView = stackView
         return pinView
     }
 }

@@ -32,7 +32,7 @@ class MapKitLocationFinder: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.init(named: "MainColor")
-        title = "Add Location"
+        title = "Set Location"
         definesPresentationContext = true
         
         locationManager.delegate = self

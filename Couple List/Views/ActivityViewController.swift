@@ -93,20 +93,20 @@ class ActivityViewController: UIViewController {
         scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
         scrollView.addSubview(clCard)
-        clCard.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
-        clCard.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
-        clCard.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        clCard.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        clCard.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0.0).isActive = true
+        clCard.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0.0).isActive = true
+        clCard.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0.0).isActive = true
+        clCard.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0.0).isActive = true
         
         clCard.bottomView.addSubview(deleteButton)
-        deleteButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 10).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0).isActive = true
-        deleteButton.leftAnchor.constraint(equalTo: clCard.bottomView.leftAnchor, constant: 10).isActive = true
+        deleteButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 0.0).isActive = true
+        deleteButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0.0).isActive = true
+        deleteButton.leftAnchor.constraint(equalTo: clCard.bottomView.leftAnchor, constant: 10.0).isActive = true
         
         clCard.bottomView.addSubview(editButton)
-        editButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 10).isActive = true
-        editButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0).isActive = true
-        editButton.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10).isActive = true
+        editButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 0.0).isActive = true
+        editButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0.0).isActive = true
+        editButton.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10.0).isActive = true
         
         scrollView.bounds = view.bounds
         scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)

@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 protocol CLEditableCardDelegate: class {
     func userWantsToAddLocation()
+    func userWantsToRemoveLocation()
     func userAddedLocation(location: MKPlacemark)
     func userSeletedLocation()
 }
@@ -167,6 +168,12 @@ class CLEditableCard: UIView {
         }
     }
     
+    @objc func handleRemoveLocation() {
+        if let delegate = delegate {
+            delegate.userWantsToRemoveLocation()
+        }
+    }
+    
     fileprivate func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         isUserInteractionEnabled = true
@@ -300,12 +307,30 @@ extension CLEditableCard: UITextViewDelegate {
     }
 }
 
+//extension CLEditableCard: MKMapViewDelegate {
+//
+//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//        if let delegate = delegate {
+//            delegate.userSeletedLocation()
+//        }
+//    }
+//}
+
 extension CLEditableCard: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let delegate = delegate {
-            delegate.userSeletedLocation()
-        }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation { return nil }
+        
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
+        pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView?.markerTintColor = UIColor.init(named: "MainColor")
+        pinView?.animatesWhenAdded = true
+        pinView?.canShowCallout = true
+        let removeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
+        removeDirectionsButton.setBackgroundImage(UIImage.init(named: "RemoveDirections"), for: .normal)
+        removeDirectionsButton.addTarget(self, action: #selector(handleRemoveLocation), for: .touchUpInside)
+        pinView?.rightCalloutAccessoryView = removeDirectionsButton
+        return pinView
     }
 }
-

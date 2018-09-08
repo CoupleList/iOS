@@ -116,6 +116,7 @@ extension MapKitLocationFinder: MKMapViewDelegate {
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
         pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView?.markerTintColor = UIColor.init(named: "MainColor")
         pinView?.animatesWhenAdded = true
         pinView?.canShowCallout = true
         let btn = UIButton(type: .contactAdd)

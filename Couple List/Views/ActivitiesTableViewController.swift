@@ -79,6 +79,7 @@ class ActivitiesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ActivityTableViewCell
         
         cell.activity = activities[indexPath.row]
+        cell.delegate = self
         cell.selectionStyle = .none
         
         return cell
@@ -157,5 +158,14 @@ class ActivitiesTableViewController: UITableViewController {
             self.activities.reverse()
             self.tableView.reloadData()
         })
+    }
+}
+
+extension ActivitiesTableViewController: ActivityTableViewCellDelegate {
+    
+    func getDirectionsForActivity(placemark: CLPlacemark) {
+        CL.generateDirectionsAlert(placemark: placemark) { alert in
+            self.present(alert, animated: true)
+        }
     }
 }

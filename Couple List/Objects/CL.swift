@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class CL {
     
@@ -31,5 +32,18 @@ class CL {
     
     func displayName() -> String {
         return UserDefaults.standard.string(forKey: "displayName") ?? ""
+    }
+    
+    class func generateDirectionsAlert(placemark: CLPlacemark, completion: @escaping (_ alert: UIAlertController) -> Void) {
+        let alert = UIAlertController(title: "Get directions to \(placemark.name ?? "to activity")?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            if let addressDictionary = placemark.addressDictionary as! [String:AnyObject]?, let coordinate = placemark.location?.coordinate {
+                let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: addressDictionary))
+                let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+                mapItem.openInMaps(launchOptions: launchOptions)
+            }
+        }))
+        completion(alert)
     }
 }

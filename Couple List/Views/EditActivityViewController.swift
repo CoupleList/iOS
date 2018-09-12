@@ -163,27 +163,29 @@ extension EditActivityViewController: CLEditableCardDelegate {
         navigationController?.pushViewController(mapKitLocationFinder, animated: true)
     }
     
-    func userAddedLocation(location: MKPlacemark) {
-        activity.location = location
-        clEditableCard.activity = activity
-    }
-    
-    func userSeletedLocation() {
-        let alert = UIAlertController(title: "Location Settings", message: "Change or remove the location of this activity.", preferredStyle: .alert)
-        
-        let changeAction = UIAlertAction(title: "Change", style: .default) { _ in
+    func userWantsToChangeLocation() {
+        let alert = UIAlertController(title: "Change Activity Location?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Change", style: .default) { _ in
             let mapKitLocationFinder = MapKitLocationFinder()
             mapKitLocationFinder.clEditableCardDelegate = self
             self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
-        }
-        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { _ in
+        })
+        present(alert, animated: true)
+    }
+    
+    func userWantsToRemoveLocation() {
+        let alert = UIAlertController(title: "Remove Activity Location?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
             self.activity.location = nil
             self.clEditableCard.activity = self.activity
-        }
-        alert.addAction(changeAction)
-        alert.addAction(removeAction)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
+        })
         present(alert, animated: true)
+    }
+    
+    func userAddedLocation(location: MKPlacemark) {
+        activity.location = location
+        clEditableCard.activity = activity
     }
 }

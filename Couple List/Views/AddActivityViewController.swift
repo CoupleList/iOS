@@ -122,7 +122,7 @@ extension AddActivityViewController: CLEditableCardDelegate {
     func userWantsToChangeLocation() {
         let alert = UIAlertController(title: "Change Activity Location?", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: "Change", style: .default) { _ in
             let mapKitLocationFinder = MapKitLocationFinder()
             mapKitLocationFinder.clEditableCardDelegate = self
             self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
@@ -133,7 +133,7 @@ extension AddActivityViewController: CLEditableCardDelegate {
     func userWantsToRemoveLocation() {
         let alert = UIAlertController(title: "Remove Activity Location?", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
             self.activity.location = nil
             self.clEditableCard.activity = self.activity
         })

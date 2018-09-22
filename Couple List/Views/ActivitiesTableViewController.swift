@@ -19,7 +19,6 @@ class ActivitiesTableViewController: UITableViewController {
     var ref: DatabaseReference!
     var storage: Storage!
     var activities = [Activity]()
-    var animatedRows = [Int]()
     let cellIdentifier = "ActivityTableViewCell"
     
     override func viewDidLoad() {
@@ -31,22 +30,6 @@ class ActivitiesTableViewController: UITableViewController {
     
     @objc func handleAdd() {
         navigationController?.pushViewController(AddActivityViewController(), animated: true)
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if animatedRows.contains(indexPath.row) {
-            return
-        }
-        
-        animatedRows.append(indexPath.row)
-        
-        cell.alpha = 0
-        cell.transform = CGAffineTransform(translationX: 0, y: 20)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            cell.alpha = 1
-            cell.transform = CGAffineTransform(translationX: 0, y: 0)
-        })
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -103,7 +86,6 @@ class ActivitiesTableViewController: UITableViewController {
         ref.child("lists/\(CL.shared.userSettings.listKey)/activities").observe(.value, with: { snapshot in
             
             self.activities.removeAll()
-            self.animatedRows.removeAll()
             
             for child in snapshot.children.allObjects {
                 let childSnapshot = child as! DataSnapshot

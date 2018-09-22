@@ -138,20 +138,10 @@ class RegisterViewController: CLBasicViewController {
 }
 
 extension RegisterViewController: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == passwordTextField {
-            moveView(y: 35)
-        } else if textField == confirmPasswordTextField {
-            moveView(y: 70)
-        } else {
-            moveView(y: 0)
-        }
-    }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
+
         if textField == displayNameTextField {
             emailAddressTextField.becomeFirstResponder()
             return false
@@ -162,8 +152,7 @@ extension RegisterViewController: UITextFieldDelegate {
             confirmPasswordTextField.becomeFirstResponder()
             return false
         }
-        
-        moveView(y: 0)
+
         return true
     }
 }

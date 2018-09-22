@@ -30,6 +30,15 @@
 				<string>com.kirinpatel.couplelist</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1089690004334-8opct1u5n7gm5ogs74i80k9e94ehbejm
+</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>38</string>

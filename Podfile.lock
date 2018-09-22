@@ -76,7 +76,6 @@ PODS:
   - GTMSessionFetcher/Full (1.1.15):
     - GTMSessionFetcher/Core (= 1.1.15)
   - leveldb-library (1.20)
-  - MKRingProgressView (2.0.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -96,7 +95,6 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - GoogleSignIn
-  - MKRingProgressView
   - TPKeyboardAvoiding
 
 SPEC REPOS:
@@ -118,7 +116,6 @@ SPEC REPOS:
     - GTMOAuth2
     - GTMSessionFetcher
     - leveldb-library
-    - MKRingProgressView
     - nanopb
     - Protobuf
     - TPKeyboardAvoiding
@@ -141,11 +138,10 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MKRingProgressView: a2adeddfff0ea03f0fb7f8b108f3f77176db3bb5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
 
-PODFILE CHECKSUM: 66b4b4892024c4aad40189a1643105d1cd3fd9a5
+PODFILE CHECKSUM: 5e749726314c80da6376fc8e65302938810a22f8
 
 COCOAPODS: 1.5.3

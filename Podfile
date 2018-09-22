@@ -17,7 +17,6 @@ target 'Couple List' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Storage'
   pod 'GoogleSignIn'
-  pod 'MKRingProgressView'
   pod 'TPKeyboardAvoiding'
 
 end

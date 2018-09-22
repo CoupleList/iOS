@@ -82,6 +82,13 @@ class FeedbackViewController: UIViewController {
             anonymousItem,
             CLSettingsItemSpacer(),
             feedbackTextView,
+            {
+                let view = UIView()
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.backgroundColor = .white
+                view.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3.5).isActive = true
+                return view
+            }(),
             CLSettingsItemSpacer(),
             submitButton,
             CLSettingsItemSpacer()

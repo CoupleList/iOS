@@ -241,7 +241,7 @@ extension CLCard: MKMapViewDelegate {
         pinView?.animatesWhenAdded = true
         pinView?.canShowCallout = true
         let getDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
-        getDirectionsButton.setBackgroundImage(UIImage.init(named: "GetDirections"), for: .normal)
+        getDirectionsButton.setBackgroundImage(UIImage.init(named: "getDirections"), for: .normal)
         getDirectionsButton.addTarget(self, action: #selector(handleGetDirections), for: .touchUpInside)
         pinView?.rightCalloutAccessoryView = getDirectionsButton
         return pinView

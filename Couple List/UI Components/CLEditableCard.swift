@@ -32,7 +32,7 @@ class CLEditableCard: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "ProfileImagePlaceholder")!
+        imageView.image = UIImage(named: "profilePicture")!
         return imageView
     }()
     
@@ -80,7 +80,7 @@ class CLEditableCard: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.init(named: "ActivityAddImage")!
+        imageView.image = UIImage.init(named: "image")!
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         view.addSubview(imageView)
@@ -96,7 +96,7 @@ class CLEditableCard: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.init(named: "ActivityAddLocation")!
+        imageView.image = UIImage.init(named: "location")!
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         view.addSubview(imageView)
@@ -134,7 +134,7 @@ class CLEditableCard: UIView {
                 }
             } else {
                 personLabel.text = ""
-                profileImageView.image = UIImage.init(named: "ProfileImagePlaceholder")
+                profileImageView.image = UIImage.init(named: "profilePicture")
                 cardView.setNeedsLayout()
             }
             
@@ -326,10 +326,10 @@ extension CLEditableCard: MKMapViewDelegate {
         pinView?.animatesWhenAdded = true
         pinView?.canShowCallout = true
         let changeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
-        changeDirectionsButton.setBackgroundImage(UIImage.init(named: "ChangeDirections"), for: .normal)
+        changeDirectionsButton.setBackgroundImage(UIImage.init(named: "changeDirections"), for: .normal)
         changeDirectionsButton.addTarget(self, action: #selector(handleChangeLocation), for: .touchUpInside)
         let removeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
-        removeDirectionsButton.setBackgroundImage(UIImage.init(named: "RemoveDirections"), for: .normal)
+        removeDirectionsButton.setBackgroundImage(UIImage.init(named: "removeDirections"), for: .normal)
         removeDirectionsButton.addTarget(self, action: #selector(handleRemoveLocation), for: .touchUpInside)
         let stackView = UIStackView(frame: CGRect(origin: .zero, size: CGSize(width: 68, height: 30)))
         stackView.axis = .horizontal

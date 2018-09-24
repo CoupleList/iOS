@@ -26,6 +26,7 @@
 		784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */; };
 		784E0E2920D6E18A006D6AAE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */; };
 		784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */; };
+		786B60102157FBEF008E9F98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 786B600F2157FBEF008E9F98 /* Images.xcassets */; };
 		786F1ED920F00CFB00E54B97 /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */; };
 		786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */; };
 		786F1EE020F080A600E54B97 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDF20F080A600E54B97 /* ActivityViewController.swift */; };
@@ -79,6 +80,7 @@
 		784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		786B600F2157FBEF008E9F98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
 		786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditActivityViewController.swift; sourceTree = "<group>"; };
 		786F1EDF20F080A600E54B97 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */,
 				78AB80391EE38D54008ACCC3 /* Info.plist */,
 				78AB80341EE38D54008ACCC3 /* Assets.xcassets */,
+				786B600F2157FBEF008E9F98 /* Images.xcassets */,
 				78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */,
 			);
 			path = "Couple List";
@@ -331,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78AB80381EE38D54008ACCC3 /* LaunchScreen.storyboard in Resources */,
+				786B60102157FBEF008E9F98 /* Images.xcassets in Resources */,
 				784AEC6D20D56FA900BAD8DF /* GoogleService-Info.plist in Resources */,
 				78AB80351EE38D54008ACCC3 /* Assets.xcassets in Resources */,
 			);

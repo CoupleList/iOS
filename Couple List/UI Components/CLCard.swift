@@ -73,7 +73,7 @@ class CLCard: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "ProfileImagePlaceholder")!
+        imageView.image = UIImage(named: "profilePicture")!
         return imageView
     }()
     

@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     
     let submitFeedbackItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsFeedback")
+        clSettingsItem.iconImage = UIImage.init(named: "feedback")
         clSettingsItem.title = "Feedback"
         clSettingsItem.details = "Provide feedback on feature you like/dislike"
         return clSettingsItem
@@ -38,7 +38,7 @@ class SettingsViewController: UIViewController {
     
     let accountSettingsItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsAccount")
+        clSettingsItem.iconImage = UIImage.init(named: "profilePicture")
         clSettingsItem.title = "Account Settings"
         clSettingsItem.details = "Set and change account information"
         return clSettingsItem
@@ -46,7 +46,7 @@ class SettingsViewController: UIViewController {
     
     let shareListItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsShare")
+        clSettingsItem.iconImage = UIImage.init(named: "share")
         clSettingsItem.title = "Share List"
         clSettingsItem.details = "Invite your partner to help"
         return clSettingsItem
@@ -61,7 +61,7 @@ class SettingsViewController: UIViewController {
     let removeAdsItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
         clSettingsItem.isHidden = CL.shared.noAds()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsRemoveAds")
+        clSettingsItem.iconImage = UIImage.init(named: "removeAds")
         clSettingsItem.title = "Remove Ads"
         clSettingsItem.details = "Get rid of pesky ads"
         return clSettingsItem
@@ -70,7 +70,7 @@ class SettingsViewController: UIViewController {
     let restorePurchasesItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
         clSettingsItem.isHidden = CL.shared.noAds()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsRestore")
+        clSettingsItem.iconImage = UIImage.init(named: "restore")
         clSettingsItem.title = "Restore Purchases"
         clSettingsItem.details = "Re-remove ads from your list"
         return clSettingsItem
@@ -78,7 +78,7 @@ class SettingsViewController: UIViewController {
     
     let leaveItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsLeave")
+        clSettingsItem.iconImage = UIImage.init(named: "leave")
         clSettingsItem.title = "Leave List"
         clSettingsItem.details = "Remove your account from this list"
         return clSettingsItem
@@ -86,7 +86,7 @@ class SettingsViewController: UIViewController {
     
     let logoutItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "SettingsLogout")
+        clSettingsItem.iconImage = UIImage.init(named: "logout")
         clSettingsItem.title = "Logout"
         clSettingsItem.details = "Sign out of the app"
         return clSettingsItem

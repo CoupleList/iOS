@@ -100,7 +100,7 @@ class ActivitiesTableViewController: UITableViewController {
                     if let person = childSnapshot.childSnapshot(forPath: "person").value as? String {
                         activity.person = person
                         if CL.shared.profileImages.index(forKey: person) == nil {
-                            CL.shared.profileImages.updateValue(UIImage(named: "ProfileImagePlaceholder")!, forKey: person)
+                            CL.shared.profileImages.updateValue(UIImage(named: "profilePicture")!, forKey: person)
                             
                             if person == Auth.auth().currentUser!.uid {
                                 CL.shared.profileDisplayNames.updateValue("You", forKey: person)

@@ -47,7 +47,7 @@ class AccountSettingsViewController: UIViewController {
     
     let setProfileImageItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "AccountProfilePicture")
+        clSettingsItem.iconImage = UIImage.init(named: "profilePicture")
         clSettingsItem.title = "Set Profile Picture"
         clSettingsItem.details = "Select a picture to be used"
         return clSettingsItem
@@ -55,7 +55,7 @@ class AccountSettingsViewController: UIViewController {
     
     let setDisplayNameItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "AccountDisplayName")
+        clSettingsItem.iconImage = UIImage.init(named: "rename")
         clSettingsItem.title = "Set Display Name"
         clSettingsItem.details = "Set a display name to be used"
         return clSettingsItem
@@ -63,7 +63,7 @@ class AccountSettingsViewController: UIViewController {
     
     let changePasswordItem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "AccountChangePassword")
+        clSettingsItem.iconImage = UIImage.init(named: "changePassword")
         clSettingsItem.title = "Change Password"
         clSettingsItem.details = "Change your password"
         return clSettingsItem
@@ -71,7 +71,7 @@ class AccountSettingsViewController: UIViewController {
     
     let accountDataIem: CLSettingsItem = {
         let clSettingsItem = CLSettingsItem()
-        clSettingsItem.iconImage = UIImage.init(named: "AccountData")
+        clSettingsItem.iconImage = UIImage.init(named: "data")
         clSettingsItem.title = "View Account Data"
         clSettingsItem.details = "View all your account data"
         return clSettingsItem

@@ -24,7 +24,7 @@ class AccountDataViewController: UIViewController {
     
     let userProgressItem: CLSettingsProgressItem = {
         let clSettingsProgressItem = CLSettingsProgressItem()
-        clSettingsProgressItem.iconImage = UIImage.init(named: "AccountProfilePicture")
+        clSettingsProgressItem.iconImage = UIImage.init(named: "profilePicture")
         clSettingsProgressItem.title = "Account Information"
         clSettingsProgressItem.details = "View all account information"
         return clSettingsProgressItem

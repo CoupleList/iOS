@@ -16,7 +16,7 @@ The iOS version of Couple List is intended to be developed on devices running Ma
 
       $ sudo gem install cocoapods
 
-- Run `pod install` in the project directory, which will install the required pods.
+- Run `pod install` inside the project directory, which will install the required pods.
    
 - For full Firebase functionality, please contact kirinpatel@gmail.com for the required files and setup process.
    

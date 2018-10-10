@@ -18,7 +18,7 @@ The iOS version of Couple List is intended to be developed on devices running Ma
 
 - Run `pod install` inside the project directory, which will install the required pods.
    
-- Obtain GoogleService-Info.plist file by contacting kirinpatel@gmail.com in order for Firebase to communicate correctly.
+- Obtain the ***GoogleService-Info.plist*** file by contacting kirinpatel@gmail.com in order for Firebase to communicate correctly.
    
 *Be sure to open the Xcode workspace instead of the project file itself.*
 

@@ -12,15 +12,15 @@ The iOS version of Couple List is intended to be developed on devices running Ma
 
 ## Getting Started
 
-- Install [cocoapods](https://cocoapods.org/) on your device in order  to utilize the required dependencies for development. 
+1. Install [cocoapods](https://cocoapods.org/) on your device in order  to utilize the required dependencies for development. 
 
-      $ sudo gem install cocoapods
+       $ sudo gem install cocoapods
 
-- Run `pod install` inside the project directory, which will install the required pods.
+2. Run `pod install` inside the project directory, which will install the required pods.
    
-- Obtain the ***GoogleService-Info.plist*** file by contacting kirinpatel@gmail.com in order for Firebase to communicate correctly.
+3. Obtain the ***GoogleService-Info.plist*** file by contacting kirinpatel@gmail.com in order for Firebase to communicate correctly.
    
-*Be sure to open the Xcode workspace instead of the project file itself.*
+4. Be sure to open the Xcode workspace instead of the project file itself.
 
 
 ## Website (for reference)

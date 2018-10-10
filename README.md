@@ -3,7 +3,7 @@
 This app is designed for those who want to share and review experiences with their partner.
 
 ## Find any issues?
-If you for any reason run into issues while using Couple List, submit an issue [here](https://github.com/CoupleList/iOS/issues) and use the bug report template
+If you for any reason run into issues while using Couple List, please submit an issue [here](https://github.com/CoupleList/iOS/issues).
 
 
 ## Prerequisites
@@ -18,7 +18,7 @@ The iOS version of Couple List is intended to be developed on devices running Ma
 
 - Run `pod install` inside the project directory, which will install the required pods.
    
-- For full Firebase functionality, please contact kirinpatel@gmail.com for the required files and setup process.
+- Obtain GoogleService-Info.plist file by contacting kirinpatel@gmail.com in order for Firebase to communicate correctly.
    
 *Be sure to open the Xcode workspace instead of the project file itself.*
 

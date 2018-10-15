@@ -113,7 +113,7 @@ class EditActivityViewController: UIViewController {
             self.activity = self.clEditableCard.activity
             self.activity.isDone = true
             
-            self.ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(self.activity.key)").updateChildValues(["title": self.activity.title, "description": self.activity.desc, "done": self.activity.isDone, "person": self.activity.person!, "lastEditor": Auth.auth().currentUser!.uid])
+            self.ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(self.activity.key)").updateChildValues(["title": self.activity.title, "description": self.activity.desc, "done": self.activity.isDone, "person": self.activity.person ?? nil, "lastEditor": Auth.auth().currentUser!.uid])
             
             self.delegate.activityWasEdited(self.activity)
             self.navigationController?.popViewController(animated: true)

@@ -139,6 +139,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		784FE7AA219B0E8D0088BC01 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7846CA0B20EF46F300879807 /* AccountDataViewController.swift */,
+				78E8EF3B20EDD3CB00B06F34 /* AccountSettingsViewController.swift */,
+				78E8EF3920EDD3B100B06F34 /* SettingsNavigationController.swift */,
+				784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		78786F9D1F58D8040095ED2D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,9 +161,8 @@
 		78786F9E1F58D8100095ED2D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				784FE7AA219B0E8D0088BC01 /* Settings */,
 				78E8EF3720EDCA6C00B06F34 /* AddActivityViewController.swift */,
-				7846CA0B20EF46F300879807 /* AccountDataViewController.swift */,
-				78E8EF3B20EDD3CB00B06F34 /* AccountSettingsViewController.swift */,
 				786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */,
 				78F82B9920EDEC7B001A6A92 /* ActivityHistoryTableViewCell.swift */,
 				784E0E2420D6E144006D6AAE /* ActivityNavigationViewController.swift */,
@@ -168,8 +178,6 @@
 				78DD9CD8213108FA00DF30E8 /* MapKitLocationFinder.swift */,
 				784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */,
 				78DF37712132370B00BF86A1 /* SetListViewController.swift */,
-				784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */,
-				78E8EF3920EDD3B100B06F34 /* SettingsNavigationController.swift */,
 				7895607320D4C8C600509E41 /* StartViewController.swift */,
 			);
 			path = Views;

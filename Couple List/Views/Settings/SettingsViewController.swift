@@ -234,9 +234,13 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func handleViewIcons8() {
-        if let url = URL(string: "https://icons8.com") {
-            UIApplication.shared.open(url, options: [:])
-        }
+        let alert = UIAlertController(title: "View icons8?", message: "Would you like to open the icons8 website in your web browser?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            if let url = URL(string: "https://icons8.com") {
+                UIApplication.shared.open(url, options: [:])
+            }
+        }))
     }
     
     fileprivate func setupView() {

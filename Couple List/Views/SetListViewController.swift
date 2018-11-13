@@ -19,7 +19,7 @@ class SetListViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.init(named: "SetListCreate")!
+        imageView.image = UIImage.init(named: "create")!
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         view.addSubview(imageView)
@@ -39,7 +39,7 @@ class SetListViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.init(named: "SetListJoin")!
+        imageView.image = UIImage.init(named: "join")!
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         view.addSubview(imageView)

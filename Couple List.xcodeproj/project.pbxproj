@@ -26,6 +26,7 @@
 		784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */; };
 		784E0E2920D6E18A006D6AAE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */; };
 		784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */; };
+		786B60102157FBEF008E9F98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 786B600F2157FBEF008E9F98 /* Images.xcassets */; };
 		786F1ED920F00CFB00E54B97 /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */; };
 		786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */; };
 		786F1EE020F080A600E54B97 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDF20F080A600E54B97 /* ActivityViewController.swift */; };
@@ -79,6 +80,7 @@
 		784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		786B600F2157FBEF008E9F98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
 		786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditActivityViewController.swift; sourceTree = "<group>"; };
 		786F1EDF20F080A600E54B97 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */,
 				78AB80391EE38D54008ACCC3 /* Info.plist */,
 				78AB80341EE38D54008ACCC3 /* Assets.xcassets */,
+				786B600F2157FBEF008E9F98 /* Images.xcassets */,
 				78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */,
 			);
 			path = "Couple List";
@@ -262,6 +265,7 @@
 				78AB80271EE38D54008ACCC3 /* Frameworks */,
 				78AB80281EE38D54008ACCC3 /* Resources */,
 				3641B3DFE4751076C270F38A /* [CP] Embed Pods Frameworks */,
+				F8E64643B199A84EAB8E6E6E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -330,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78AB80381EE38D54008ACCC3 /* LaunchScreen.storyboard in Resources */,
+				786B60102157FBEF008E9F98 /* Images.xcassets in Resources */,
 				784AEC6D20D56FA900BAD8DF /* GoogleService-Info.plist in Resources */,
 				78AB80351EE38D54008ACCC3 /* Assets.xcassets in Resources */,
 			);
@@ -345,19 +350,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftSVG/SwiftSVG.framework",
+				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSVG.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -382,6 +389,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8E64643B199A84EAB8E6E6E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

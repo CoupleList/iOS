@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol CLCardDelegate: class {
+    func getDirectionsForActivity(placemark: CLPlacemark)
+}
+
 class CLCard: UIView {
     
     fileprivate let cardView: UIView = {
@@ -62,7 +66,7 @@ class CLCard: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "ProfileImagePlaceholder")!
+        imageView.image = UIImage(named: "profilePicture")!
         return imageView
     }()
     
@@ -73,9 +77,9 @@ class CLCard: UIView {
         return view
     }()
     
-    internal lazy var profileImageWidthConstraint = profileImageView.widthAnchor.constraint(equalToConstant: 40)
-    internal lazy var profileImageHeightConstraint = profileImageView.heightAnchor.constraint(equalToConstant: 40)
-    internal lazy var richContentHeightConstraint = richContentStackView.heightAnchor.constraint(equalToConstant: 150)
+    internal lazy var widthConstraint = profileImageView.widthAnchor.constraint(equalToConstant: 40)
+    internal lazy var heightConstraint = profileImageView.heightAnchor.constraint(equalToConstant: 40)
+    internal lazy var richContentHeightConstraint = richContentStackView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 350 : 200)
     
     var activity: Activity! {
         didSet {
@@ -106,6 +110,8 @@ class CLCard: UIView {
             }
         }
     }
+    var activityLocation: CLPlacemark?
+    var delegate: CLCardDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -115,6 +121,14 @@ class CLCard: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func handleGetDirections() {
+        if let delegate = delegate {
+            if let placemark = activityLocation {
+                delegate.getDirectionsForActivity(placemark: placemark)
+            }
+        }
     }
     
     fileprivate func setupView() {
@@ -161,34 +175,52 @@ class CLCard: UIView {
         mapView.isZoomEnabled = false
         mapView.isPitchEnabled = false
         mapView.isRotateEnabled = false
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location.coordinate
-        if let name = location.name {
-            annotation.title = name
-        } else {
-            annotation.title = "Activity Location"
+        getLocation(location: CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)) { annotation in
+            mapView.addAnnotation(annotation)
         }
-        if let city = location.locality, let state = location.administrativeArea {
-            annotation.subtitle = "\(city) \(state)"
-        } else {
-            annotation.subtitle = activity.title
-        }
-        mapView.addAnnotation(annotation)
         let span = MKCoordinateSpanMake(0.015, 0.015)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: true)
         mapView.delegate = self
         richContentStackView.addArrangedSubview(mapView)
     }
+    
+    fileprivate func getLocation(location: CLLocation, _ completion: @escaping (_ annotation: MKPointAnnotation) -> Void) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let _ = error { return }
+            
+            guard let placemark = placemarks?.first else { return }
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location.coordinate
+            annotation.title = placemark.name
+            if let city = placemark.locality, let state = placemark.administrativeArea {
+                annotation.subtitle = "\(city) \(state)"
+            }
+            
+            self.activityLocation = placemark
+            completion(annotation)
+        }
+    }
 }
 
 extension CLCard: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let location = activity.location {
-            let mapItem = MKMapItem(placemark: location)
-            let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
-            mapItem.openInMaps(launchOptions: launchOptions)
-        }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation { return nil }
+        
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
+        pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView?.markerTintColor = UIColor.init(named: "MainColor")
+        pinView?.animatesWhenAdded = true
+        pinView?.canShowCallout = true
+        let getDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
+        getDirectionsButton.setBackgroundImage(UIImage.init(named: "getDirections"), for: .normal)
+        getDirectionsButton.addTarget(self, action: #selector(handleGetDirections), for: .touchUpInside)
+        pinView?.rightCalloutAccessoryView = getDirectionsButton
+        return pinView
     }
 }

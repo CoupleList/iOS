@@ -119,24 +119,29 @@ extension AddActivityViewController: CLEditableCardDelegate {
         navigationController?.pushViewController(mapKitLocationFinder, animated: true)
     }
     
-    func userAddedLocation(location: MKPlacemark) {
-        activity.location = location
-        clEditableCard.activity = activity
-    }
-    
-    func userSeletedLocation() {
-        // TODO: Remove alert & add dynamic option list within mapkit window
-        let alert = UIAlertController(title: "Location Options", message: "Change or remove the location for this activity.", preferredStyle: .alert)
+    func userWantsToChangeLocation() {
+        let alert = UIAlertController(title: "Change Activity Location?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Change", style: .default) { _ in
             let mapKitLocationFinder = MapKitLocationFinder()
             mapKitLocationFinder.clEditableCardDelegate = self
             self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
         })
+        present(alert, animated: true)
+    }
+    
+    func userWantsToRemoveLocation() {
+        let alert = UIAlertController(title: "Remove Activity Location?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
             self.activity.location = nil
             self.clEditableCard.activity = self.activity
         })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
+    }
+    
+    func userAddedLocation(location: MKPlacemark) {
+        activity.location = location
+        clEditableCard.activity = activity
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -97,6 +98,7 @@ class ActivityViewController: UIViewController {
         clCard.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
         clCard.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         clCard.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        clCard.delegate = self
         
         clCard.bottomView.addSubview(deleteButton)
         deleteButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 10).isActive = true
@@ -117,5 +119,14 @@ extension ActivityViewController: EditActivityViewControllerDelegate {
     
     func activityWasEdited(_ activity: Activity) {
         self.activity = activity
+    }
+}
+
+extension ActivityViewController: CLCardDelegate {
+    
+    func getDirectionsForActivity(placemark: CLPlacemark) {
+        CL.generateDirectionsAlert(placemark: placemark) { alert in
+            self.present(alert, animated: true)
+        }
     }
 }

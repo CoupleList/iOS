@@ -24,10 +24,17 @@ class AccountDataViewController: UIViewController {
     
     let userProgressItem: CLSettingsProgressItem = {
         let clSettingsProgressItem = CLSettingsProgressItem()
-        clSettingsProgressItem.iconImage = UIImage.init(named: "AccountProfilePicture")
+        clSettingsProgressItem.iconImage = UIImage.init(named: "profilePicture")
         clSettingsProgressItem.title = "Account Information"
         clSettingsProgressItem.details = "View all account information"
         return clSettingsProgressItem
+    }()
+    
+    let testingItem: CLSettingsItem = {
+        let clSettingsItem = CLSettingsItem()
+        clSettingsItem.title = CL.shared.userSettings.listKey
+        clSettingsItem.details = Auth.auth().currentUser!.uid
+        return clSettingsItem
     }()
     
     var ref: DatabaseReference!
@@ -52,7 +59,7 @@ class AccountDataViewController: UIViewController {
         scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
         
         let accountSettingsSubViews: [UIView] = [
-            userProgressItem
+            testingItem
         ]
         
         let accountSettingsStackView = UIStackView(arrangedSubviews: accountSettingsSubViews)

@@ -17,7 +17,7 @@ class FeedbackViewController: UIViewController {
     
     let anonymousItem: CLSettingsSwitchInputItem = {
         let clSettingsSwitchInputItem = CLSettingsSwitchInputItem()
-        clSettingsSwitchInputItem.iconImage = UIImage.init(named: "FeedbackAnonymous")
+        clSettingsSwitchInputItem.iconImage = UIImage.init(named: "anonymous")
         clSettingsSwitchInputItem.title = "Remain Anonymous?"
         clSettingsSwitchInputItem.details = "Send feedback without an email address"
         clSettingsSwitchInputItem.isOn = true
@@ -82,6 +82,13 @@ class FeedbackViewController: UIViewController {
             anonymousItem,
             CLSettingsItemSpacer(),
             feedbackTextView,
+            {
+                let view = UIView()
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.backgroundColor = .white
+                view.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3.5).isActive = true
+                return view
+            }(),
             CLSettingsItemSpacer(),
             submitButton,
             CLSettingsItemSpacer()

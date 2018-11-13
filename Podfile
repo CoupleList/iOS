@@ -16,6 +16,7 @@ target 'Couple List' do
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Messaging'
   pod 'Firebase/Storage'
-  pod 'SwiftSVG'
+  pod 'GoogleSignIn'
+  pod 'TPKeyboardAvoiding'
 
 end

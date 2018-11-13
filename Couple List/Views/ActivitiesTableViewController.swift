@@ -19,7 +19,6 @@ class ActivitiesTableViewController: UITableViewController {
     var ref: DatabaseReference!
     var storage: Storage!
     var activities = [Activity]()
-    var animatedRows = [Int]()
     let cellIdentifier = "ActivityTableViewCell"
     
     override func viewDidLoad() {
@@ -31,22 +30,6 @@ class ActivitiesTableViewController: UITableViewController {
     
     @objc func handleAdd() {
         navigationController?.pushViewController(AddActivityViewController(), animated: true)
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if animatedRows.contains(indexPath.row) {
-            return
-        }
-        
-        animatedRows.append(indexPath.row)
-        
-        cell.alpha = 0
-        cell.transform = CGAffineTransform(translationX: 0, y: 20)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            cell.alpha = 1
-            cell.transform = CGAffineTransform(translationX: 0, y: 0)
-        })
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -79,6 +62,7 @@ class ActivitiesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ActivityTableViewCell
         
         cell.activity = activities[indexPath.row]
+        cell.delegate = self
         cell.selectionStyle = .none
         
         return cell
@@ -102,7 +86,6 @@ class ActivitiesTableViewController: UITableViewController {
         ref.child("lists/\(CL.shared.userSettings.listKey)/activities").observe(.value, with: { snapshot in
             
             self.activities.removeAll()
-            self.animatedRows.removeAll()
             
             for child in snapshot.children.allObjects {
                 let childSnapshot = child as! DataSnapshot
@@ -117,7 +100,7 @@ class ActivitiesTableViewController: UITableViewController {
                     if let person = childSnapshot.childSnapshot(forPath: "person").value as? String {
                         activity.person = person
                         if CL.shared.profileImages.index(forKey: person) == nil {
-                            CL.shared.profileImages.updateValue(UIImage(named: "ProfileImagePlaceholder")!, forKey: person)
+                            CL.shared.profileImages.updateValue(UIImage(named: "profilePicture")!, forKey: person)
                             
                             if person == Auth.auth().currentUser!.uid {
                                 CL.shared.profileDisplayNames.updateValue("You", forKey: person)
@@ -163,5 +146,14 @@ class ActivitiesTableViewController: UITableViewController {
             self.activities.reverse()
             self.tableView.reloadData()
         })
+    }
+}
+
+extension ActivitiesTableViewController: ActivityTableViewCellDelegate {
+    
+    func getDirectionsForActivity(placemark: CLPlacemark) {
+        CL.generateDirectionsAlert(placemark: placemark) { alert in
+            self.present(alert, animated: true)
+        }
     }
 }

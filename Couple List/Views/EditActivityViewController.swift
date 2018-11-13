@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import StoreKit
 import FirebaseAuth
 import FirebaseAnalytics
 import FirebaseDatabase
@@ -115,10 +116,11 @@ class EditActivityViewController: UIViewController {
             self.activity = self.clEditableCard.activity
             self.activity.isDone = true
             
-            self.ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(self.activity.key)").updateChildValues(["title": self.activity.title, "description": self.activity.desc, "done": self.activity.isDone, "person": self.activity.person!, "lastEditor": Auth.auth().currentUser!.uid])
+            self.ref.child("lists/\(CL.shared.userSettings.listKey)/activities/\(self.activity.key)").updateChildValues(["title": self.activity.title, "description": self.activity.desc, "done": self.activity.isDone, "person": self.activity.person ?? nil, "lastEditor": Auth.auth().currentUser!.uid])
             
             self.delegate.activityWasEdited(self.activity)
             self.navigationController?.popViewController(animated: true)
+            SKStoreReviewController.requestReview()
         })
         alert.addAction(completeAction)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -164,27 +166,29 @@ extension EditActivityViewController: CLEditableCardDelegate {
         navigationController?.pushViewController(mapKitLocationFinder, animated: true)
     }
     
-    func userAddedLocation(location: MKPlacemark) {
-        activity.location = location
-        clEditableCard.activity = activity
-    }
-    
-    func userSeletedLocation() {
-        let alert = UIAlertController(title: "Location Settings", message: "Change or remove the location of this activity.", preferredStyle: .alert)
-        
-        let changeAction = UIAlertAction(title: "Change", style: .default) { _ in
+    func userWantsToChangeLocation() {
+        let alert = UIAlertController(title: "Change Activity Location?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Change", style: .default) { _ in
             let mapKitLocationFinder = MapKitLocationFinder()
             mapKitLocationFinder.clEditableCardDelegate = self
             self.navigationController?.pushViewController(mapKitLocationFinder, animated: true)
-        }
-        let removeAction = UIAlertAction(title: "Remove", style: .destructive) { _ in
+        })
+        present(alert, animated: true)
+    }
+    
+    func userWantsToRemoveLocation() {
+        let alert = UIAlertController(title: "Remove Activity Location?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
             self.activity.location = nil
             self.clEditableCard.activity = self.activity
-        }
-        alert.addAction(changeAction)
-        alert.addAction(removeAction)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
+        })
         present(alert, animated: true)
+    }
+    
+    func userAddedLocation(location: MKPlacemark) {
+        activity.location = location
+        clEditableCard.activity = activity
     }
 }

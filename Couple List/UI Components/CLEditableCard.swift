@@ -12,8 +12,9 @@ import FirebaseDatabase
 
 protocol CLEditableCardDelegate: class {
     func userWantsToAddLocation()
+    func userWantsToChangeLocation()
+    func userWantsToRemoveLocation()
     func userAddedLocation(location: MKPlacemark)
-    func userSeletedLocation()
 }
 
 class CLEditableCard: UIView {
@@ -31,7 +32,7 @@ class CLEditableCard: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "ProfileImagePlaceholder")!
+        imageView.image = UIImage(named: "profilePicture")!
         return imageView
     }()
     
@@ -79,7 +80,7 @@ class CLEditableCard: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.init(named: "ActivityAddImage")!
+        imageView.image = UIImage.init(named: "image")!
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         view.addSubview(imageView)
@@ -95,7 +96,7 @@ class CLEditableCard: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.init(named: "ActivityAddLocation")!
+        imageView.image = UIImage.init(named: "location")!
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         view.addSubview(imageView)
@@ -142,7 +143,7 @@ class CLEditableCard: UIView {
                 }
             } else {
                 personLabel.text = ""
-                profileImageView.image = UIImage.init(named: "ProfileImagePlaceholder")
+                profileImageView.image = UIImage.init(named: "profilePicture")
                 cardView.setNeedsLayout()
             }
             
@@ -163,6 +164,7 @@ class CLEditableCard: UIView {
             
         }
     }
+    var activityLocation: CLPlacemark?
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -176,7 +178,20 @@ class CLEditableCard: UIView {
     
     @objc func handleSelectLocation() {
         if let delegate = delegate {
+            guard activity.location == nil else { return }
             delegate.userWantsToAddLocation()
+        }
+    }
+    
+    @objc func handleChangeLocation() {
+        if let delegate = delegate {
+            delegate.userWantsToChangeLocation()
+        }
+    }
+    
+    @objc func handleRemoveLocation() {
+        if let delegate = delegate {
+            delegate.userWantsToRemoveLocation()
         }
     }
     
@@ -216,7 +231,7 @@ class CLEditableCard: UIView {
         richContentStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10).isActive = true
         richContentStackView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
         richContentStackView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
-        richContentStackView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        richContentStackView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 350 : 200).isActive = true
         
         cardView.addSubview(datePicker)
         datePicker.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: -15).isActive = true
@@ -250,19 +265,9 @@ class CLEditableCard: UIView {
         mapView.isZoomEnabled = false
         mapView.isPitchEnabled = false
         mapView.isRotateEnabled = false
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location.coordinate
-        if let name = location.name {
-            annotation.title = name
-        } else {
-            annotation.title = "Activity Location"
+        getLocation(location: CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)) { annotation in
+            mapView.addAnnotation(annotation)
         }
-        if let city = location.locality, let state = location.administrativeArea {
-            annotation.subtitle = "\(city) \(state)"
-        } else {
-            annotation.subtitle = activity.title
-        }
-        mapView.addAnnotation(annotation)
         let span = MKCoordinateSpanMake(0.015, 0.015)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: true)
@@ -274,6 +279,26 @@ class CLEditableCard: UIView {
         richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
 //        richContentStackView.addArrangedSubview(addImageContainer)
         richContentStackView.addArrangedSubview(addLocationContainer)
+    }
+    
+    fileprivate func getLocation(location: CLLocation, _ completion: @escaping (_ annotation: MKPointAnnotation) -> Void) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let _ = error { return }
+            
+            guard let placemark = placemarks?.first else { return }
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location.coordinate
+            annotation.title = placemark.name
+            if let city = placemark.locality, let state = placemark.administrativeArea {
+                annotation.subtitle = "\(city) \(state)"
+            }
+            
+            self.activityLocation = placemark
+            completion(annotation)
+        }
     }
 }
 
@@ -319,9 +344,29 @@ extension CLEditableCard: UITextViewDelegate {
 
 extension CLEditableCard: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let delegate = delegate {
-            delegate.userSeletedLocation()
-        }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation { return nil }
+        
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
+        pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView?.markerTintColor = UIColor.init(named: "MainColor")
+        pinView?.animatesWhenAdded = true
+        pinView?.canShowCallout = true
+        let changeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
+        changeDirectionsButton.setBackgroundImage(UIImage.init(named: "changeDirections"), for: .normal)
+        changeDirectionsButton.addTarget(self, action: #selector(handleChangeLocation), for: .touchUpInside)
+        let removeDirectionsButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 30, height: 30)))
+        removeDirectionsButton.setBackgroundImage(UIImage.init(named: "removeDirections"), for: .normal)
+        removeDirectionsButton.addTarget(self, action: #selector(handleRemoveLocation), for: .touchUpInside)
+        let stackView = UIStackView(frame: CGRect(origin: .zero, size: CGSize(width: 68, height: 30)))
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        stackView.addArrangedSubview(changeDirectionsButton)
+        stackView.addArrangedSubview(removeDirectionsButton)
+        pinView?.rightCalloutAccessoryView = stackView
+        return pinView
     }
 }

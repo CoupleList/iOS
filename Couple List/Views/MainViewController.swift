@@ -75,14 +75,17 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             }
         }
         
-        let navigationTab = ActivityNavigationViewController()
-        navigationTab.tabBarItem = UITabBarItem(title: "Activities", image: UIImage(named: "ActivitiesImage"), selectedImage: nil)
+        let activitiesTab = ActivityNavigationViewController()
+        activitiesTab.tabBarItem = UITabBarItem(title: "Activities", image: UIImage(named: "activities"), selectedImage: nil)
+        
+        let connectTab = FeedbackViewController()
+        connectTab.tabBarItem = UITabBarItem(title: "Connect", image: UIImage(named: "connect"), selectedImage: nil)
         
         let historyTab = HistoryNavigationViewController()
-        historyTab.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 1)
+        historyTab.tabBarItem = UITabBarItem(title: "History", image: UIImage(named: "history"), selectedImage: nil)
         
         let settingsTab = SettingsNavigationViewController()
-        settingsTab.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "SettingsImage"), selectedImage: nil)
+        settingsTab.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settings"), selectedImage: nil)
         
         handler = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
@@ -126,7 +129,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                     } else {
                         self.ref.child("lists/\(CL.shared.userSettings.listKey)/tokens/\(user.uid)").setValue(Messaging.messaging().fcmToken)
                         
-                        self.viewControllers = [ navigationTab, historyTab, settingsTab ]
+                        self.viewControllers = [ activitiesTab, historyTab, settingsTab ]
                         self.selectedIndex = 0
                     }
                 })

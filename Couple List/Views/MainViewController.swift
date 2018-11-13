@@ -129,7 +129,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                     } else {
                         self.ref.child("lists/\(CL.shared.userSettings.listKey)/tokens/\(user.uid)").setValue(Messaging.messaging().fcmToken)
                         
-                        self.viewControllers = [ activitiesTab, connectTab, historyTab, settingsTab ]
+                        self.viewControllers = [ activitiesTab, historyTab, settingsTab ]
                         self.selectedIndex = 0
                     }
                 })

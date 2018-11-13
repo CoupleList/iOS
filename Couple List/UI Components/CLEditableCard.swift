@@ -107,6 +107,15 @@ class CLEditableCard: UIView {
         return view
     }()
     
+    fileprivate let datePicker: UIDatePicker = {
+       let datePicker = UIDatePicker()
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.minimumDate = datePicker.date
+        datePicker.minuteInterval = 10
+        datePicker.addTarget(self, action: #selector(handleDateSelected), for: .valueChanged)
+        return datePicker
+    }()
+    
     let bottomView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -139,7 +148,7 @@ class CLEditableCard: UIView {
             }
             
             titleTextView.text = activity.title
-            descriptionTextView.text = activity.desc.isEmpty ? "Activity Description" : activity.desc
+            descriptionTextView.text = activity.desc.isEmpty ? "Additional Notes" : activity.desc
             
             if let image = activity.image {
                 richContentStackView.arrangedSubviews.forEach { richContentStackView.removeArrangedSubview($0) }
@@ -148,6 +157,11 @@ class CLEditableCard: UIView {
             } else {
                 resetRichContent()
             }
+            
+            if let date = activity.date {
+                datePicker.date = date
+            }
+            
         }
     }
     var activityLocation: CLPlacemark?
@@ -181,6 +195,14 @@ class CLEditableCard: UIView {
         }
     }
     
+    @objc func handleDateSelected() {
+        if (Int(Date().timeIntervalSince1970)/86400 == Int(datePicker.date.timeIntervalSince1970)/86400) {
+            activity.date = nil
+        } else {
+            activity.date = datePicker.date
+        }
+    }
+    
     fileprivate func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         isUserInteractionEnabled = true
@@ -211,8 +233,14 @@ class CLEditableCard: UIView {
         richContentStackView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
         richContentStackView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 350 : 200).isActive = true
         
+        cardView.addSubview(datePicker)
+        datePicker.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: -15).isActive = true
+        datePicker.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
+        datePicker.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
+        datePicker.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        
         cardView.addSubview(titleTextView)
-        titleTextView.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: 0).isActive = true
+        titleTextView.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 0).isActive = true
         titleTextView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
         titleTextView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         titleTextView.delegate = self
@@ -277,7 +305,7 @@ class CLEditableCard: UIView {
 extension CLEditableCard: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text! == (textView == titleTextView ? activity.title : activity.desc.isEmpty ? "Activity Description" : activity.desc) {
+        if textView.text! == (textView == titleTextView ? activity.title : activity.desc.isEmpty ? "Additional Notes" : activity.desc) {
             textView.text = ""
             textView.textColor = UIColor.init(named: "MainColor")
         }
@@ -286,7 +314,7 @@ extension CLEditableCard: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if textView.text! == "" {
-            textView.text = textView.font?.pointSize == 30 ? activity.title : activity.desc.isEmpty ? "Activity Description" : activity.desc
+            textView.text = textView.font?.pointSize == 30 ? activity.title : activity.desc.isEmpty ? "Additional Notes" : activity.desc
             textView.textColor = .gray
         } else {
             if textView == titleTextView {

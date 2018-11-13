@@ -133,6 +133,12 @@ class ActivitiesTableViewController: UITableViewController {
                             activity.location = location
                         }
                     }
+                    if childSnapshot.childSnapshot(forPath: "date").exists() {
+                        if let epoch = childSnapshot.childSnapshot(forPath: "date").value as? Double {
+                            let date = Date(timeIntervalSince1970: epoch)
+                            activity.date = date
+                        }
+                    }
                 }
                 self.activities.append(activity)
             }

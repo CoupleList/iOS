@@ -31,15 +31,6 @@ class CLCard: UIView {
         return imageView
     }()
     
-    fileprivate let personLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 1
-        label.textColor = UIColor.init(named: "MainColor")
-        label.font = UIFont.systemFont(ofSize: 20, weight: .light)
-        return label
-    }()
-    
     fileprivate let richContentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,9 +44,11 @@ class CLCard: UIView {
     fileprivate let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
         label.textColor = UIColor.init(named: "MainColor")
-        label.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         return label
     }()
     
@@ -64,7 +57,7 @@ class CLCard: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.textColor = UIColor.init(named: "MainColor")
-        label.font = UIFont.systemFont(ofSize: 24, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         return label
     }()
     
@@ -84,34 +77,23 @@ class CLCard: UIView {
         return view
     }()
     
-    internal lazy var widthConstraint = profileImageView.widthAnchor.constraint(equalToConstant: 40.0)
-    internal lazy var heightConstraint = profileImageView.heightAnchor.constraint(equalToConstant: 40.0)
+    internal lazy var profileImageWidthConstraint = profileImageView.widthAnchor.constraint(equalToConstant: 40)
+    internal lazy var profileImageHeightConstraint = profileImageView.heightAnchor.constraint(equalToConstant: 40)
     internal lazy var richContentHeightConstraint = richContentStackView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 350 : 200)
     
     var activity: Activity! {
         didSet {
             if let person = activity.person {
-                if let displayName = CL.shared.profileDisplayNames[person] {
-                    if activity.isDone {
-                        personLabel.text = "\(displayName) and \(displayName == "You" ? "your S.O." : "you")"
-                    } else {
-                        personLabel.text = "\(displayName) want\(displayName == "You" ? "" : "s") to"
-                    }
-                } else {
-                    personLabel.text = ""
-                }
-                
                 if let profileImage = CL.shared.profileImages[person] {
                     profileImageView.image = profileImage
-                    widthConstraint.isActive = true
-                    heightConstraint.isActive = true
+                    profileImageWidthConstraint.isActive = true
+                    profileImageHeightConstraint.isActive = true
                     cardView.setNeedsLayout()
                 }
             } else {
-                personLabel.text = ""
                 profileImageView.image = nil
-                widthConstraint.isActive = false
-                heightConstraint.isActive = false
+                profileImageWidthConstraint.isActive = false
+                profileImageHeightConstraint.isActive = false
                 cardView.setNeedsLayout()
             }
             
@@ -163,29 +145,24 @@ class CLCard: UIView {
         profileImageView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10).isActive = true
         profileImageView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         
-        cardView.addSubview(personLabel)
-        personLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 10).isActive = true
-        personLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
-        personLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        
         cardView.addSubview(richContentStackView)
         richContentStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10).isActive = true
         richContentStackView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
         richContentStackView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
         
         cardView.addSubview(titleLabel)
-        titleLabel.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: 0).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 10).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         
         cardView.addSubview(descriptionLabel)
-        descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0).isActive = true
+        descriptionLabel.topAnchor.constraint(equalTo: richContentStackView.bottomAnchor, constant: 0).isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         descriptionLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         
         cardView.addSubview(bottomView)
         bottomView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 0).isActive = true
-        bottomView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0).isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10).isActive = true
         bottomView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
         bottomView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
     }

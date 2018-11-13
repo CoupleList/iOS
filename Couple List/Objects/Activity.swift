@@ -17,6 +17,7 @@ class Activity: NSObject {
     var person: String?
     var image: UIImage?
     var location: MKPlacemark?
+    var date: Date?
     var isDone: Bool
     
     init?(key: String, title: String, desc: String) {

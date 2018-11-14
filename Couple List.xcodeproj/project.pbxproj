@@ -26,6 +26,7 @@
 		784E0E2720D6E164006D6AAE /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */; };
 		784E0E2920D6E18A006D6AAE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */; };
 		784E0E2D20D6F692006D6AAE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */; };
+		784FE7AD219B120A0088BC01 /* CLActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784FE7AC219B120A0088BC01 /* CLActivityCard.swift */; };
 		786B60102157FBEF008E9F98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 786B600F2157FBEF008E9F98 /* Images.xcassets */; };
 		786F1ED920F00CFB00E54B97 /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */; };
 		786F1EDE20F07C4600E54B97 /* EditActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */; };
@@ -80,6 +81,7 @@
 		784E0E2620D6E164006D6AAE /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		784E0E2820D6E18A006D6AAE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		784E0E2C20D6F692006D6AAE /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		784FE7AC219B120A0088BC01 /* CLActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLActivityCard.swift; sourceTree = "<group>"; };
 		786B600F2157FBEF008E9F98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		786F1ED820F00CFB00E54B97 /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
 		786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditActivityViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,15 @@
 				E9CC8470662945435B1C7B16 /* Pods_Couple_List.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		784FE7AB219B11E80088BC01 /* CLCard */ = {
+			isa = PBXGroup;
+			children = (
+				784BED8621194FCC00F68B60 /* CLCard.swift */,
+				784FE7AC219B120A0088BC01 /* CLActivityCard.swift */,
+			);
+			path = CLCard;
 			sourceTree = "<group>";
 		};
 		78786F9D1F58D8040095ED2D /* Storyboards */ = {
@@ -226,6 +237,7 @@
 		78E8EF2820ED9C8000B06F34 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				784FE7AB219B11E80088BC01 /* CLCard */,
 				78E8EF2920ED9C9000B06F34 /* CLTitleLabel.swift */,
 				78E8EF2B20ED9DBC00B06F34 /* CLDescriptionLabel.swift */,
 				78E8EF2D20ED9E7500B06F34 /* CLPrimaryButton.swift */,
@@ -234,7 +246,6 @@
 				784A625A2112ACCE00127812 /* CLTextField.swift */,
 				784A625E2112C06700127812 /* CLStackView.swift */,
 				784A625C2112AEA900127812 /* CLBasicViewController.swift */,
-				784BED8621194FCC00F68B60 /* CLCard.swift */,
 				7849F26C212FB6B2006CD186 /* CLSettingsSwitchInputItem.swift */,
 				7849F268212FAA28006CD186 /* CLSettingsItem.swift */,
 				7849F26A212FAE74006CD186 /* CLSettingsItemSpacer.swift */,
@@ -424,6 +435,7 @@
 				78DF37722132370B00BF86A1 /* SetListViewController.swift in Sources */,
 				78E8EF3220ED9FBE00B06F34 /* CLFullScreenButton.swift in Sources */,
 				78ADF7621EE3A8C600C5EB36 /* Activity.swift in Sources */,
+				784FE7AD219B120A0088BC01 /* CLActivityCard.swift in Sources */,
 				7895607220D4C72D00509E41 /* UserSettings.swift in Sources */,
 				78F82B9820EDEA86001A6A92 /* ActivityHistory.swift in Sources */,
 				78E8EF3E20EDD50800B06F34 /* FeedbackViewController.swift in Sources */,

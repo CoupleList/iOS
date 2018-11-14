@@ -99,31 +99,6 @@ class ActivitiesTableViewController: UITableViewController {
                 if childSnapshot.childSnapshot(forPath: "person").exists() {
                     if let person = childSnapshot.childSnapshot(forPath: "person").value as? String {
                         activity.person = person
-                        if CL.shared.profileImages.index(forKey: person) == nil {
-                            CL.shared.profileImages.updateValue(UIImage(named: "profilePicture")!, forKey: person)
-                            
-                            if person == Auth.auth().currentUser!.uid {
-                                CL.shared.profileDisplayNames.updateValue("You", forKey: person)
-                            } else {
-                                self.ref.child("users/\(person)/displayName").observeSingleEvent(of: .value, with: {
-                                    (snapshot) in
-                                    if snapshot.exists() {
-                                        CL.shared.profileDisplayNames.updateValue(snapshot.value as! String, forKey: person)
-                                        
-                                        self.tableView.reloadData()
-                                    }
-                                })
-                            }
-                            
-                            let profileImageRef = self.storage.reference(withPath: "profileImages/\(person).JPG")
-                            profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                                if error == nil {
-                                    CL.shared.profileImages.updateValue(UIImage(data: data!)!, forKey: person)
-                                    
-                                    self.tableView.reloadData()
-                                }
-                            }
-                        }
                     }
                     
                     if childSnapshot.childSnapshot(forPath: "location").exists() {

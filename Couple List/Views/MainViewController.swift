@@ -10,7 +10,6 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseMessaging
-import FirebaseStorage
 
 class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
@@ -63,17 +62,6 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     fileprivate func loadList() {
         let uid = Auth.auth().currentUser!.uid
-        CL.shared.profileDisplayNames.updateValue("You", forKey: uid)
-        let profileImageRef = Storage.storage().reference(withPath: "profileImages/\(uid).JPG")
-        profileImageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if let data = data {
-                if let profileImage = UIImage(data: data) {
-                    CL.shared.profileImages.updateValue(profileImage, forKey: uid)
-                }
-            } else {
-                CL.shared.profileImages.updateValue(UIImage.init(named: "ProfileImagePlaceholder")!, forKey: uid)
-            }
-        }
         
         let activitiesTab = ActivityNavigationViewController()
         activitiesTab.tabBarItem = UITabBarItem(title: "Activities", image: UIImage(named: "activities"), selectedImage: nil)
@@ -92,6 +80,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                 self.ref.child("users/\(user.uid)").observeSingleEvent(of: .value, with: { (snapshot) in
                     if snapshot.childSnapshot(forPath: "displayName").exists() {
                         if let displayName = snapshot.childSnapshot(forPath: "displayName").value as? String {
+                            CL.shared.profileDisplayNames.updateValue(displayName, forKey: uid)
                             CL.shared.setDisplayName(displayName: displayName)
                         }
                     }

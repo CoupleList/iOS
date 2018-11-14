@@ -18,7 +18,7 @@ protocol ActivityTableViewCellDelegate: class {
 
 class ActivityTableViewCell: UITableViewCell {
     
-    let clCard = CLCard()
+    let clCard = CLActivityCard()
     
     let doneIndicator: UILabel = {
         let label = UILabel()
@@ -33,14 +33,6 @@ class ActivityTableViewCell: UITableViewCell {
     var activity: Activity! {
         didSet {
             clCard.activity = activity
-            if activity.isDone {
-                clCard.bottomView.addSubview(doneIndicator)
-                doneIndicator.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 10).isActive = true
-                doneIndicator.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0).isActive = true
-                doneIndicator.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10).isActive = true
-                doneIndicator.widthAnchor.constraint(equalToConstant: 10).isActive = true
-                doneIndicator.heightAnchor.constraint(equalToConstant: 10).isActive = true
-            }
         }
     }
     var delegate: ActivityTableViewCellDelegate?
@@ -63,22 +55,5 @@ class ActivityTableViewCell: UITableViewCell {
         clCard.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
         clCard.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         clCard.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        clCard.delegate = self
-        
-        clCard.bottomView.addSubview(doneIndicator)
-        doneIndicator.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 4).isActive = true
-        doneIndicator.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: -10).isActive = true
-        doneIndicator.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10).isActive = true
-        doneIndicator.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        doneIndicator.heightAnchor.constraint(equalToConstant: 10).isActive = true
-    }
-}
-
-extension ActivityTableViewCell: CLCardDelegate {
-    
-    func getDirectionsForActivity(placemark: CLPlacemark) {
-        if let delegate = delegate {
-            delegate.getDirectionsForActivity(placemark: placemark)
-        }
     }
 }

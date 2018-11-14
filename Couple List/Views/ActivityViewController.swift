@@ -25,7 +25,7 @@ class ActivityViewController: UIViewController {
         return scrollView
     }()
     
-    let clCard = CLCard()
+    let clCard = CLActivityCard()
     
     let deleteButton: UIButton = {
         let button = UIButton(type: .system)
@@ -50,7 +50,6 @@ class ActivityViewController: UIViewController {
     var activity: Activity! {
         didSet {
             clCard.activity = activity
-            editButton.isHidden = activity.isDone
         }
     }
     
@@ -98,17 +97,6 @@ class ActivityViewController: UIViewController {
         clCard.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
         clCard.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         clCard.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        clCard.delegate = self
-        
-        clCard.bottomView.addSubview(deleteButton)
-        deleteButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 10).isActive = true
-        deleteButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0).isActive = true
-        deleteButton.leftAnchor.constraint(equalTo: clCard.bottomView.leftAnchor, constant: 10).isActive = true
-        
-        clCard.bottomView.addSubview(editButton)
-        editButton.topAnchor.constraint(equalTo: clCard.bottomView.topAnchor, constant: 10).isActive = true
-        editButton.bottomAnchor.constraint(equalTo: clCard.bottomView.bottomAnchor, constant: 0).isActive = true
-        editButton.rightAnchor.constraint(equalTo: clCard.bottomView.rightAnchor, constant: -10).isActive = true
         
         scrollView.bounds = view.bounds
         scrollView.contentSize = CGSize(width: view.bounds.width, height: .infinity)
@@ -119,14 +107,5 @@ extension ActivityViewController: EditActivityViewControllerDelegate {
     
     func activityWasEdited(_ activity: Activity) {
         self.activity = activity
-    }
-}
-
-extension ActivityViewController: CLCardDelegate {
-    
-    func getDirectionsForActivity(placemark: CLPlacemark) {
-        CL.generateDirectionsAlert(placemark: placemark) { alert in
-            self.present(alert, animated: true)
-        }
     }
 }

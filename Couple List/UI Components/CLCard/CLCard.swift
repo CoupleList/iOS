@@ -40,26 +40,26 @@ class CLCard: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.distribution = .fill
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
         stackView.spacing = 8
         return stackView
     }()
     
     fileprivate lazy var headerViewTopConstraint = headerView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 0)
-    fileprivate lazy var centerViewTopConstraint = centerView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 0)
-    fileprivate lazy var bottomViewTopConstraint = bottomView.topAnchor.constraint(equalTo: centerView.topAnchor, constant: 0)
-    fileprivate lazy var bottomViewBottomConstraint = bottomView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 0)
+    fileprivate lazy var centerViewTopConstraint = centerView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0)
+    fileprivate lazy var bottomViewTopConstraint = bottomView.topAnchor.constraint(equalTo: centerView.bottomAnchor, constant: 0)
     
     var headerContent: [UIView] = [] {
         willSet {
             headerView.arrangedSubviews.forEach { headerView.removeArrangedSubview($0) }
             newValue.forEach {
                 headerView.addArrangedSubview($0)
-                headerView.setNeedsUpdateConstraints()
-                headerView.setNeedsLayout()
-                headerView.setNeedsDisplay()
             }
             headerViewTopConstraint.constant = newValue.count > 0 ? 4 : 0
+            headerView.setNeedsUpdateConstraints()
+            headerView.setNeedsLayout()
+            headerView.setNeedsDisplay()
         }
     }
     var centerContent: [UIView] = [] {
@@ -70,9 +70,14 @@ class CLCard: UIView {
     }
     var bottomContent: [UIView] = [] {
         willSet {
+            bottomView.arrangedSubviews.forEach { bottomView.removeArrangedSubview($0) }
+            newValue.forEach {
+                bottomView.addArrangedSubview($0)
+            }
             bottomViewTopConstraint.constant = newValue.count > 0 ? 4 : 0
-            bottomViewBottomConstraint.constant = newValue.count > 0 ? -4 : 0
+            bottomView.setNeedsUpdateConstraints()
             bottomView.setNeedsLayout()
+            bottomView.setNeedsDisplay()
         }
     }
     
@@ -108,19 +113,18 @@ class CLCard: UIView {
         
         cardView.addSubview(headerView)
         headerViewTopConstraint.isActive = true
-        headerView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -4).isActive = true
         headerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 4).isActive = true
         headerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -4).isActive = true
         
         cardView.addSubview(centerView)
-//        centerViewTopConstraint.isActive = true
-//        centerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
-//        centerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
+        centerViewTopConstraint.isActive = true
+        centerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
+        centerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
         
         cardView.addSubview(bottomView)
-//        bottomViewTopConstraint.isActive = true
-//        bottomViewBottomConstraint.isActive = true
-//        bottomView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
-//        bottomView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
+        bottomViewTopConstraint.isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -4).isActive = true
+        bottomView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 0).isActive = true
+        bottomView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: 0).isActive = true
     }
 }

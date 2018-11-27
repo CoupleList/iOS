@@ -34,6 +34,18 @@ class CLActivityCard: CLCard {
         return label
     }()
     
+    fileprivate let completedLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = UIColor.init(named: "AppleGreen")
+        label.text = " "
+        label.layer.cornerRadius = 5
+        label.layer.masksToBounds = true
+        label.widthAnchor.constraint(equalToConstant: 10).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        return label
+    }()
+    
     var activity: Activity! {
         didSet {
             let contentViews = createViewForActivity(activity)

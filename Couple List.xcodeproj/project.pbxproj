@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		78218EE721DD1D1B009756C5 /* Starting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78218EE621DD1D1B009756C5 /* Starting.storyboard */; };
+		78218EEB21DD1EB1009756C5 /* StartingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78218EEA21DD1EB1009756C5 /* StartingViewController.swift */; };
 		7827198820CCD2090033CADE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827198720CCD2090033CADE /* StoreKit.framework */; };
 		784AEC6D20D56FA900BAD8DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */; };
 		78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 		5F54A18AE81A9CB45B22BB0D /* Pods-Couple List.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Couple List.release.xcconfig"; path = "Pods/Target Support Files/Pods-Couple List/Pods-Couple List.release.xcconfig"; sourceTree = "<group>"; };
 		7805B46F1EF85580004929CA /* Couple List.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Couple List.entitlements"; sourceTree = "<group>"; };
 		78218EE621DD1D1B009756C5 /* Starting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Starting.storyboard; sourceTree = "<group>"; };
+		78218EEA21DD1EB1009756C5 /* StartingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingViewController.swift; sourceTree = "<group>"; };
 		7827198720CCD2090033CADE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		78AB802A1EE38D54008ACCC3 /* Couple List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Couple List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +59,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		78218EE821DD1E93009756C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				78218EE921DD1EA0009756C5 /* Starting */,
+			);
+			name = Views;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		78218EE921DD1EA0009756C5 /* Starting */ = {
+			isa = PBXGroup;
+			children = (
+				78218EEA21DD1EB1009756C5 /* StartingViewController.swift */,
+			);
+			path = Starting;
+			sourceTree = "<group>";
+		};
 		78786F9D1F58D8040095ED2D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				78786F9D1F58D8040095ED2D /* Storyboards */,
+				78218EE821DD1E93009756C5 /* Views */,
 				7805B46F1EF85580004929CA /* Couple List.entitlements */,
 				784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */,
 				78AB80391EE38D54008ACCC3 /* Info.plist */,
@@ -118,7 +138,6 @@
 				78AB80271EE38D54008ACCC3 /* Frameworks */,
 				78AB80281EE38D54008ACCC3 /* Resources */,
 				3641B3DFE4751076C270F38A /* [CP] Embed Pods Frameworks */,
-				F8E64643B199A84EAB8E6E6E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,21 +222,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BLTNBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLTNBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -244,28 +261,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F8E64643B199A84EAB8E6E6E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -273,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78218EEB21DD1EB1009756C5 /* StartingViewController.swift in Sources */,
 				78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

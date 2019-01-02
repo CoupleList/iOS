@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1EN-bo-eNZ">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -30,9 +30,22 @@
             <objects>
                 <viewController id="2Qs-uC-Fky" customClass="StartingViewController" customModule="Couple_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tNm-TX-cC4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="tWS-of-Gc7">
+                                <rect key="frame" x="132" y="293" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="IuG-oV-bYq"/>
+                                    <constraint firstAttribute="width" constant="150" id="w2x-Fq-RCb"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="tWS-of-Gc7" firstAttribute="centerY" secondItem="tNm-TX-cC4" secondAttribute="centerY" id="dJ3-BV-tpP"/>
+                            <constraint firstItem="tWS-of-Gc7" firstAttribute="centerX" secondItem="tNm-TX-cC4" secondAttribute="centerX" id="pIj-Mn-TuF"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="OwD-7i-TsU"/>
                     </view>
                     <navigationItem key="navigationItem" id="Ybv-wC-GnP"/>
@@ -42,4 +55,7 @@
             <point key="canvasLocation" x="-108" y="100"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Icon" width="1024" height="1024"/>
+    </resources>
 </document>

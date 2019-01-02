@@ -11,6 +11,7 @@
 		7827198820CCD2090033CADE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827198720CCD2090033CADE /* StoreKit.framework */; };
 		7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7827198920CCD4250033CADE /* PurchaseHelper.swift */; };
 		7835A75E21176A5C0081B062 /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */; };
+		7837DD642174457A00C85E04 /* ActivitiesTableSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7837DD632174457A00C85E04 /* ActivitiesTableSortViewController.swift */; };
 		7846CA0C20EF46F300879807 /* AccountDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846CA0B20EF46F300879807 /* AccountDataViewController.swift */; };
 		78484D222131A06900F50534 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78484D212131A06900F50534 /* LocationTableViewCell.swift */; };
 		7849F269212FAA28006CD186 /* CLSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7849F268212FAA28006CD186 /* CLSettingsItem.swift */; };
@@ -65,6 +66,7 @@
 		7827198720CCD2090033CADE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7827198920CCD4250033CADE /* PurchaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHelper.swift; sourceTree = "<group>"; };
 		7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
+		7837DD632174457A00C85E04 /* ActivitiesTableSortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTableSortViewController.swift; sourceTree = "<group>"; };
 		7846CA0B20EF46F300879807 /* AccountDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataViewController.swift; sourceTree = "<group>"; };
 		78484D212131A06900F50534 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		7849F268212FAA28006CD186 /* CLSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLSettingsItem.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				78F82B9920EDEC7B001A6A92 /* ActivityHistoryTableViewCell.swift */,
 				784E0E2420D6E144006D6AAE /* ActivityNavigationViewController.swift */,
 				7835A75D21176A5C0081B062 /* ActivitiesTableViewController.swift */,
+				7837DD632174457A00C85E04 /* ActivitiesTableSortViewController.swift */,
 				786F1EDF20F080A600E54B97 /* ActivityViewController.swift */,
 				786F1EDD20F07C4600E54B97 /* EditActivityViewController.swift */,
 				78E8EF3D20EDD50800B06F34 /* FeedbackViewController.swift */,
@@ -437,6 +440,7 @@
 				78E8EF3E20EDD50800B06F34 /* FeedbackViewController.swift in Sources */,
 				78E8EF3020ED9F3100B06F34 /* CLSecondaryButton.swift in Sources */,
 				78DD9CD72130FBF600DF30E8 /* CLSettingsProgressItem.swift in Sources */,
+				7837DD642174457A00C85E04 /* ActivitiesTableSortViewController.swift in Sources */,
 				7807D7B620CCD64100E734C6 /* Products.swift in Sources */,
 				78E8EF2A20ED9C9000B06F34 /* CLTitleLabel.swift in Sources */,
 				7827198A20CCD4250033CADE /* PurchaseHelper.swift in Sources */,

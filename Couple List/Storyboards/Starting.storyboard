@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-966" y="101"/>
         </scene>
-        <!--View Controller-->
+        <!--Starting View Controller-->
         <scene sceneID="Geq-KO-fwJ">
             <objects>
-                <viewController id="2Qs-uC-Fky" sceneMemberID="viewController">
+                <viewController id="2Qs-uC-Fky" customClass="StartingViewController" customModule="Couple_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tNm-TX-cC4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -6,6 +6,7 @@ target 'Couple List' do
   use_frameworks!
 
   # Pods for Couple List
+  pod 'BulletinBoard'
   pod 'Crashlytics', '~> 3.10.2'
   pod 'Fabric', '~> 1.7.7'
   pod 'Firebase/Auth'
@@ -16,7 +17,5 @@ target 'Couple List' do
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Messaging'
   pod 'Firebase/Storage'
-  pod 'GoogleSignIn'
-  pod 'TPKeyboardAvoiding'
 
 end

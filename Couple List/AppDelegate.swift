@@ -13,13 +13,12 @@ import FirebaseAnalytics
 import FirebaseDatabase
 import FirebaseDynamicLinks
 import FirebaseMessaging
-import GoogleSignIn
 import AudioToolbox
 import UserNotifications
 import os.log
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var ref: DatabaseReference!
     var window: UIWindow?
@@ -28,8 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "sa6cz.app.goo.gl"
         FirebaseApp.configure()
         GADMobileAds.configure(withApplicationID: "ca-app-pub-9026572937829340~1062002797")
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
         
         ref = Database.database().reference()
         
@@ -42,11 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         })
         
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.tintColor = UIColor.init(named: "MainColor")
-        self.window?.rootViewController = StartViewController()
-        self.window?.makeKeyAndVisible()
-        
         return true
     }
     
@@ -55,23 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)
-        if let link = dynamicLink?.url?.absoluteString {
-            loadDynamicLink(link: link)
-            return true
-        }
-        
         return false
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        let handled = DynamicLinks.dynamicLinks().handleUniversalLink(userActivity.webpageURL!) { (dynamicLink, error) in
-            if let link = dynamicLink?.url?.absoluteString {
-                self.loadDynamicLink(link: link)
-            }
-        }
-        
-        return handled
+        return true
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -93,42 +73,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        if let error = error {
-            Analytics.logEvent("error_google_signin", parameters: [
-                "device": "iOS",
-                "error": error.localizedDescription
-                ])
-            return
-        }
-        
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        // Perform any operations when the user disconnects from app here.
-    }
-    
-    private func loadDynamicLink(link : String) {
-        if !link.isEmpty {
-            CL.shared.userSettings = UserSettings.generateFromLink(link: link)
-            let userID = Auth.auth().currentUser?.uid
-            if userID != nil {
-                ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if (!snapshot.exists()) {
-                        self.ref.child("users/\(userID!)/list").setValue(["key": CL.shared.userSettings.listKey])
-                    }
-                }) { (error) in
-                    Analytics.logEvent("error_joining_list", parameters: [
-                        "device": "iOS",
-                        "error": error.localizedDescription,
-                        "link": link
-                        ])
-                }
-            }
-        }
     }
 }

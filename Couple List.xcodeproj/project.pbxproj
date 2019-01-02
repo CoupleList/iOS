@@ -75,17 +75,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		78218EE821DD1E93009756C5 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				78218EF621DD5ADD009756C5 /* Main */,
-				78218EE921DD1EA0009756C5 /* Starting */,
-				78218EFB21DD5E3C009756C5 /* Settings */,
-			);
-			name = Views;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		78218EE921DD1EA0009756C5 /* Starting */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +110,16 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		78218F0421DD6D1F009756C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				78218EF621DD5ADD009756C5 /* Main */,
+				78218EE921DD1EA0009756C5 /* Starting */,
+				78218EFB21DD5E3C009756C5 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		78786F9D1F58D8040095ED2D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,9 +152,9 @@
 		78AB802C1EE38D54008ACCC3 /* Couple List */ = {
 			isa = PBXGroup;
 			children = (
+				78218F0421DD6D1F009756C5 /* Views */,
 				78218EEC21DD3431009756C5 /* CL */,
 				78786F9D1F58D8040095ED2D /* Storyboards */,
-				78218EE821DD1E93009756C5 /* Views */,
 				7805B46F1EF85580004929CA /* Couple List.entitlements */,
 				784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */,
 				78AB80391EE38D54008ACCC3 /* Info.plist */,

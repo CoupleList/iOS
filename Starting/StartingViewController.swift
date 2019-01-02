@@ -14,7 +14,7 @@ import FirebaseDatabase
 
 class StartingViewController: UIViewController {
     
-    lazy var startPage: BLTNPageItem = {
+    lazy var startPage: CLBLTNPageItem = {
         let page = CLBLTNPageItem(title: "Couple List")
         page.descriptionText = "The bucket list app for couples. To get started, login or create an account."
         page.actionButtonTitle = "Login"
@@ -27,14 +27,11 @@ class StartingViewController: UIViewController {
         return page
     }()
     
-    lazy var loginPage: BLTNPageItem = {
-        let page = CLBLTNPageItem(title: "Login")
-        page.actionButtonTitle = "Login"
-        page.alternativeButtonTitle = "Back"
-        page.alternativeHandler = { (item: BLTNActionItem) in
-            if let manager = item.manager {
-                manager.popItem()
-            }
+    lazy var loginPage: CLBTNLoginPageItem = {
+        let page = CLBTNLoginPageItem()
+        page.actionHandler = { (item: BLTNActionItem) in
+            print(page.emailAddressTextField.text ?? "No email")
+            print(page.passwordTextField.text ?? "No password")
         }
         return page
     }()
@@ -47,7 +44,7 @@ class StartingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        guard handle == nil else { return }
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
                 
@@ -59,7 +56,6 @@ class StartingViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         guard let handle = handle else { return }
         Auth.auth().removeStateDidChangeListener(handle)
     }

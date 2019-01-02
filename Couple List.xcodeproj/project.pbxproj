@@ -10,6 +10,7 @@
 		78218EE721DD1D1B009756C5 /* Starting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78218EE621DD1D1B009756C5 /* Starting.storyboard */; };
 		78218EEB21DD1EB1009756C5 /* StartingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78218EEA21DD1EB1009756C5 /* StartingViewController.swift */; };
 		78218EEE21DD344C009756C5 /* CLBLTNPageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */; };
+		78218EF021DD37CD009756C5 /* CLBLTNLoginPageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */; };
 		7827198820CCD2090033CADE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827198720CCD2090033CADE /* StoreKit.framework */; };
 		784AEC6D20D56FA900BAD8DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */; };
 		78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 		78218EE621DD1D1B009756C5 /* Starting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Starting.storyboard; sourceTree = "<group>"; };
 		78218EEA21DD1EB1009756C5 /* StartingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingViewController.swift; sourceTree = "<group>"; };
 		78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBLTNPageItem.swift; sourceTree = "<group>"; };
+		78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBLTNLoginPageItem.swift; sourceTree = "<group>"; };
 		7827198720CCD2090033CADE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		78AB802A1EE38D54008ACCC3 /* Couple List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Couple List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */,
+				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
 			);
 			path = CL;
 			sourceTree = "<group>";
@@ -171,7 +174,7 @@
 				TargetAttributes = {
 					78AB80291EE38D54008ACCC3 = {
 						CreatedOnToolsVersion = 8.3.2;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78218EF021DD37CD009756C5 /* CLBLTNLoginPageItem.swift in Sources */,
 				78218EEE21DD344C009756C5 /* CLBLTNPageItem.swift in Sources */,
 				78218EEB21DD1EB1009756C5 /* StartingViewController.swift in Sources */,
 				78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */,
@@ -417,8 +421,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kirinpatel.couplelist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -435,8 +438,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kirinpatel.couplelist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

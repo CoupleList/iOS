@@ -45,10 +45,11 @@ class StartingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard handle == nil else { return }
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
-                
+            if user != nil {
+                if !self.definesPresentationContext {
+                    self.goToMain()
+                }
             } else {
                 self.bulletinManager.showBulletin(above: self)
             }
@@ -61,6 +62,11 @@ class StartingViewController: UIViewController {
         Auth.auth().removeStateDidChangeListener(handle)
     }
     
+    fileprivate func goToMain() {
+        let mainViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController()
+        present(mainViewController!, animated: true)
+    }
+    
     fileprivate func login(emailAddress: String, password: String) {
         if !emailAddress.isEmpty && !password.isEmpty {
             bulletinManager.displayActivityIndicator()
@@ -71,6 +77,7 @@ class StartingViewController: UIViewController {
                     self.bulletinManager.push(item: errorPageItem)
                 } else {
                     self.bulletinManager.dismissBulletin()
+                    self.goToMain()
                 }
             }
         }

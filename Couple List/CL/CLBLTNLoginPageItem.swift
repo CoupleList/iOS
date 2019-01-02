@@ -97,8 +97,8 @@ extension CLBTNLoginPageItem: UITextFieldDelegate {
             emailAddressTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
         }
         if !isInputValid(text: passwordTextField.text ?? "") {
-            if let text = descriptionLabel!.text {
-                descriptionLabel!.text = "\(text)\nA password is required."
+            if !descriptionLabel!.text!.isEmpty {
+                descriptionLabel!.text = "\(descriptionLabel!.text)\nA password is required."
             } else {
                 descriptionLabel!.text = "A password is required."
             }

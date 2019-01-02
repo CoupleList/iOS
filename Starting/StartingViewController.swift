@@ -30,8 +30,9 @@ class StartingViewController: UIViewController {
     lazy var loginPage: CLBTNLoginPageItem = {
         let page = CLBTNLoginPageItem()
         page.actionHandler = { (item: BLTNActionItem) in
-            print(page.emailAddressTextField.text ?? "No email")
-            print(page.passwordTextField.text ?? "No password")
+            let emailAddress = page.emailAddressTextField.text
+            let password = page.passwordTextField.text
+            self.login(emailAddress: emailAddress ?? "", password: password ?? "")
         }
         return page
     }()
@@ -58,5 +59,20 @@ class StartingViewController: UIViewController {
         super.viewWillDisappear(animated)
         guard let handle = handle else { return }
         Auth.auth().removeStateDidChangeListener(handle)
+    }
+    
+    fileprivate func login(emailAddress: String, password: String) {
+        if !emailAddress.isEmpty && !password.isEmpty {
+            bulletinManager.displayActivityIndicator()
+            Auth.auth().signIn(withEmail: emailAddress, password: password) { (result, error) in
+                self.bulletinManager.hideActivityIndicator()
+                if let error = error {
+                    let errorPageItem = CLBLTNErrorPageItem(descriptionText: error.localizedDescription)
+                    self.bulletinManager.push(item: errorPageItem)
+                } else {
+                    self.bulletinManager.dismissBulletin()
+                }
+            }
+        }
     }
 }

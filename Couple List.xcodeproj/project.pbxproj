@@ -86,9 +86,7 @@
 		78218EEC21DD3431009756C5 /* CL */ = {
 			isa = PBXGroup;
 			children = (
-				78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */,
-				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
-				78218EF121DD5838009756C5 /* CLBLTNErrorPageItem.swift */,
+				78BAFBF221DD6E5F00681548 /* BLTN */,
 			);
 			path = CL;
 			sourceTree = "<group>";
@@ -152,9 +150,9 @@
 		78AB802C1EE38D54008ACCC3 /* Couple List */ = {
 			isa = PBXGroup;
 			children = (
-				78218F0421DD6D1F009756C5 /* Views */,
 				78218EEC21DD3431009756C5 /* CL */,
 				78786F9D1F58D8040095ED2D /* Storyboards */,
+				78218F0421DD6D1F009756C5 /* Views */,
 				7805B46F1EF85580004929CA /* Couple List.entitlements */,
 				784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */,
 				78AB80391EE38D54008ACCC3 /* Info.plist */,
@@ -162,6 +160,16 @@
 				78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */,
 			);
 			path = "Couple List";
+			sourceTree = "<group>";
+		};
+		78BAFBF221DD6E5F00681548 /* BLTN */ = {
+			isa = PBXGroup;
+			children = (
+				78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */,
+				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
+				78218EF121DD5838009756C5 /* CLBLTNErrorPageItem.swift */,
+			);
+			path = BLTN;
 			sourceTree = "<group>";
 		};
 		EAB18B2D1645562277BB8D35 /* Pods */ = {

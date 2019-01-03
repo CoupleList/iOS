@@ -34,10 +34,7 @@ class StartingViewController: UIViewController {
     
     lazy var loginPage: CLBTNLoginPageItem = self.generateLoginPageItem()
     
-    lazy var registerPage: CLBLTNRegisterPageItem = {
-        let page = CLBLTNRegisterPageItem()
-        return page
-    }()
+    lazy var registerPage: CLBLTNRegisterPageItem = self.generateRegisterPageItem()
     
     lazy var bulletinManager: BLTNItemManager = {
         return BLTNItemManager(rootItem: startPage)
@@ -79,6 +76,30 @@ class StartingViewController: UIViewController {
         return page
     }
     
+    fileprivate func generateRegisterPageItem(_ emailAddress: String = "") -> CLBLTNRegisterPageItem {
+        let page = CLBLTNRegisterPageItem(emailAddress: emailAddress)
+        page.actionHandler = { (item: BLTNActionItem) in
+            let emailAddress = page.emailAddressTextField.text
+            let password = page.passwordTextField.text
+            let confirmPassword = page.confirmPasswordTextField.text
+            
+            if password != confirmPassword {
+                self.displayAlertOverBulletinManager(title: "Mismatching Passwords",
+                                                     message: "You must provide identical passwords when creating your account.")
+            } else {
+                self.register(emailAddress: emailAddress ?? "",
+                              password: password ?? "")
+            }
+        }
+        return page
+    }
+    
+    fileprivate func displayAlertOverBulletinManager(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        bulletinManager.present(alert, animated: true)
+    }
+    
     fileprivate func login(emailAddress: String, password: String) {
         if !emailAddress.isEmpty && !password.isEmpty {
             bulletinManager.displayActivityIndicator()
@@ -98,12 +119,31 @@ class StartingViewController: UIViewController {
                 }
             }
         } else {
-            let alert = UIAlertController(title: "Missing Information",
-                                          message: "An email address and password are required.",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
-            self.bulletinManager.present(alert, animated: true)
+            self.displayAlertOverBulletinManager(title: "Missing Information",
+                                                 message: "An email address and password are required.")
         }
     }
+    
+    fileprivate func register(emailAddress: String, password: String) {
+        if !emailAddress.isEmpty && !password.isEmpty {
+            bulletinManager.displayActivityIndicator()
+            Auth.auth().createUser(withEmail: emailAddress, password: password) { (result, error) in
+                if let error = error {
+                    self.bulletinManager.hideActivityIndicator()
+                    let errorPageItem = CLBLTNErrorPageItem(descriptionText: error.localizedDescription)
+                    errorPageItem.actionHandler = { (item: BLTNActionItem) in
+                        if let manager = item.manager {
+                            manager.push(item: self.generateRegisterPageItem(emailAddress))
+                        }
+                    }
+                } else {
+                    self.bulletinManager.dismissBulletin()
+                    self.goToMain()
+                }
+            }
+        } else {
+            self.displayAlertOverBulletinManager(title: "Missing Information",
+                                                 message: "An email address and passwords are required.")
+        }
     }
 }

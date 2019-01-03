@@ -77,10 +77,31 @@ class MainTabViewController: UITabBarController {
         let ref = Database.database().reference(withPath: "users/\(uid)")
         ref.observeSingleEvent(of: .value) { snapshot in
             if snapshot.hasChild("list") && snapshot.hasChild("list/key") && snapshot.hasChild("list/code") {
-                
+                self.validateUserList(uid: uid,
+                                      key: snapshot.childSnapshot(forPath: "list/key").value as? String ?? "",
+                                      code: snapshot.childSnapshot(forPath: "list/code").value as? String ?? "")
             } else {
                 self.bulletinManager.showBulletin(above: self)
             }
         }
+    }
+    
+    fileprivate func validateUserList(uid: String, key: String, code: String) {
+        if !key.isEmpty && !code.isEmpty {
+            let ref = Database.database().reference(withPath: "lists/\(key)/activities")
+            ref.observeSingleEvent(of: .value, with: { _ in
+               // User is able to view list, do nothing here
+            }, withCancel: { _ in
+                self.removeUserFromList(uid: uid)
+            })
+        } else {
+            removeUserFromList(uid: uid)
+        }
+    }
+    
+    fileprivate func removeUserFromList(uid: String) {
+        let ref = Database.database().reference(withPath: "users/\(uid)/list")
+        ref.removeValue()
+        determineUserStatus(uid: uid)
     }
 }

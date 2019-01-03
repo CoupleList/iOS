@@ -24,16 +24,18 @@ class StartingViewController: UIViewController {
                 manager.push(item: self.loginPage)
             }
         }
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.push(item: self.registerPage)
+            }
+        }
         return page
     }()
     
-    lazy var loginPage: CLBTNLoginPageItem = {
-        let page = CLBTNLoginPageItem()
-        page.actionHandler = { (item: BLTNActionItem) in
-            let emailAddress = page.emailAddressTextField.text
-            let password = page.passwordTextField.text
-            self.login(emailAddress: emailAddress ?? "", password: password ?? "")
-        }
+    lazy var loginPage: CLBTNLoginPageItem = self.generateLoginPageItem()
+    
+    lazy var registerPage: CLBLTNRegisterPageItem = {
+        let page = CLBLTNRegisterPageItem()
         return page
     }()
     
@@ -67,19 +69,41 @@ class StartingViewController: UIViewController {
         present(mainViewController!, animated: true)
     }
     
+    fileprivate func generateLoginPageItem(_ emailAddress: String = "") -> CLBTNLoginPageItem {
+        let page = CLBTNLoginPageItem(emailAddress: emailAddress)
+        page.actionHandler = { (item: BLTNActionItem) in
+            let emailAddress = page.emailAddressTextField.text
+            let password = page.passwordTextField.text
+            self.login(emailAddress: emailAddress ?? "", password: password ?? "")
+        }
+        return page
+    }
+    
     fileprivate func login(emailAddress: String, password: String) {
         if !emailAddress.isEmpty && !password.isEmpty {
             bulletinManager.displayActivityIndicator()
             Auth.auth().signIn(withEmail: emailAddress, password: password) { (result, error) in
-                self.bulletinManager.hideActivityIndicator()
                 if let error = error {
+                    self.bulletinManager.hideActivityIndicator()
                     let errorPageItem = CLBLTNErrorPageItem(descriptionText: error.localizedDescription)
+                    errorPageItem.actionHandler = { (item: BLTNActionItem) in
+                        if let manager = item.manager {
+                            manager.push(item: self.generateLoginPageItem(emailAddress))
+                        }
+                    }
                     self.bulletinManager.push(item: errorPageItem)
                 } else {
                     self.bulletinManager.dismissBulletin()
                     self.goToMain()
                 }
             }
+        } else {
+            let alert = UIAlertController(title: "Missing Information",
+                                          message: "An email address and password are required.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.bulletinManager.present(alert, animated: true)
         }
+    }
     }
 }

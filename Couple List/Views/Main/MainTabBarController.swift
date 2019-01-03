@@ -7,14 +7,80 @@
 //
 
 import UIKit
+import BLTNBoard
+import FirebaseAuth
+import FirebaseDatabase
 
 class MainTabViewController: UITabBarController {
+    
+    lazy var startPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Getting Started")
+        page.descriptionText = "You currently are not apart of a list. You can create one or ask your Partner to share their list with you."
+        page.actionButtonTitle = "Create List"
+        page.alternativeButtonTitle = "Join List"
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.push(item: self.joinListPage)
+            }
+        }
+        return page
+    }()
+    
+    lazy var joinListPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Join List")
+        page.descriptionText = "To join your Partner's list, ask them to share it from the settings of Couple List. Then simply click the link they share to get started."
+        page.actionButtonTitle = "Ok"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.popItem()
+            }
+        }
+        return page
+    }()
+    
+    lazy var bulletinManager: BLTNItemManager = {
+        return BLTNItemManager(rootItem: startPage)
+    }()
+    
+    var handle: AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let listStack = UIStoryboard.init(name: "List", bundle: nil).instantiateInitialViewController()
+        listStack!.tabBarItem = UITabBarItem(title: "List", image: nil, selectedImage: nil)
+        
         let settingsStack = UIStoryboard.init(name: "Settings", bundle: nil).instantiateInitialViewController()
         settingsStack!.tabBarItem = UITabBarItem(title: "Settins", image: nil, selectedImage: nil)
-        viewControllers = [settingsStack!]
+        viewControllers = [listStack!, settingsStack!]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard handle == nil else { return }
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            if let user = user {
+                self.determineUserStatus(uid: user.uid)
+            } else {
+                self.dismiss(animated: true)
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard let handle = handle else { return }
+        Auth.auth().removeStateDidChangeListener(handle)
+    }
+    
+    fileprivate func determineUserStatus(uid: String) {
+        let ref = Database.database().reference(withPath: "users/\(uid)")
+        ref.observeSingleEvent(of: .value) { snapshot in
+            if snapshot.hasChild("list") && snapshot.hasChild("list/key") && snapshot.hasChild("list/code") {
+                
+            } else {
+                self.bulletinManager.showBulletin(above: self)
+            }
+        }
     }
 }

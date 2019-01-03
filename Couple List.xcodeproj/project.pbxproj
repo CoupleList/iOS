@@ -23,6 +23,9 @@
 		78AB80351EE38D54008ACCC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78AB80341EE38D54008ACCC3 /* Assets.xcassets */; };
 		78AB80381EE38D54008ACCC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78AB80361EE38D54008ACCC3 /* LaunchScreen.storyboard */; };
 		78BAFBF421DD6EA500681548 /* CLBLTNRegisterPageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAFBF321DD6EA500681548 /* CLBLTNRegisterPageItem.swift */; };
+		78BAFBF821DE725600681548 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78BAFBF721DE725600681548 /* List.storyboard */; };
+		78BAFBFB21DE729A00681548 /* ListNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAFBFA21DE729A00681548 /* ListNavigationViewController.swift */; };
+		78BAFBFF21DE749A00681548 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAFBFE21DE749A00681548 /* ListTableViewController.swift */; };
 		78DD9CDB21310DC900DF30E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DD9CDA21310DC900DF30E8 /* MapKit.framework */; };
 		D85C47BF82C94C989987DA37 /* Pods_Couple_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CC8470662945435B1C7B16 /* Pods_Couple_List.framework */; };
 /* End PBXBuildFile section */
@@ -48,6 +51,9 @@
 		78AB80371EE38D54008ACCC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78AB80391EE38D54008ACCC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78BAFBF321DD6EA500681548 /* CLBLTNRegisterPageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBLTNRegisterPageItem.swift; sourceTree = "<group>"; };
+		78BAFBF721DE725600681548 /* List.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
+		78BAFBFA21DE729A00681548 /* ListNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNavigationViewController.swift; sourceTree = "<group>"; };
+		78BAFBFE21DE749A00681548 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		78DD9CDA21310DC900DF30E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C9049F0F04D4C38CD95CBDE7 /* Pods-Couple List.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Couple List.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Couple List/Pods-Couple List.debug.xcconfig"; sourceTree = "<group>"; };
 		E9CC8470662945435B1C7B16 /* Pods_Couple_List.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Couple_List.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +119,7 @@
 		78218F0421DD6D1F009756C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78BAFBF921DE727400681548 /* List */,
 				78218EF621DD5ADD009756C5 /* Main */,
 				78218EE921DD1EA0009756C5 /* Starting */,
 				78218EFB21DD5E3C009756C5 /* Settings */,
@@ -124,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				78AB80361EE38D54008ACCC3 /* LaunchScreen.storyboard */,
+				78BAFBF721DE725600681548 /* List.storyboard */,
 				78218EF421DD5A0B009756C5 /* Main.storyboard */,
 				78218EE621DD1D1B009756C5 /* Starting.storyboard */,
 				78218EF921DD5B41009756C5 /* Settings.storyboard */,
@@ -173,6 +181,15 @@
 				78BAFBF321DD6EA500681548 /* CLBLTNRegisterPageItem.swift */,
 			);
 			path = BLTN;
+			sourceTree = "<group>";
+		};
+		78BAFBF921DE727400681548 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				78BAFBFA21DE729A00681548 /* ListNavigationViewController.swift */,
+				78BAFBFE21DE749A00681548 /* ListTableViewController.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		EAB18B2D1645562277BB8D35 /* Pods */ = {
@@ -267,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78AB80381EE38D54008ACCC3 /* LaunchScreen.storyboard in Resources */,
+				78BAFBF821DE725600681548 /* List.storyboard in Resources */,
 				78218EF521DD5A0B009756C5 /* Main.storyboard in Resources */,
 				78218EE721DD1D1B009756C5 /* Starting.storyboard in Resources */,
 				78218EFA21DD5B41009756C5 /* Settings.storyboard in Resources */,
@@ -337,7 +355,9 @@
 				78218EFD21DD5E7B009756C5 /* SettingsNavigationController.swift in Sources */,
 				78BAFBF421DD6EA500681548 /* CLBLTNRegisterPageItem.swift in Sources */,
 				78218EFF21DD5EC3009756C5 /* SettingsTableViewController.swift in Sources */,
+				78BAFBFB21DE729A00681548 /* ListNavigationViewController.swift in Sources */,
 				78218EEB21DD1EB1009756C5 /* StartingViewController.swift in Sources */,
+				78BAFBFF21DE749A00681548 /* ListTableViewController.swift in Sources */,
 				78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */,
 				78218EF821DD5AEC009756C5 /* MainTabBarController.swift in Sources */,
 			);

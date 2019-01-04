@@ -20,6 +20,7 @@ class CLList {
     
     var key: String
     var code: String
+    var displaysAds: Bool = true
     private var delegates: [CLListDelegate] = [CLListDelegate]()
     private var addedObserver: UInt?
     private var changedObserver: UInt?
@@ -28,6 +29,14 @@ class CLList {
     init(key: String, code: String) {
         self.key = key
         self.code = code
+        let ref = Database.database().reference(withPath: "lists/\(key)/hasAds")
+        ref.observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                if let displaysAds = snapshot.childSnapshot(forPath: "noAds").value as? Bool {
+                    self.displaysAds = !displaysAds
+                }
+            }
+        }
     }
     
     func observeActivities() {

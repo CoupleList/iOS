@@ -58,7 +58,7 @@ class SettingsTableViewController: UITableViewController {
                                type: .simple,
                                action: nil)],
                 [CLSettingsRow(title: "Receive Notifications",
-                               description: "Off",
+                               description: "No",
                                type: .simplifiedDetails,
                                action: nil)],
                 [],

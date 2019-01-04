@@ -67,7 +67,11 @@ class SettingsTableViewController: UITableViewController {
                 [CLSettingsRow(title: "Icons",
                                description: "All icons were obtained from icons8.com",
                                type: .details,
-                               action: viewIcons8Website)]]
+                               action: viewIcons8Website),
+                 CLSettingsRow(title: "Privacy",
+                               description: nil,
+                               type: .details,
+                               action: viewPrivacy)]]
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -135,6 +139,13 @@ class SettingsTableViewController: UITableViewController {
     
     fileprivate func viewIcons8Website() {
         if let url = URL(string: "https://icons8.com/") {
+            let view = SFSafariViewController(url: url)
+            present(view, animated: true)
+        }
+    }
+    
+    fileprivate func viewPrivacy() {
+        if let url = URL(string: "https://couplelist.app/privacy") {
             let view = SFSafariViewController(url: url)
             present(view, animated: true)
         }

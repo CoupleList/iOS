@@ -8,7 +8,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseDatabase
 
 class MainTabViewController: UITabBarController {
     
@@ -21,7 +20,7 @@ class MainTabViewController: UITabBarController {
         listStack!.tabBarItem = UITabBarItem(title: "List", image: nil, selectedImage: nil)
         
         let settingsStack = UIStoryboard.init(name: "Settings", bundle: nil).instantiateInitialViewController()
-        settingsStack!.tabBarItem = UITabBarItem(title: "Settins", image: nil, selectedImage: nil)
+        settingsStack!.tabBarItem = UITabBarItem(title: "Settings", image: nil, selectedImage: nil)
         viewControllers = [listStack!, settingsStack!]
     }
     
@@ -29,11 +28,8 @@ class MainTabViewController: UITabBarController {
         super.viewWillAppear(animated)
         guard handle == nil else { return }
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
-                
-            } else {
-                self.dismiss(animated: true)
-            }
+            guard user == nil else { return }
+            self.dismiss(animated: true)
         }
     }
     

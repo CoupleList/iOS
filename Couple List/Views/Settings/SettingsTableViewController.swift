@@ -8,10 +8,12 @@
 
 import UIKit
 import FirebaseAuth
+import SafariServices
 
 enum CLSettingsRowType {
     case simple
     case details
+    case simplifiedDetails
     case toggle
 }
 
@@ -29,31 +31,43 @@ class SettingsTableViewController: UITableViewController {
                     "Notification Settings",
                     "Location Settings",
                     "Feedback",
-                    "In App Purchases"]
-    let rows = [[CLSettingsRow(title: "Set Display Name",
+                    "In App Purchases",
+                    "Disclaimers"]
+    lazy var rows = [[CLSettingsRow(title: "Set Display Name",
                                description: nil,
-                               type: .simple,
+                               type: .simplifiedDetails,
                                action: nil),
                  CLSettingsRow(title: "Set Profile Picture",
                                description: nil,
                                type: .simple,
                                action: nil),
                  CLSettingsRow(title: "Logout",
-                               description: nil,
+                               description: Auth.auth().currentUser?.email,
                                type: .simple,
                                action: logout)],
                 [CLSettingsRow(title: "Share List",
                                description: "Invite your partner to your list",
-                               type: .simple,
+                               type: .details,
+                               action: nil),
+                 CLSettingsRow(title: "View List History",
+                               description: "View all saved history of your list",
+                               type: .details,
                                action: nil),
                  CLSettingsRow(title: "Leave List",
                                description: nil,
                                type: .simple,
                                action: nil)],
+                [CLSettingsRow(title: "Receive Notifications",
+                               description: "Off",
+                               type: .simplifiedDetails,
+                               action: nil)],
                 [],
                 [],
                 [],
-                []]
+                [CLSettingsRow(title: "Icons",
+                               description: "All icons were obtained from icons8.com",
+                               type: .details,
+                               action: viewIcons8Website)]]
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -72,22 +86,35 @@ class SettingsTableViewController: UITableViewController {
         
         switch cellData.type {
         case .simple:
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "subtitle")
+            cell.textLabel!.text = cellData.title
             if let description = cellData.description {
-                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "subtitle")
-                cell.textLabel!.text = cellData.title
                 cell.detailTextLabel!.text = description
-                return cell
-            } else {
-                let cell = UITableViewCell(style: .default, reuseIdentifier: "default")
-                cell.textLabel!.text = cellData.title
-                return cell
             }
+            return cell
         case .details:
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "default")
+            cell.textLabel!.text = cellData.title
+            if let description = cellData.description {
+                cell.detailTextLabel!.text = description
+            }
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        case .simplifiedDetails:
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "default")
             cell.textLabel!.text = cellData.title
+            if let description = cellData.description {
+                cell.detailTextLabel!.text = description
+            }
+            cell.accessoryType = .disclosureIndicator
             return cell
         case .toggle:
-            return UITableViewCell(style: .default, reuseIdentifier: "default")
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "default")
+            if let description = cellData.description {
+                cell.detailTextLabel!.text = description
+            }
+            cell.accessoryView = UISwitch()
+            return cell
         }
     }
     
@@ -98,11 +125,18 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    fileprivate static func logout() {
+    fileprivate func logout() {
         do {
           try Auth.auth().signOut()
         } catch let signOutError as NSError {
             // TODO: Handle error
+        }
+    }
+    
+    fileprivate func viewIcons8Website() {
+        if let url = URL(string: "https://icons8.com/") {
+            let view = SFSafariViewController(url: url)
+            present(view, animated: true)
         }
     }
 }

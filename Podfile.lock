@@ -65,6 +65,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.6.0)
+  - SwiftKeychainWrapper (3.0.1)
 
 DEPENDENCIES:
   - BulletinBoard
@@ -77,6 +78,7 @@ DEPENDENCIES:
   - Firebase/DynamicLinks
   - Firebase/Messaging
   - Firebase/Storage
+  - SwiftKeychainWrapper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -98,6 +100,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
+    - SwiftKeychainWrapper
 
 SPEC CHECKSUMS:
   BulletinBoard: a4a3022789e5202167127c3231975313c1d76c51
@@ -118,7 +121,8 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
 
-PODFILE CHECKSUM: 4a291564b1a74e13843337ccfb85b2c807074e7d
+PODFILE CHECKSUM: 24a354c9f2859fa20c496a8b8fce29029b01ade8
 
 COCOAPODS: 1.5.3

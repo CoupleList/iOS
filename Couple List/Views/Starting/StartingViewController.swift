@@ -36,6 +36,31 @@ class StartingViewController: UIViewController {
     
     lazy var registerPage: CLBLTNRegisterPageItem = self.generateRegisterPageItem()
     
+    lazy var welcomePage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Getting Started")
+        page.descriptionText = "You currently are not apart of a list. You can create one or ask your Partner to share their list with you."
+        page.actionButtonTitle = "Create List"
+        page.alternativeButtonTitle = "Join List"
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.push(item: self.joinListPage)
+            }
+        }
+        return page
+    }()
+    
+    lazy var joinListPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Join List")
+        page.descriptionText = "To join your Partner's list, ask them to share it from the settings of Couple List. Then simply click the link they share to get started."
+        page.actionButtonTitle = "Ok"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.popItem()
+            }
+        }
+        return page
+    }()
+    
     lazy var bulletinManager: BLTNItemManager = {
         return BLTNItemManager(rootItem: startPage)
     }()
@@ -114,8 +139,19 @@ class StartingViewController: UIViewController {
                     }
                     self.bulletinManager.push(item: errorPageItem)
                 } else {
-                    self.bulletinManager.dismissBulletin()
-                    self.goToMain()
+                    do {
+                        try CLDefaults.shared.checkForListForUser(completion: { list in
+                            if list != nil {
+                                self.bulletinManager.dismissBulletin()
+                                self.goToMain()
+                            } else {
+                                self.bulletinManager.push(item: self.welcomePage)
+                            }
+                        })
+                    } catch {
+                        self.displayAlertOverBulletinManager(title: "An Unexpected Error Occurred",
+                                                             message: "You account was unable to be verified. Please ensure your device has an internet connection.")
+                    }
                 }
             }
         } else {
@@ -128,8 +164,8 @@ class StartingViewController: UIViewController {
         if !emailAddress.isEmpty && !password.isEmpty {
             bulletinManager.displayActivityIndicator()
             Auth.auth().createUser(withEmail: emailAddress, password: password) { (result, error) in
+                self.bulletinManager.hideActivityIndicator()
                 if let error = error {
-                    self.bulletinManager.hideActivityIndicator()
                     let errorPageItem = CLBLTNErrorPageItem(descriptionText: error.localizedDescription)
                     errorPageItem.actionHandler = { (item: BLTNActionItem) in
                         if let manager = item.manager {
@@ -137,8 +173,7 @@ class StartingViewController: UIViewController {
                         }
                     }
                 } else {
-                    self.bulletinManager.dismissBulletin()
-                    self.goToMain()
+                    self.bulletinManager.push(item: self.welcomePage)
                 }
             }
         } else {

@@ -15,6 +15,7 @@ class ListTableViewController: UITableViewController {
     var selectedActivity: CLActivity?
     var state = "Incomplete"
     var type = "All"
+    var order = "Recent"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +68,7 @@ class ListTableViewController: UITableViewController {
         } else if let destination = segue.destination as? ListSortingTableViewController, segue.identifier == "pushSortActivityView" {
             destination.state = state
             destination.type = type
+            destination.order = order
             destination.delegate = self
         }
     }
@@ -92,6 +94,7 @@ class ListTableViewController: UITableViewController {
             
             if isViewable { viewableActivities.append(activity) }
         }
+        if order == "Recent" { viewableActivities.reverse() }
         tableView.reloadData()
     }
 }
@@ -134,6 +137,11 @@ extension ListTableViewController: ListSortingTableViewControllerDelegate {
     
     func sortTypeChanged(type: String) {
         self.type = type
+        determineViewableActivities()
+    }
+    
+    func sortOrderChanged(order: String) {
+        self.order = order
         determineViewableActivities()
     }
 }

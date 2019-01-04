@@ -11,13 +11,23 @@ import UIKit
 class ListTableViewController: UITableViewController {
     
     var activities: [CLActivity] = [CLActivity]()
+    var viewableActivities: [CLActivity] = [CLActivity]()
+    var selectedActivity: CLActivity?
+    var state = "Incomplete"
+    var type = "All"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addActivity))
+        let sortItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(sortActivity))
+        navigationItem.rightBarButtonItems = [sortItem, addItem]
         
         if let list = CLDefaults.shared.list {
             list.registerDelegate(delegate: self)
             list.observeActivities()
+        } else {
+            dismiss(animated: true)
         }
     }
     
@@ -26,11 +36,11 @@ class ListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities.count
+        return viewableActivities.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellData = activities[indexPath.row]
+        let cellData = viewableActivities[indexPath.row]
         if let desc = cellData.desc, !desc.isEmpty, let cell = tableView.dequeueReusableCell(withIdentifier: "subtitleActivityCell") {
             cell.textLabel?.text = cellData.title
             cell.detailTextLabel?.text = desc
@@ -44,6 +54,45 @@ class ListTableViewController: UITableViewController {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "")
         cell.textLabel?.text = cellData.title
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedActivity = viewableActivities[indexPath.row]
+        performSegue(withIdentifier: "pushActivityDetailView", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let activity = selectedActivity, let destination = segue.destination as? ListActivityDetailView, segue.identifier == "pushActivityDetailView" {
+            destination.activity = activity
+        } else if let destination = segue.destination as? ListSortingTableViewController, segue.identifier == "pushSortActivityView" {
+            destination.state = state
+            destination.type = type
+            destination.delegate = self
+        }
+    }
+    
+    @objc func addActivity() {
+        performSegue(withIdentifier: "pushAddActivityView", sender: self)
+    }
+    
+    @objc func sortActivity() {
+        performSegue(withIdentifier: "pushSortActivityView", sender: self)
+    }
+    
+    fileprivate func determineViewableActivities() {
+        viewableActivities.removeAll()
+        activities.forEach { activity in
+            var isViewable = true
+            
+            if state == "Incomplete" && activity.completed { isViewable = false }
+            else if state == "Complete" && !activity.completed { isViewable = false }
+            
+            if type == "Text" { isViewable = false }
+            else if type == "Location" { isViewable = false }
+            
+            if isViewable { viewableActivities.append(activity) }
+        }
+        tableView.reloadData()
     }
 }
 
@@ -59,20 +108,32 @@ extension ListTableViewController: CLListDelegate {
     
     func activityAdded(activity: CLActivity) {
         activities.append(activity)
-        tableView.reloadData()
+        determineViewableActivities()
     }
     
     func activityChanged(activity: CLActivity) {
         if let index = activities.index(where: { $0.id == activity.id }) {
             activities[index] = activity
-            tableView.reloadData()
+            determineViewableActivities()
         }
     }
     
     func activityRemoved(id: String) {
         if let index = activities.index(where: { $0.id == id }) {
             activities.remove(at: index)
-            tableView.reloadData()
+            determineViewableActivities()
         }
+    }
+}
+
+extension ListTableViewController: ListSortingTableViewControllerDelegate {
+    func sortStateChanged(state: String) {
+        self.state = state
+        determineViewableActivities()
+    }
+    
+    func sortTypeChanged(type: String) {
+        self.type = type
+        determineViewableActivities()
     }
 }

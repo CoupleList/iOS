@@ -12,7 +12,5 @@ class ListNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationBar.prefersLargeTitles = true
     }
 }

@@ -9,6 +9,8 @@
 import FirebaseDatabase
 
 protocol CLListDelegate: class {
+    func observersSet()
+    func observersRemoved()
     func activityAdded(activity: CLActivity)
     func activityChanged(activity: CLActivity)
     func activityRemoved(id: String)
@@ -29,7 +31,9 @@ class CLList {
     }
     
     func observeActivities() {
+        removeActivitiesObserver()
         let ref = Database.database().reference(withPath: "lists/\(key)")
+        delegates.forEach { $0.observersSet() }
         addedObserver = ref.child("activities").observe(.childAdded, with: { snapshot in
             if let activity = self.createActivityFromSnapshot(ref: ref, snapshot: snapshot) {
                 self.delegates.forEach { $0.activityAdded(activity: activity) }
@@ -56,6 +60,7 @@ class CLList {
         if let observer = removedObserver {
             ref.removeObserver(withHandle: observer)
         }
+        delegates.forEach { $0.observersRemoved() }
     }
     
     func registerDelegate(delegate: CLListDelegate) {

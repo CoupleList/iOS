@@ -49,6 +49,7 @@ class CLDefaults {
                                     self.validateUserHasPermissionsToViewList(key: key, completion: { canView in
                                         if canView {
                                             self.list = CLList(key: key, code: code)
+                                            self.updateUserListSettings(uid: user.uid)
                                             return completion(self.list)
                                         } else {
                                             return completion(nil)
@@ -84,5 +85,12 @@ class CLDefaults {
         }, withCancel: { _ in
             completion(false)
         })
+    }
+    
+    fileprivate func updateUserListSettings(uid: String) {
+        if let list = list {
+            ref.child("users/\(uid)/list").setValue(["key": list.key,
+                                                     "code": list.code])
+        }
     }
 }

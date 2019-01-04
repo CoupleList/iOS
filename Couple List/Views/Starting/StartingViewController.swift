@@ -72,7 +72,19 @@ class StartingViewController: UIViewController {
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if user != nil {
                 if !self.definesPresentationContext {
-                    self.goToMain()
+                    do {
+                        try CLDefaults.shared.checkForListForUser(completion: { list in
+                            if list != nil {
+                                self.goToMain()
+                            } else {
+                                self.bulletinManager.showBulletin(above: self)
+                                self.bulletinManager.push(item: self.welcomePage)
+                            }
+                        })
+                    } catch {
+                        self.displayAlertOverBulletinManager(title: "An Unexpected Error Occurred",
+                                                             message: "You account was unable to be verified. Please ensure your device has an internet connection.")
+                    }
                 }
             } else {
                 self.bulletinManager.showBulletin(above: self)

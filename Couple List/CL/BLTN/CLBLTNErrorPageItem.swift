@@ -11,7 +11,7 @@ import BLTNBoard
 class CLBLTNErrorPageItem: CLBLTNPageItem {
     
     override init() {
-        super.init(title: "An error occurred")
+        super.init(title: "An Error Occurred")
         descriptionText = "An unexpected error has occurred"
         actionButtonTitle = "Ok"
         actionHandler = { (item: BLTNActionItem) in
@@ -22,7 +22,7 @@ class CLBLTNErrorPageItem: CLBLTNPageItem {
     }
     
     init(descriptionText: String) {
-        super.init(title: "An error occurred")
+        super.init(title: "An Error Occurred")
         self.descriptionText = descriptionText
         actionButtonTitle = "Ok"
         actionHandler = { (item: BLTNActionItem) in

@@ -186,9 +186,9 @@
 		78BAFBF221DD6E5F00681548 /* BLTN */ = {
 			isa = PBXGroup;
 			children = (
-				78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */,
-				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
 				78218EF121DD5838009756C5 /* CLBLTNErrorPageItem.swift */,
+				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
+				78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */,
 				78BAFBF321DD6EA500681548 /* CLBLTNRegisterPageItem.swift */,
 			);
 			path = BLTN;
@@ -330,6 +330,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -339,6 +340,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);

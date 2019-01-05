@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import BLTNBoard
 import FirebaseAuth
+import LocalAuthentication
 import SafariServices
 
 enum CLSettingsRowType {
@@ -19,9 +21,20 @@ enum CLSettingsRowType {
 
 struct CLSettingsRow {
     var title: String
-    var description: String?
+    var description: String? = nil
     var type: CLSettingsRowType = .simple
-    var action: (() -> Void)?
+    var action: (() -> Void)? = nil
+    
+    init(title: String) {
+        self.title = title
+    }
+    
+    init(title: String, description: String?, type: CLSettingsRowType = .simple, action: (() -> Void)? = nil) {
+        self.title = title
+        self.description = description
+        self.type = type
+        self.action = action
+    }
 }
 
 class SettingsTableViewController: UITableViewController {
@@ -35,32 +48,25 @@ class SettingsTableViewController: UITableViewController {
                     "Disclaimers"]
     lazy var rows = [[CLSettingsRow(title: "Set Display Name",
                                description: nil,
-                               type: .simplifiedDetails,
-                               action: nil),
-                 CLSettingsRow(title: "Set Profile Picture",
-                               description: nil,
-                               type: .simple,
-                               action: nil),
+                               type: .simplifiedDetails),
+                 CLSettingsRow(title: "Set Profile Picture"),
                  CLSettingsRow(title: "Logout",
                                description: Auth.auth().currentUser?.email,
-                               type: .simple,
                                action: logout)],
                 [CLSettingsRow(title: "Share List",
                                description: "Invite your partner to your list",
-                               type: .details,
-                               action: nil),
+                               type: .details),
                  CLSettingsRow(title: "View List History",
                                description: "View all saved history of your list",
-                               type: .details,
-                               action: nil),
-                 CLSettingsRow(title: "Leave List",
-                               description: nil,
-                               type: .simple,
-                               action: nil)],
+                               type: .details),
+                 CLSettingsRow(title: "Biometric Authentication",
+                               description: UserDefaults.standard.bool(forKey: "requireBiometricAuthentication") ? "Yes" : "No",
+                               type: .simplifiedDetails,
+                               action: toggleBiometricAuthentication),
+                 CLSettingsRow(title: "Leave List")],
                 [CLSettingsRow(title: "Receive Notifications",
                                description: "No",
-                               type: .simplifiedDetails,
-                               action: nil)],
+                               type: .simplifiedDetails)],
                 [],
                 [],
                 [],
@@ -72,6 +78,83 @@ class SettingsTableViewController: UITableViewController {
                                description: nil,
                                type: .details,
                                action: viewPrivacy)]]
+    
+    lazy var enableBiometricAuthenticationPage: CLBLTNPageItem = {
+        let context = LAContext()
+        var error: NSError?
+        context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+        if let error = error {
+            return CLBLTNErrorPageItem(descriptionText: "Unable to enable biometric authentication on this device.")
+        }
+        let page = CLBLTNPageItem(title: "Enable Biometric Authentication")
+        page.image = context.biometryType == .faceID ? UIImage(named: "FaceID") : UIImage(named: "TouchID")
+        page.descriptionText = "Secure your list and account data by requiring that biometric authentication is verified before accessing Couple List on this device."
+        page.actionButtonTitle = "Enable"
+        page.alternativeButtonTitle = "Cancel"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                UserDefaults.standard.set(true, forKey: "requireBiometricAuthentication")
+                self.tableView.reloadData()
+                manager.push(item: self.biometricAuthenticationEnabledPage)
+            }
+        }
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.dismissBulletin()
+            }
+        }
+        return page
+    }()
+    
+    lazy var biometricAuthenticationEnabledPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Biometric Authentication Enabled")
+        page.actionButtonTitle = "Complete"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.dismissBulletin()
+            }
+        }
+        return page
+    }()
+    
+    lazy var enableBioetricAuthenticationBulletinManager: BLTNItemManager = {
+        return BLTNItemManager(rootItem: enableBiometricAuthenticationPage)
+    }()
+    
+    lazy var disableBiometricAuthenticationPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Disable Biometric Authentication")
+        page.descriptionText = "Remove biometric authentication and its requirement to be verified before viewing any list or account data within Couple List on this device."
+        page.actionButtonTitle = "Disable"
+        page.alternativeButtonTitle = "Cancel"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                UserDefaults.standard.set(false, forKey: "requireBiometricAuthentication")
+                self.tableView.reloadData()
+                manager.push(item: self.biometricAuthenticationDisabledPage)
+            }
+        }
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.dismissBulletin()
+            }
+        }
+        return page
+    }()
+    
+    lazy var biometricAuthenticationDisabledPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Biometric Authentication Disabled")
+        page.actionButtonTitle = "Complete"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.dismissBulletin()
+            }
+        }
+        return page
+    }()
+    
+    lazy var disableBiometricAuthenticationBulletinManager: BLTNItemManager = {
+        return BLTNItemManager(rootItem: disableBiometricAuthenticationPage)
+    }()
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -108,7 +191,11 @@ class SettingsTableViewController: UITableViewController {
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "default")
             cell.textLabel!.text = cellData.title
             if let description = cellData.description {
-                cell.detailTextLabel!.text = description
+                if cellData.title == "Biometric Authentication" {
+                    cell.detailTextLabel!.text = UserDefaults.standard.bool(forKey: "requireBiometricAuthentication") ? "Yes" : "No"
+                } else {
+                    cell.detailTextLabel!.text = description
+                }
             }
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -148,6 +235,16 @@ class SettingsTableViewController: UITableViewController {
         if let url = URL(string: "https://couplelist.app/privacy") {
             let view = SFSafariViewController(url: url)
             present(view, animated: true)
+        }
+    }
+    
+    fileprivate func toggleBiometricAuthentication() {
+        tableView.reloadData()
+        let requireBiometricAuthentication = UserDefaults.standard.bool(forKey: "requireBiometricAuthentication")
+        if requireBiometricAuthentication {
+            disableBiometricAuthenticationBulletinManager.showBulletin(above: self)
+        } else {
+            enableBioetricAuthenticationBulletinManager.showBulletin(above: self)
         }
     }
 }

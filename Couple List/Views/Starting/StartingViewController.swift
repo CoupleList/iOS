@@ -11,6 +11,8 @@ import BLTNBoard
 import FirebaseAnalytics
 import FirebaseAuth
 import FirebaseDatabase
+import LocalAuthentication
+import SwiftKeychainWrapper
 
 class StartingViewController: UIViewController {
     
@@ -65,6 +67,22 @@ class StartingViewController: UIViewController {
         return BLTNItemManager(rootItem: startPage)
     }()
     
+    lazy var biometricAuthenticationFailedPage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Unable To Validate With Biometrics")
+        page.actionButtonTitle = "Retry"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.dismissBulletin()
+                self.goToMain()
+            }
+        }
+        return page
+    }()
+    
+    lazy var biometricAuthenticationFailedBulletinManager: BLTNItemManager = {
+        return BLTNItemManager(rootItem: biometricAuthenticationFailedPage)
+    }()
+    
     var handle: AuthStateDidChangeListenerHandle?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,7 +118,28 @@ class StartingViewController: UIViewController {
     
     fileprivate func goToMain() {
         let mainViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController()
-        present(mainViewController!, animated: true)
+        let requireBiometricAuthentication = UserDefaults.standard.bool(forKey: "requireBiometricAuthentication")
+        if requireBiometricAuthentication {
+            let context = LAContext()
+            var error: NSError?
+            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+                context.evaluatePolicy(.deviceOwnerAuthentication,
+                                       localizedReason: "Authenticate User Locally") { (success, error) in
+                                        DispatchQueue.main.async {
+                                            if success {
+                                                self.present(mainViewController!, animated: true)
+                                            } else {
+                                                self.biometricAuthenticationFailedBulletinManager.showBulletin(above: self)
+                                            }
+                                        }
+                }
+            } else {
+                self.biometricAuthenticationFailedBulletinManager.showBulletin(above: self)
+                self.biometricAuthenticationFailedBulletinManager.push(item: CLBLTNErrorPageItem(descriptionText: "Unable to use biometric authentication. Please ensure Face ID or Touch ID is enabled for Couple List."))
+            }
+        } else {
+            present(mainViewController!, animated: true)
+        }
     }
     
     fileprivate func generateLoginPageItem(_ emailAddress: String = "") -> CLBTNLoginPageItem {

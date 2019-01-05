@@ -59,8 +59,10 @@ class CLBLTNItemManager {
     fileprivate func setTheme() {
         if Ambience.currentState == .invert {
             manager.backgroundColor = .black
+            manager.backgroundViewStyle = .blurredLight
         } else {
             manager.backgroundColor = .white
+            manager.backgroundViewStyle = .blurredDark
         }
     }
 }

@@ -17,4 +17,9 @@ class ListActivityDetailView: UIViewController {
             }
         }
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        ambience = true
+    }
 }

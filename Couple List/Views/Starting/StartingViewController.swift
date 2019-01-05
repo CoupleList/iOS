@@ -12,7 +12,6 @@ import FirebaseAnalytics
 import FirebaseAuth
 import FirebaseDatabase
 import LocalAuthentication
-import SwiftKeychainWrapper
 
 class StartingViewController: UIViewController {
     
@@ -63,8 +62,8 @@ class StartingViewController: UIViewController {
         return page
     }()
     
-    lazy var bulletinManager: BLTNItemManager = {
-        return BLTNItemManager(rootItem: startPage)
+    lazy var bulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: startPage)
     }()
     
     lazy var biometricAuthenticationFailedPage: CLBLTNPageItem = {
@@ -79,8 +78,8 @@ class StartingViewController: UIViewController {
         return page
     }()
     
-    lazy var biometricAuthenticationFailedBulletinManager: BLTNItemManager = {
-        return BLTNItemManager(rootItem: biometricAuthenticationFailedPage)
+    lazy var biometricAuthenticationFailedBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: biometricAuthenticationFailedPage)
     }()
     
     var handle: AuthStateDidChangeListenerHandle?
@@ -95,7 +94,7 @@ class StartingViewController: UIViewController {
                             if list != nil {
                                 self.goToMain()
                             } else {
-                                self.bulletinManager.showBulletin(above: self)
+                                self.bulletinManager.show(above: self)
                                 self.bulletinManager.push(item: self.welcomePage)
                             }
                         })
@@ -105,7 +104,7 @@ class StartingViewController: UIViewController {
                     }
                 }
             } else {
-                self.bulletinManager.showBulletin(above: self)
+                self.bulletinManager.show(above: self)
             }
         }
     }
@@ -129,12 +128,12 @@ class StartingViewController: UIViewController {
                                             if success {
                                                 self.present(mainViewController!, animated: true)
                                             } else {
-                                                self.biometricAuthenticationFailedBulletinManager.showBulletin(above: self)
+                                                self.biometricAuthenticationFailedBulletinManager.show(above: self)
                                             }
                                         }
                 }
             } else {
-                self.biometricAuthenticationFailedBulletinManager.showBulletin(above: self)
+                self.biometricAuthenticationFailedBulletinManager.show(above: self)
                 self.biometricAuthenticationFailedBulletinManager.push(item: CLBLTNErrorPageItem(descriptionText: "Unable to use biometric authentication. Please ensure Face ID or Touch ID is enabled for Couple List."))
             }
         } else {
@@ -173,7 +172,7 @@ class StartingViewController: UIViewController {
     fileprivate func displayAlertOverBulletinManager(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        bulletinManager.present(alert, animated: true)
+        bulletinManager.present(viewController: alert)
     }
     
     fileprivate func login(emailAddress: String, password: String) {
@@ -193,7 +192,7 @@ class StartingViewController: UIViewController {
                     do {
                         try CLDefaults.shared.checkForListForUser(completion: { list in
                             if list != nil {
-                                self.bulletinManager.dismissBulletin()
+                                self.bulletinManager.dismiss()
                                 self.goToMain()
                             } else {
                                 self.bulletinManager.push(item: self.welcomePage)

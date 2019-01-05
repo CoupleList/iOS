@@ -1,4 +1,5 @@
 PODS:
+  - Ambience (0.1.2)
   - BulletinBoard (2.0.2)
   - Crashlytics (3.10.3):
     - Fabric (~> 1.7.8)
@@ -65,9 +66,9 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.6.0)
-  - SwiftKeychainWrapper (3.0.1)
 
 DEPENDENCIES:
+  - Ambience
   - BulletinBoard
   - Crashlytics (~> 3.10.2)
   - Fabric (~> 1.7.7)
@@ -78,10 +79,10 @@ DEPENDENCIES:
   - Firebase/DynamicLinks
   - Firebase/Messaging
   - Firebase/Storage
-  - SwiftKeychainWrapper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Ambience
     - BulletinBoard
     - Crashlytics
     - Fabric
@@ -100,9 +101,9 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
-    - SwiftKeychainWrapper
 
 SPEC CHECKSUMS:
+  Ambience: 50ef53807961e96584a01f908283e25366f9899e
   BulletinBoard: a4a3022789e5202167127c3231975313c1d76c51
   Crashlytics: 2aea305161a2122492698c75af27f2b98aa49a25
   Fabric: fba4684a95df789565b0b27fc5b6e68f1755af32
@@ -121,8 +122,7 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
-  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
 
-PODFILE CHECKSUM: 24a354c9f2859fa20c496a8b8fce29029b01ade8
+PODFILE CHECKSUM: 91d7974e9ff5a8e4a9e6b7815018863e6a9e49a7
 
 COCOAPODS: 1.5.3

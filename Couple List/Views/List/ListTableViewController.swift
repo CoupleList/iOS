@@ -19,6 +19,8 @@ class ListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ambience = true
 
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addActivity))
         let sortItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(sortActivity))

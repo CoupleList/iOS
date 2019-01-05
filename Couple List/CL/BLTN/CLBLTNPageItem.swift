@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kirin Patel. All rights reserved.
 //
 
+import Ambience
 import BLTNBoard
 
 class CLBLTNPageItem: BLTNPageItem {
@@ -21,7 +22,16 @@ class CLBLTNPageItem: BLTNPageItem {
     }
     
     fileprivate func setup() {
+        ambience = true
         requiresCloseButton = false
         isDismissable = false
+    }
+    
+    func setTheme() {
+        if Ambience.currentState == .invert {
+            appearance.descriptionTextColor = .white
+        } else {
+            appearance.descriptionTextColor = .black
+        }
     }
 }

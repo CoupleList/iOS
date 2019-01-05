@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ambience
 import BLTNBoard
 
 class CLBLTNRegisterPageItem: CLBLTNPageItem {
@@ -51,6 +52,33 @@ class CLBLTNRegisterPageItem: CLBLTNPageItem {
             confirmPasswordTextField.textContentType = .password
         }
         confirmPasswordTextField.isSecureTextEntry = true
+        if Ambience.currentState == .invert {
+            let attributes = [NSAttributedString.Key.foregroundColor : UIColor.lightGray]
+            let emailAttributedPlaceholder = NSAttributedString(string: "Email Address",
+                                                                attributes: attributes)
+            let passwordAttributedPlaceholder = NSAttributedString(string: "Password",
+                                                                   attributes: attributes)
+            let confirmPasswordAttributedPlaceholder = NSAttributedString(string: "Confirm Password",
+                                                                          attributes: attributes)
+            emailAddressTextField.backgroundColor = .black
+            emailAddressTextField.textColor = .white
+            emailAddressTextField.attributedPlaceholder = emailAttributedPlaceholder
+            emailAddressTextField.layer.borderColor = UIColor.white.cgColor
+            emailAddressTextField.layer.borderWidth = 1
+            emailAddressTextField.layer.cornerRadius = 6
+            passwordTextField.backgroundColor = .black
+            passwordTextField.textColor = .white
+            passwordTextField.attributedPlaceholder = passwordAttributedPlaceholder
+            passwordTextField.layer.borderColor = UIColor.white.cgColor
+            passwordTextField.layer.borderWidth = 1
+            passwordTextField.layer.cornerRadius = 6
+            confirmPasswordTextField.backgroundColor = .black
+            confirmPasswordTextField.textColor = .white
+            confirmPasswordTextField.attributedPlaceholder = confirmPasswordAttributedPlaceholder
+            confirmPasswordTextField.layer.borderColor = UIColor.white.cgColor
+            confirmPasswordTextField.layer.borderWidth = 1
+            confirmPasswordTextField.layer.cornerRadius = 6
+        }
         return [emailAddressTextField,
                 passwordTextField,
                 confirmPasswordTextField]

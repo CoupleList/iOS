@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ambience
 import Firebase
 import FirebaseAuth
 import FirebaseAnalytics
@@ -29,6 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         GADMobileAds.configure(withApplicationID: "ca-app-pub-9026572937829340~1062002797")
         
         ref = Database.database().reference()
+        
+        _ = Ambience.shared
+        
+//        ambience.insert([.invert(upper: 0.2),
+//                         .regular(lower: 0.1, upper: 1.0),
+//                         .contrast(lower: nil)])
+        
         
         return true
     }

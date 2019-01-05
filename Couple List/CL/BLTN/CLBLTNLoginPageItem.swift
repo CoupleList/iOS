@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ambience
 import BLTNBoard
 
 class CLBTNLoginPageItem: CLBLTNPageItem {
@@ -40,6 +41,25 @@ class CLBTNLoginPageItem: CLBLTNPageItem {
                                                            delegate: self)
         passwordTextField.textContentType = .password
         passwordTextField.isSecureTextEntry = true
+        if Ambience.currentState == .invert {
+            let attributes = [NSAttributedString.Key.foregroundColor : UIColor.lightGray]
+            let emailAttributedPlaceholder = NSAttributedString(string: "Email Address",
+                                                                attributes: attributes)
+            let passwordAttributedPlaceholder = NSAttributedString(string: "Password",
+                                                                   attributes: attributes)
+            emailAddressTextField.backgroundColor = .black
+            emailAddressTextField.textColor = .white
+            emailAddressTextField.attributedPlaceholder = emailAttributedPlaceholder
+            emailAddressTextField.layer.borderColor = UIColor.white.cgColor
+            emailAddressTextField.layer.borderWidth = 1
+            emailAddressTextField.layer.cornerRadius = 6
+            passwordTextField.backgroundColor = .black
+            passwordTextField.textColor = .white
+            passwordTextField.attributedPlaceholder = passwordAttributedPlaceholder
+            passwordTextField.layer.borderColor = UIColor.white.cgColor
+            passwordTextField.layer.borderWidth = 1
+            passwordTextField.layer.cornerRadius = 6
+        }
         return [emailAddressTextField, passwordTextField]
     }
     

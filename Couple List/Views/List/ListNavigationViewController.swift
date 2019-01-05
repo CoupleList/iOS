@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Ambience
 
 class ListNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ambience = true
     }
 }

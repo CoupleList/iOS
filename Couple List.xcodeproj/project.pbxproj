@@ -28,6 +28,7 @@
 		78BAFBFF21DE749A00681548 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAFBFE21DE749A00681548 /* ListTableViewController.swift */; };
 		78BAFC0221DE877400681548 /* CLList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAFC0121DE877400681548 /* CLList.swift */; };
 		78BAFC0421DE89AC00681548 /* CLActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAFC0321DE89AC00681548 /* CLActivity.swift */; };
+		78C0669321E118B000091D6A /* CLBLTNItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0669221E118B000091D6A /* CLBLTNItemManager.swift */; };
 		78DD9CDB21310DC900DF30E8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DD9CDA21310DC900DF30E8 /* MapKit.framework */; };
 		78F1B7DE21DEFECE00D6773A /* CLDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F1B7DD21DEFECE00D6773A /* CLDefaults.swift */; };
 		78F1B7E021DF16CD00D6773A /* ListActivityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F1B7DF21DF16CD00D6773A /* ListActivityDetailView.swift */; };
@@ -61,6 +62,7 @@
 		78BAFBFE21DE749A00681548 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		78BAFC0121DE877400681548 /* CLList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLList.swift; sourceTree = "<group>"; };
 		78BAFC0321DE89AC00681548 /* CLActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLActivity.swift; sourceTree = "<group>"; };
+		78C0669221E118B000091D6A /* CLBLTNItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBLTNItemManager.swift; sourceTree = "<group>"; };
 		78DD9CDA21310DC900DF30E8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		78F1B7DD21DEFECE00D6773A /* CLDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLDefaults.swift; sourceTree = "<group>"; };
 		78F1B7DF21DF16CD00D6773A /* ListActivityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListActivityDetailView.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				78218EF121DD5838009756C5 /* CLBLTNErrorPageItem.swift */,
+				78C0669221E118B000091D6A /* CLBLTNItemManager.swift */,
 				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
 				78218EED21DD344C009756C5 /* CLBLTNPageItem.swift */,
 				78BAFBF321DD6EA500681548 /* CLBLTNRegisterPageItem.swift */,
@@ -326,21 +329,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Couple List/Pods-Couple List-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Ambience/Ambience.framework",
 				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BLTNBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Ambience.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLTNBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -376,6 +379,7 @@
 			files = (
 				78218EF221DD5838009756C5 /* CLBLTNErrorPageItem.swift in Sources */,
 				78218EF021DD37CD009756C5 /* CLBLTNLoginPageItem.swift in Sources */,
+				78C0669321E118B000091D6A /* CLBLTNItemManager.swift in Sources */,
 				78F1B7DE21DEFECE00D6773A /* CLDefaults.swift in Sources */,
 				78BAFC0221DE877400681548 /* CLList.swift in Sources */,
 				78218EEE21DD344C009756C5 /* CLBLTNPageItem.swift in Sources */,

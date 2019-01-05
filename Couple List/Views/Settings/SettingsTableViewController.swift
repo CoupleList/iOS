@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ambience
 import BLTNBoard
 import FirebaseAuth
 import LocalAuthentication
@@ -39,45 +40,50 @@ struct CLSettingsRow {
 
 class SettingsTableViewController: UITableViewController {
     
-    let sections = ["Account Settings",
+    let sections = ["App Settings",
+                    "Account Settings",
                     "List Settings",
                     "Notification Settings",
                     "Location Settings",
                     "Feedback",
                     "In App Purchases",
                     "Disclaimers"]
-    lazy var rows = [[CLSettingsRow(title: "Set Display Name",
-                               description: nil,
-                               type: .simplifiedDetails),
-                 CLSettingsRow(title: "Set Profile Picture"),
-                 CLSettingsRow(title: "Logout",
-                               description: Auth.auth().currentUser?.email,
-                               action: logout)],
-                [CLSettingsRow(title: "Share List",
-                               description: "Invite your partner to your list",
-                               type: .details),
-                 CLSettingsRow(title: "View List History",
-                               description: "View all saved history of your list",
-                               type: .details),
-                 CLSettingsRow(title: "Biometric Authentication",
-                               description: UserDefaults.standard.bool(forKey: "requireBiometricAuthentication") ? "Yes" : "No",
-                               type: .simplifiedDetails,
-                               action: toggleBiometricAuthentication),
-                 CLSettingsRow(title: "Leave List")],
-                [CLSettingsRow(title: "Receive Notifications",
-                               description: "No",
-                               type: .simplifiedDetails)],
-                [],
-                [],
-                [],
-                [CLSettingsRow(title: "Icons",
-                               description: "All icons were obtained from icons8.com",
-                               type: .details,
-                               action: viewIcons8Website),
-                 CLSettingsRow(title: "Privacy",
-                               description: nil,
-                               type: .details,
-                               action: viewPrivacy)]]
+    lazy var rows = [[CLSettingsRow(title: "App Theme",
+                                    description: Ambience.currentState == .invert ? "Dark" : "Light",
+                                    type: .simplifiedDetails,
+                                    action: setAppTheme)],
+                     [CLSettingsRow(title: "Set Display Name",
+                                   description: nil,
+                                   type: .simplifiedDetails),
+                      CLSettingsRow(title: "Set Profile Picture"),
+                      CLSettingsRow(title: "Logout",
+                                    description: Auth.auth().currentUser?.email,
+                                    action: logout)],
+                    [CLSettingsRow(title: "Share List",
+                                   description: "Invite your partner to your list",
+                                   type: .details),
+                     CLSettingsRow(title: "View List History",
+                                   description: "View all saved history of your list",
+                                   type: .details),
+                     CLSettingsRow(title: "Biometric Authentication",
+                                   description: UserDefaults.standard.bool(forKey: "requireBiometricAuthentication") ? "Yes" : "No",
+                                   type: .simplifiedDetails,
+                                   action: toggleBiometricAuthentication),
+                     CLSettingsRow(title: "Leave List")],
+                    [CLSettingsRow(title: "Receive Notifications",
+                                   description: "No",
+                                   type: .simplifiedDetails)],
+                    [],
+                    [],
+                    [],
+                    [CLSettingsRow(title: "Icons",
+                                   description: "All icons were obtained from icons8.com",
+                                   type: .details,
+                                   action: viewIcons8Website),
+                     CLSettingsRow(title: "Privacy",
+                                   description: nil,
+                                   type: .details,
+                                   action: viewPrivacy)]]
     
     lazy var enableBiometricAuthenticationPage: CLBLTNPageItem = {
         let context = LAContext()
@@ -117,8 +123,8 @@ class SettingsTableViewController: UITableViewController {
         return page
     }()
     
-    lazy var enableBioetricAuthenticationBulletinManager: BLTNItemManager = {
-        return BLTNItemManager(rootItem: enableBiometricAuthenticationPage)
+    lazy var enableBioetricAuthenticationBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: enableBiometricAuthenticationPage)
     }()
     
     lazy var disableBiometricAuthenticationPage: CLBLTNPageItem = {
@@ -152,8 +158,33 @@ class SettingsTableViewController: UITableViewController {
         return page
     }()
     
-    lazy var disableBiometricAuthenticationBulletinManager: BLTNItemManager = {
-        return BLTNItemManager(rootItem: disableBiometricAuthenticationPage)
+    lazy var disableBiometricAuthenticationBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: disableBiometricAuthenticationPage)
+    }()
+    
+    lazy var themePage: CLBLTNPageItem = {
+        let page = CLBLTNPageItem(title: "Set App Theme")
+        page.actionButtonTitle = "Dark"
+        page.actionHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                Ambience.forcedState = .invert
+                manager.dismissBulletin()
+                self.tableView.reloadData()
+            }
+        }
+        page.alternativeButtonTitle = "Light"
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                Ambience.forcedState = .regular
+                manager.dismissBulletin()
+                self.tableView.reloadData()
+            }
+        }
+        return page
+    }()
+    
+    lazy var setAppThemeBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: themePage)
     }()
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -193,6 +224,8 @@ class SettingsTableViewController: UITableViewController {
             if let description = cellData.description {
                 if cellData.title == "Biometric Authentication" {
                     cell.detailTextLabel!.text = UserDefaults.standard.bool(forKey: "requireBiometricAuthentication") ? "Yes" : "No"
+                } else if cellData.title == "App Theme" {
+                    cell.detailTextLabel!.text = Ambience.currentState == .invert ? "Dark" : "Light"
                 } else {
                     cell.detailTextLabel!.text = description
                 }
@@ -242,9 +275,14 @@ class SettingsTableViewController: UITableViewController {
         tableView.reloadData()
         let requireBiometricAuthentication = UserDefaults.standard.bool(forKey: "requireBiometricAuthentication")
         if requireBiometricAuthentication {
-            disableBiometricAuthenticationBulletinManager.showBulletin(above: self)
+            disableBiometricAuthenticationBulletinManager.show(above: self)
         } else {
-            enableBioetricAuthenticationBulletinManager.showBulletin(above: self)
+            enableBioetricAuthenticationBulletinManager.show(above: self)
         }
+    }
+    
+    fileprivate func setAppTheme() {
+        tableView.reloadData()
+        setAppThemeBulletinManager.show(above: self)
     }
 }

@@ -35,8 +35,8 @@ class MainTabViewController: UITabBarController {
         return page
     }()
     
-    lazy var biometricAuthenticationFailedBulletinManager: BLTNItemManager = {
-        return BLTNItemManager(rootItem: biometricAuthenticationFailedPage)
+    lazy var biometricAuthenticationFailedBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: biometricAuthenticationFailedPage)
     }()
     
     override func viewDidLoad() {
@@ -107,12 +107,12 @@ class MainTabViewController: UITabBarController {
                                                 self.blurView.alpha = 0
                                             })
                                         } else {
-                                            self.biometricAuthenticationFailedBulletinManager.showBulletin(above: self)
+                                            self.biometricAuthenticationFailedBulletinManager.show(above: self)
                                         }
                                     }
             }
         } else {
-            self.biometricAuthenticationFailedBulletinManager.showBulletin(above: self)
+            self.biometricAuthenticationFailedBulletinManager.show(above: self)
             self.biometricAuthenticationFailedBulletinManager.push(item: CLBLTNErrorPageItem(descriptionText: "Unable to use biometric authentication. Please ensure Face ID or Touch ID is enabled for Couple List."))
         }
     }

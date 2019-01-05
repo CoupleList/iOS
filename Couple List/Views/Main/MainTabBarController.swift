@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ambience
 import BLTNBoard
 import FirebaseAuth
 import LocalAuthentication
@@ -92,6 +93,7 @@ class MainTabViewController: UITabBarController {
         let requireBiometricAuthentication = UserDefaults.standard.bool(forKey: "requireBiometricAuthentication")
         if requireBiometricAuthentication {
             self.blurView.alpha = 1
+            self.blurView.effect = UIBlurEffect(style: Ambience.currentState == .invert ? .dark : .light)
         }
     }
     

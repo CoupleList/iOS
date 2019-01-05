@@ -47,15 +47,18 @@ class ListTableViewController: UITableViewController {
         if let desc = cellData.desc, !desc.isEmpty, let cell = tableView.dequeueReusableCell(withIdentifier: "subtitleActivityCell") {
             cell.textLabel?.text = cellData.title
             cell.detailTextLabel?.text = desc
+            cell.accessoryType = cellData.completed ? .checkmark : .none
             return cell
             
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "defaultActivityCell") {
             cell.textLabel?.text = cellData.title
+            cell.accessoryType = cellData.completed ? .checkmark : .none
             return cell
         }
         
         let cell = UITableViewCell(style: .default, reuseIdentifier: "")
         cell.textLabel?.text = cellData.title
+        cell.accessoryType = cellData.completed ? .checkmark : .none
         return cell
     }
     

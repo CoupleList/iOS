@@ -115,7 +115,9 @@ class ListSortingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: "default")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "simplifiedDetails") else {
+            fatalError("The dequeued cell is not an instance of UITableViewCell")
+        }
         if indexPath.section == 0 {
             cell.textLabel?.text = indexPath.row == 0 ? "State" : "Type"
             cell.detailTextLabel?.text = indexPath.row == 0 ? state : type

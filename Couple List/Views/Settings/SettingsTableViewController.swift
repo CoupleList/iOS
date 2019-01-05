@@ -169,7 +169,9 @@ class SettingsTableViewController: UITableViewController {
             if let manager = item.manager {
                 Ambience.forcedState = .invert
                 manager.dismissBulletin()
-                self.tableView.reloadData()
+                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { _ in
+                    self.tableView.reloadData()
+                })
             }
         }
         page.alternativeButtonTitle = "Light"
@@ -177,7 +179,9 @@ class SettingsTableViewController: UITableViewController {
             if let manager = item.manager {
                 Ambience.forcedState = .regular
                 manager.dismissBulletin()
-                self.tableView.reloadData()
+                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { _ in
+                    self.tableView.reloadData()
+                })
             }
         }
         return page
@@ -204,14 +208,24 @@ class SettingsTableViewController: UITableViewController {
         
         switch cellData.type {
         case .simple:
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "subtitle")
-            cell.textLabel!.text = cellData.title
             if let description = cellData.description {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "subtitle") else {
+                    fatalError("The dequeued cell is not an instance of UITableViewCell")
+                }
+                cell.textLabel!.text = cellData.title
                 cell.detailTextLabel!.text = description
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "basic") else {
+                    fatalError("The dequeued cell is not an instance of UITableViewCell")
+                }
+                cell.textLabel!.text = cellData.title
+                return cell
             }
-            return cell
         case .details:
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "default")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "subtitle") else {
+                fatalError("The dequeued cell is not an instance of UITableViewCell")
+            }
             cell.textLabel!.text = cellData.title
             if let description = cellData.description {
                 cell.detailTextLabel!.text = description
@@ -219,7 +233,9 @@ class SettingsTableViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
             return cell
         case .simplifiedDetails:
-            let cell = UITableViewCell(style: .value1, reuseIdentifier: "default")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "simplifiedDetails") else {
+                fatalError("The dequeued cell is not an instance of UITableViewCell")
+            }
             cell.textLabel!.text = cellData.title
             if let description = cellData.description {
                 if cellData.title == "Biometric Authentication" {
@@ -233,7 +249,8 @@ class SettingsTableViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
             return cell
         case .toggle:
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "default")
+            let cell = UITableViewCell(style: cellData.type == .simplifiedDetails ? .value1 : .subtitle, reuseIdentifier: "cell")
+            cell.textLabel!.text = cellData.title
             if let description = cellData.description {
                 cell.detailTextLabel!.text = description
             }

@@ -43,11 +43,17 @@ class MainTabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let listStack = UIStoryboard.init(name: "List", bundle: nil).instantiateInitialViewController()
-        listStack!.tabBarItem = UITabBarItem(title: "List", image: nil, selectedImage: nil)
+        let listStack = UIStoryboard.init(name: "List",
+                                          bundle: nil).instantiateInitialViewController()
+        listStack!.tabBarItem = UITabBarItem(title: "List",
+                                             image: UIImage(named: "List"),
+                                             selectedImage: nil)
         
-        let settingsStack = UIStoryboard.init(name: "Settings", bundle: nil).instantiateInitialViewController()
-        settingsStack!.tabBarItem = UITabBarItem(title: "Settings", image: nil, selectedImage: nil)
+        let settingsStack = UIStoryboard.init(name: "Settings",
+                                              bundle: nil).instantiateInitialViewController()
+        settingsStack!.tabBarItem = UITabBarItem(title: "Settings",
+                                                 image: UIImage(named: "Settings"),
+                                                 selectedImage: nil)
         viewControllers = [listStack!, settingsStack!]
         
         view.addSubview(blurView)

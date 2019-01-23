@@ -150,34 +150,13 @@
                     <navigationItem key="navigationItem" title="Activities" id="s34-ZA-5RC"/>
                     <connections>
                         <segue destination="PXm-4f-ZiS" kind="show" identifier="pushActivityDetailView" id="Lsp-vs-Lvn"/>
-                        <segue destination="ivs-bg-oqb" kind="show" identifier="pushAddActivityView" id="QkK-bF-42C"/>
                         <segue destination="kEi-Te-rlb" kind="show" identifier="pushSortActivityView" id="ML4-Sy-Bjq"/>
+                        <segue destination="PXm-4f-ZiS" kind="show" identifier="pushAddActivityView" id="6uU-e8-EZJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IOV-4c-HeX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-625" y="-118"/>
-        </scene>
-        <!--Add Activity-->
-        <scene sceneID="Cju-20-Zyr">
-            <objects>
-                <viewController title="Add Activity" id="ivs-bg-oqb" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="A18-9H-MPW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="rt8-xw-o08"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="invertColor">
-                                <color key="value" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="ambience" value="YES"/>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6Ew-ud-NDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="199" y="544"/>
         </scene>
         <!--Filter/Sort Activities-->
         <scene sceneID="n6u-r0-mLN">
@@ -259,7 +238,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SWh-Gk-lMq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="199" y="1204"/>
+            <point key="canvasLocation" x="199" y="683"/>
         </scene>
         <!--Activity Details-->
         <scene sceneID="q5i-Pd-S12">
@@ -283,4 +262,7 @@
             <point key="canvasLocation" x="198.55072463768118" y="-118.20652173913044"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="6uU-e8-EZJ"/>
+    </inferredMetricsTieBreakers>
 </document>

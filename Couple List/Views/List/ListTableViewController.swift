@@ -75,6 +75,8 @@ class ListTableViewController: UITableViewController {
             destination.type = type
             destination.order = order
             destination.delegate = self
+        } else if let destination = segue.destination as? ListActivityDetailView, segue.identifier == "pushAddActivityView" {
+            destination.title = "Add Activity"
         }
     }
     

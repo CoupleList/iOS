@@ -19,6 +19,7 @@
 		78218EFF21DD5EC3009756C5 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78218EFE21DD5EC3009756C5 /* SettingsTableViewController.swift */; };
 		7827198820CCD2090033CADE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7827198720CCD2090033CADE /* StoreKit.framework */; };
 		784AEC6D20D56FA900BAD8DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */; };
+		78882C6721FC1F1A00B5B73D /* CLBLTNAddActivityPageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78882C6621FC1F1A00B5B73D /* CLBLTNAddActivityPageItem.swift */; };
 		78AB802E1EE38D54008ACCC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */; };
 		78AB80351EE38D54008ACCC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78AB80341EE38D54008ACCC3 /* Assets.xcassets */; };
 		78AB80381EE38D54008ACCC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78AB80361EE38D54008ACCC3 /* LaunchScreen.storyboard */; };
@@ -51,6 +52,7 @@
 		78218EFE21DD5EC3009756C5 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		7827198720CCD2090033CADE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		784AEC6C20D56FA900BAD8DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		78882C6621FC1F1A00B5B73D /* CLBLTNAddActivityPageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLBLTNAddActivityPageItem.swift; sourceTree = "<group>"; };
 		78AB802A1EE38D54008ACCC3 /* Couple List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Couple List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78AB802D1EE38D54008ACCC3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78AB80341EE38D54008ACCC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		78BAFBF221DD6E5F00681548 /* BLTN */ = {
 			isa = PBXGroup;
 			children = (
+				78882C6621FC1F1A00B5B73D /* CLBLTNAddActivityPageItem.swift */,
 				78218EF121DD5838009756C5 /* CLBLTNErrorPageItem.swift */,
 				78C0669221E118B000091D6A /* CLBLTNItemManager.swift */,
 				78218EEF21DD37CD009756C5 /* CLBLTNLoginPageItem.swift */,
@@ -388,6 +391,7 @@
 				78218EFF21DD5EC3009756C5 /* SettingsTableViewController.swift in Sources */,
 				78F1B7E221DF1D5800D6773A /* ListSortingTableViewController.swift in Sources */,
 				78BAFBFB21DE729A00681548 /* ListNavigationViewController.swift in Sources */,
+				78882C6721FC1F1A00B5B73D /* CLBLTNAddActivityPageItem.swift in Sources */,
 				78F1B7E021DF16CD00D6773A /* ListActivityDetailView.swift in Sources */,
 				78218EEB21DD1EB1009756C5 /* StartingViewController.swift in Sources */,
 				78BAFBFF21DE749A00681548 /* ListTableViewController.swift in Sources */,

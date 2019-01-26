@@ -25,6 +25,7 @@ class CLBLTNPageItem: BLTNPageItem {
         ambience = true
         requiresCloseButton = false
         isDismissable = false
+        setTheme()
     }
     
     func setTheme() {

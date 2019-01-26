@@ -39,6 +39,16 @@ class CLList {
         }
     }
     
+    func createActivity(title: String, details: String = "") {
+        let ref = Database.database().reference(withPath: "lists/\(key)")
+        let id = ref.childByAutoId().key
+        ref.child("activities/\(id)").setValue([
+            "title": title,
+            "description": details,
+            "done": false
+            ])
+    }
+    
     func observeActivities() {
         removeActivitiesObserver()
         let ref = Database.database().reference(withPath: "lists/\(key)")

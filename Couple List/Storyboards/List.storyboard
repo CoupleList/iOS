@@ -149,12 +149,20 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Activities" id="s34-ZA-5RC"/>
                     <connections>
+                        <outlet property="searchDisplayController" destination="6It-Wf-Bhi" id="Oc5-UU-sj4"/>
                         <segue destination="PXm-4f-ZiS" kind="show" identifier="pushActivityDetailView" id="Lsp-vs-Lvn"/>
                         <segue destination="kEi-Te-rlb" kind="show" identifier="pushSortActivityView" id="ML4-Sy-Bjq"/>
-                        <segue destination="PXm-4f-ZiS" kind="show" identifier="pushAddActivityView" id="6uU-e8-EZJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IOV-4c-HeX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="6It-Wf-Bhi">
+                    <connections>
+                        <outlet property="delegate" destination="AB2-n2-IqN" id="tOp-Yl-4LZ"/>
+                        <outlet property="searchContentsController" destination="AB2-n2-IqN" id="RFk-0K-OkO"/>
+                        <outlet property="searchResultsDataSource" destination="AB2-n2-IqN" id="3VR-P4-iMo"/>
+                        <outlet property="searchResultsDelegate" destination="AB2-n2-IqN" id="7Qx-Lc-wdZ"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-625" y="-118"/>
         </scene>
@@ -247,7 +255,77 @@
                     <view key="view" contentMode="scaleToFill" id="AJx-VT-nI3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Activity Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SiD-0a-93i">
+                                <rect key="frame" x="8" y="149" width="398" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ambience" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="invertColor">
+                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColorInvert">
+                                        <color key="value" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIe-hM-eQl">
+                                <rect key="frame" x="8" y="124" width="398" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ambience" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColorInvert">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNE-z2-Fv5">
+                                <rect key="frame" x="8" y="187" width="398" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColorInvert">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ambience" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Activity Details" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="kB0-f0-Tbx">
+                                <rect key="frame" x="8" y="212" width="398" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="invertColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ambience" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColorInvert">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="lNE-z2-Fv5" firstAttribute="top" secondItem="SiD-0a-93i" secondAttribute="bottom" constant="8" id="5kK-PN-lmD"/>
+                            <constraint firstItem="h02-Np-Rmf" firstAttribute="trailing" secondItem="kB0-f0-Tbx" secondAttribute="trailing" constant="8" id="CG2-ML-OM5"/>
+                            <constraint firstItem="VIe-hM-eQl" firstAttribute="top" secondItem="h02-Np-Rmf" secondAttribute="top" constant="8" id="JHp-h5-ql2"/>
+                            <constraint firstItem="lNE-z2-Fv5" firstAttribute="leading" secondItem="h02-Np-Rmf" secondAttribute="leading" constant="8" id="KH7-ci-Uwa"/>
+                            <constraint firstItem="h02-Np-Rmf" firstAttribute="trailing" secondItem="VIe-hM-eQl" secondAttribute="trailing" constant="8" id="POz-Ga-IJR"/>
+                            <constraint firstItem="SiD-0a-93i" firstAttribute="top" secondItem="VIe-hM-eQl" secondAttribute="bottom" constant="4" id="Tky-wo-xra"/>
+                            <constraint firstItem="h02-Np-Rmf" firstAttribute="trailing" secondItem="SiD-0a-93i" secondAttribute="trailing" constant="8" id="ZLU-W2-wCg"/>
+                            <constraint firstItem="SiD-0a-93i" firstAttribute="leading" secondItem="AJx-VT-nI3" secondAttribute="leading" constant="8" id="ZVc-3x-jpt"/>
+                            <constraint firstItem="h02-Np-Rmf" firstAttribute="trailing" secondItem="lNE-z2-Fv5" secondAttribute="trailing" constant="8" id="Zt1-df-qqS"/>
+                            <constraint firstItem="VIe-hM-eQl" firstAttribute="leading" secondItem="h02-Np-Rmf" secondAttribute="leading" constant="8" id="bBw-cj-WqE"/>
+                            <constraint firstItem="kB0-f0-Tbx" firstAttribute="top" secondItem="lNE-z2-Fv5" secondAttribute="bottom" constant="4" id="bSj-Zy-D7O"/>
+                            <constraint firstItem="kB0-f0-Tbx" firstAttribute="leading" secondItem="h02-Np-Rmf" secondAttribute="leading" constant="8" id="laT-eW-v6f"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="h02-Np-Rmf"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="invertColor">
@@ -256,13 +334,14 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="ambience" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="detailsTextField" destination="kB0-f0-Tbx" id="GBu-nF-m64"/>
+                        <outlet property="titleTextField" destination="SiD-0a-93i" id="Of5-yt-4oW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="enO-89-fr0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="198.55072463768118" y="-118.20652173913044"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="6uU-e8-EZJ"/>
-    </inferredMetricsTieBreakers>
 </document>

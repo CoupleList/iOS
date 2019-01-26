@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import BLTNBoard
 
 class ListTableViewController: UITableViewController {
+    
+    lazy var addActivityBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: self.generateAddActivityPageItem())
+    }()
     
     var activities: [CLActivity] = [CLActivity]()
     var viewableActivities: [CLActivity] = [CLActivity]()
@@ -75,13 +80,14 @@ class ListTableViewController: UITableViewController {
             destination.type = type
             destination.order = order
             destination.delegate = self
-        } else if let destination = segue.destination as? ListActivityDetailView, segue.identifier == "pushAddActivityView" {
-            destination.title = "Add Activity"
         }
     }
     
     @objc func addActivity() {
-        performSegue(withIdentifier: "pushAddActivityView", sender: self)
+        addActivityBulletinManager = {
+            return CLBLTNItemManager(rootItem: self.generateAddActivityPageItem())
+        }()
+        addActivityBulletinManager.show(above: self)
     }
     
     @objc func sortActivity() {
@@ -103,6 +109,25 @@ class ListTableViewController: UITableViewController {
         }
         if order == "Recent" { viewableActivities.reverse() }
         tableView.reloadData()
+    }
+    
+    fileprivate func generateAddActivityPageItem(title: String = "", details: String = "") -> CLBLTNAddActivityPageItem {
+        let page = CLBLTNAddActivityPageItem(title: title, details: details)
+        page.actionHandler = { (item: BLTNActionItem) in
+            let title = page.titleField.text ?? ""
+            let details = page.detailsField.text ?? ""
+            if title.count > 0 {
+                page.shouldStartWithActivityIndicator = true
+                CLDefaults.shared.list?.createActivity(title: title, details: details)
+                if let manager = item.manager {
+                    manager.dismissBulletin()
+                }
+            } else if let manager = item.manager {
+                let errorPage = CLBLTNErrorPageItem(descriptionText: "A title is required in order to create an activity")
+                manager.push(item: errorPage)
+            }
+        }
+        return page
     }
 }
 

@@ -37,18 +37,7 @@ class StartingViewController: UIViewController {
     
     lazy var registerPage: CLBLTNRegisterPageItem = self.generateRegisterPageItem()
     
-    lazy var welcomePage: CLBLTNPageItem = {
-        let page = CLBLTNPageItem(title: "Getting Started")
-        page.descriptionText = "You currently are not apart of a list. You can create one or ask your Partner to share their list with you."
-        page.actionButtonTitle = "Create List"
-        page.alternativeButtonTitle = "Join List"
-        page.alternativeHandler = { (item: BLTNActionItem) in
-            if let manager = item.manager {
-                manager.push(item: self.joinListPage)
-            }
-        }
-        return page
-    }()
+    lazy var welcomePage: CLBLTNPageItem = self.generateWelcomePageItem()
     
     lazy var joinListPage: CLBLTNPageItem = {
         let page = CLBLTNPageItem(title: "Join List")
@@ -169,6 +158,22 @@ class StartingViewController: UIViewController {
         return page
     }
     
+    fileprivate func generateWelcomePageItem() -> CLBLTNPageItem {
+        let page = CLBLTNPageItem(title: "Getting Started")
+        page.descriptionText = "You currently are not apart of a list. You can create one or ask your Partner to share their list with you."
+        page.actionButtonTitle = "Create List"
+        page.actionHandler = { (item: BLTNActionItem) in
+            self.createList()
+        }
+        page.alternativeButtonTitle = "Join List"
+        page.alternativeHandler = { (item: BLTNActionItem) in
+            if let manager = item.manager {
+                manager.push(item: self.joinListPage)
+            }
+        }
+        return page
+    }
+    
     fileprivate func displayAlertOverBulletinManager(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
@@ -229,6 +234,27 @@ class StartingViewController: UIViewController {
         } else {
             self.displayAlertOverBulletinManager(title: "Missing Information",
                                                  message: "An email address and passwords are required.")
+        }
+    }
+    
+    fileprivate func createList() {
+        bulletinManager.displayActivityIndicator()
+        do {
+            try CLDefaults.shared.createList() { error in
+                if error != nil {
+                    self.bulletinManager.hideActivityIndicator()
+                    self.bulletinManager.push(item: CLBLTNErrorPageItem(descriptionText: "Unable to create list. Please ensure your device has an internet connection."))
+                } else {
+                    self.bulletinManager.dismiss()
+                    self.goToMain()
+                }
+            }
+        } catch is CLDefaultsError {
+            self.bulletinManager.hideActivityIndicator()
+            self.bulletinManager.reset()
+        } catch is NSError {
+            self.bulletinManager.hideActivityIndicator()
+            self.bulletinManager.push(item: CLBLTNErrorPageItem(descriptionText: "An unexpected error occurred. Please ensure your device has an internet connection."))
         }
     }
 }

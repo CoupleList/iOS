@@ -71,6 +71,31 @@ class CLDefaults {
         }
     }
     
+    func createList(completion: @escaping (_ error: Error?) -> Void) throws {
+        if let user = Auth.auth().currentUser {
+            let key = ref.child("user/\(user.uid)").childByAutoId().key
+            let code = String(ref.child("user/\(user.uid)/list").childByAutoId().key.shuffled())
+            ref.child("users/\(Auth.auth().currentUser!.uid)/list").setValue([
+                "key": key,
+                "code": code
+                ], withCompletionBlock: { (error, snapshot) in
+                    guard error == nil else {
+                        completion(error)
+                        return
+                    }
+                    self.ref.child("lists/\(key)/code").setValue(code, withCompletionBlock: { (error, snapshot) in
+                        guard error == nil else {
+                            completion(error)
+                            return
+                        }
+                        completion(nil)
+                    })
+            })
+        } else {
+            throw CLDefaultsError.noUser
+        }
+    }
+    
     func leaveList() throws {
         if let user = Auth.auth().currentUser {
             ref.child("users/\(user.uid)/list").removeValue()

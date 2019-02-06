@@ -69,7 +69,9 @@ class SettingsTableViewController: UITableViewController {
                                    description: UserDefaults.standard.bool(forKey: "requireBiometricAuthentication") ? "Yes" : "No",
                                    type: .simplifiedDetails,
                                    action: toggleBiometricAuthentication),
-                     CLSettingsRow(title: "Leave List")],
+                     CLSettingsRow(title: "Leave List",
+                                   description: nil,
+                                   action: leaveList)],
                     [CLSettingsRow(title: "Receive Notifications",
                                    description: "No",
                                    type: .simplifiedDetails)],
@@ -266,10 +268,18 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
+    fileprivate func leaveList() {
+        do {
+           try CLDefaults.shared.leaveList()
+        } catch is Error {
+            // TODO: Hanle error
+        }
+    }
+    
     fileprivate func logout() {
         do {
           try Auth.auth().signOut()
-        } catch let signOutError as NSError {
+        } catch is NSError {
             // TODO: Handle error
         }
     }

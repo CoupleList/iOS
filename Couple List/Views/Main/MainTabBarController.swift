@@ -10,6 +10,7 @@ import UIKit
 import Ambience
 import BLTNBoard
 import FirebaseAuth
+import FirebaseDatabase
 import LocalAuthentication
 
 class MainTabViewController: UITabBarController {
@@ -23,6 +24,8 @@ class MainTabViewController: UITabBarController {
     }()
     
     var handle: AuthStateDidChangeListenerHandle?
+    var listReference: DatabaseReference?
+    var listListener: DatabaseHandle?
     
     lazy var biometricAuthenticationFailedPage: CLBLTNPageItem = {
         let page = CLBLTNPageItem(title: "Unable To Validate With Biometrics")
@@ -77,7 +80,14 @@ class MainTabViewController: UITabBarController {
         super.viewWillAppear(animated)
         guard handle == nil else { return }
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            guard user == nil else { return }
+            guard user == nil else {
+                guard let user = user,  self.listReference == nil, self.listListener == nil else { return }
+                self.listReference = Database.database().reference().child("users/\(user.uid)/list")
+                self.listListener = self.listReference!.observe(.childRemoved, with: { _ in
+                    self.dismiss(animated: true)
+                })
+                return
+            }
             self.dismiss(animated: true)
         }
     }
@@ -86,6 +96,8 @@ class MainTabViewController: UITabBarController {
         super.viewWillDisappear(animated)
         guard let handle = handle else { return }
         Auth.auth().removeStateDidChangeListener(handle)
+        guard let listReference = listReference else { return }
+        listReference.removeAllObservers()
     }
     
     @objc func handleAppMovedToForeground() {

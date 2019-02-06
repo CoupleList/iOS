@@ -33,4 +33,12 @@ class CLActivity {
         self.desc = desc
         self.completed = completed ?? false
     }
+    
+    func complete() {
+        listRef.child("activities/\(id)/done").setValue(true)
+    }
+    
+    func delete() {
+        listRef.child("activities/\(id)").removeValue()
+    }
 }

@@ -83,6 +83,26 @@ class ListTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let activity = viewableActivities[indexPath.row]
+        
+        let complete = UITableViewRowAction(style: .normal, title: "Complete") { action, index in
+            activity.complete()
+        }
+        complete.backgroundColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1.0)
+        
+        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
+            activity.delete()
+        }
+        delete.backgroundColor = UIColor(red: 1.0, green: 59/255, blue: 48/255, alpha: 1.0)
+        
+        if (activity.completed) {
+            return [delete]
+        } else {
+            return [delete, complete]
+        }
+    }
+    
     @objc func addActivity() {
         addActivityBulletinManager = {
             return CLBLTNItemManager(rootItem: self.generateAddActivityPageItem())

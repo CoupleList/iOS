@@ -81,5 +81,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-9026572937829340~1062002797</string>
 </dict>
 </plist>

@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "sa6cz.app.goo.gl"
         FirebaseApp.configure()
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-9026572937829340~1062002797")
         
         ref = Database.database().reference()
         

@@ -74,7 +74,7 @@ class CLDefaults {
     func createList(completion: @escaping (_ error: Error?) -> Void) throws {
         if let user = Auth.auth().currentUser {
             let key = ref.child("user/\(user.uid)").childByAutoId().key
-            let code = String(ref.child("user/\(user.uid)/list").childByAutoId().key.shuffled())
+            let code = String(ref.child("user/\(user.uid)/list").childByAutoId().key!.shuffled())
             ref.child("users/\(Auth.auth().currentUser!.uid)/list").setValue([
                 "key": key,
                 "code": code

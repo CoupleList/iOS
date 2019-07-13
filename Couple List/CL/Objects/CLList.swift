@@ -42,18 +42,20 @@ class CLList {
     func createActivity(title: String, details: String = "") {
         let ref = Database.database().reference(withPath: "lists/\(key)")
         let id = ref.childByAutoId().key
-        ref.child("activities/\(id)").setValue([
-            "title": title,
-            "description": details,
-            "done": false
-            ])
+        if let id = id {
+            ref.child("activities/\(id)").setValue([
+                "title": title,
+                "description": details,
+                "done": false
+                ])
+        }
     }
     
     func observeActivities() {
         removeActivitiesObserver()
-        let ref = Database.database().reference(withPath: "lists/\(key)")
+        let ref = Database.database().reference(withPath: "lists/\(key)/activities")
         delegates.forEach { $0.observersSet() }
-        addedObserver = ref.child("activities").observe(.childAdded, with: { snapshot in
+        addedObserver = ref.observe(.childAdded, with: { snapshot in
             if let activity = self.createActivityFromSnapshot(ref: ref, snapshot: snapshot) {
                 self.delegates.forEach { $0.activityAdded(activity: activity) }
             }

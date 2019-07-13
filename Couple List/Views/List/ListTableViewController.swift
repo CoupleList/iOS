@@ -11,13 +11,12 @@ import BLTNBoard
 
 class ListTableViewController: UITableViewController {
     
-    lazy var addActivityBulletinManager: CLBLTNItemManager = {
-        return CLBLTNItemManager(rootItem: self.generateAddActivityPageItem())
+    lazy var activityBulletinManager: CLBLTNItemManager = {
+        return CLBLTNItemManager(rootItem: CLBLTNErrorPageItem(descriptionText: "Unable to preform this action."))
     }()
     
     var activities: [CLActivity] = [CLActivity]()
     var viewableActivities: [CLActivity] = [CLActivity]()
-    var selectedActivity: CLActivity?
     var state = "Incomplete"
     var type = "All"
     var order = "Recent"
@@ -68,14 +67,16 @@ class ListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedActivity = viewableActivities[indexPath.row]
-        performSegue(withIdentifier: "pushActivityDetailView", sender: self)
+        let activity = viewableActivities[indexPath.row]
+        activityBulletinManager = {
+            return CLBLTNItemManager(rootItem: self.generateEditActivityPageItem(activity: activity))
+        }()
+        activityBulletinManager.show(above: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let activity = selectedActivity, let destination = segue.destination as? ListActivityDetailView, segue.identifier == "pushActivityDetailView" {
-            destination.activity = activity
-        } else if let destination = segue.destination as? ListSortingTableViewController, segue.identifier == "pushSortActivityView" {
+        if let destination = segue.destination as? ListSortingTableViewController, segue.identifier == "pushSortActivityView" {
             destination.state = state
             destination.type = type
             destination.order = order
@@ -104,10 +105,10 @@ class ListTableViewController: UITableViewController {
     }
     
     @objc func addActivity() {
-        addActivityBulletinManager = {
+        activityBulletinManager = {
             return CLBLTNItemManager(rootItem: self.generateAddActivityPageItem())
         }()
-        addActivityBulletinManager.show(above: self)
+        activityBulletinManager.show(above: self)
     }
     
     @objc func sortActivity() {
@@ -116,16 +117,14 @@ class ListTableViewController: UITableViewController {
     
     fileprivate func determineViewableActivities() {
         viewableActivities.removeAll()
-        activities.forEach { activity in
-            var isViewable = true
+        for activity in activities {
+            if state == "Incomplete" && activity.completed { continue }
+            else if state == "Complete" && !activity.completed { continue }
             
-            if state == "Incomplete" && activity.completed { isViewable = false }
-            else if state == "Complete" && !activity.completed { isViewable = false }
+            if type == "Text" { continue }
+            else if type == "Location" { continue }
             
-            if type == "Text" { isViewable = false }
-            else if type == "Location" { isViewable = false }
-            
-            if isViewable { viewableActivities.append(activity) }
+            viewableActivities.append(activity)
         }
         if order == "Recent" { viewableActivities.reverse() }
         tableView.reloadData()
@@ -144,6 +143,25 @@ class ListTableViewController: UITableViewController {
                 }
             } else if let manager = item.manager {
                 let errorPage = CLBLTNErrorPageItem(descriptionText: "A title is required in order to create an activity")
+                manager.push(item: errorPage)
+            }
+        }
+        return page
+    }
+    
+    fileprivate func generateEditActivityPageItem(activity: CLActivity) -> CLBLTNEditActivityPageItem {
+        let page = CLBLTNEditActivityPageItem(activity: activity)
+        page.actionHandler = { (item: BLTNActionItem) in
+            activity.title = page.titleField.text ?? ""
+            activity.desc = page.detailsField.text ?? ""
+            if activity.title.count > 0 {
+                page.shouldStartWithActivityIndicator = true
+                activity.update()
+                if let manager = item.manager {
+                    manager.dismissBulletin()
+                }
+            } else if let manager = item.manager {
+                let errorPage = CLBLTNErrorPageItem(descriptionText: "A title is required in order to update an activity")
                 manager.push(item: errorPage)
             }
         }

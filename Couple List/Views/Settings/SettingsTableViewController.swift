@@ -255,22 +255,37 @@ class SettingsTableViewController: UITableViewController {
         if let action: () -> Void = cellData.action {
             action()
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     fileprivate func leaveList() {
-        do {
-           try CLDefaults.shared.leaveList()
-        } catch is Error {
-            // TODO: Hanle error
-        }
+        let alert = UIAlertController(title: "Are you Sure you Want to Leave Your List?",
+                                      message: "If you leave your list you will be unable to rejoin it without an invite.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: { _ in
+            do {
+                try CLDefaults.shared.leaveList()
+            } catch is Error {
+                // Ignore error
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     fileprivate func logout() {
-        do {
-          try Auth.auth().signOut()
-        } catch is NSError {
-            // TODO: Handle error
-        }
+        let alert = UIAlertController(title: "Are you Sure you Want to Logout?",
+                                      message: "Logging out of Couple List will require you to re-enter your credentials.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
+            do {
+                try Auth.auth().signOut()
+            } catch is NSError {
+                // Ignore error
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     fileprivate func viewIcons8Website() {
